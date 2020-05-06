@@ -6,6 +6,7 @@ import androidx.navigation.findNavController
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import fr.barfou.socialnetwork.R
+import fr.barfou.socialnetwork.ui.utils.changeToolbarFont
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(tool_bar)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
         tool_bar.setNavigationOnClickListener { onNavigateUp() }
+        tool_bar.changeToolbarFont()
     }
     private fun testFirebase() {
         val activitiesRef = Firebase.database.reference.child("Activities")
