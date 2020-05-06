@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initToolBar()
-        testFirebase()
+        //testFirebase()
     }
 
     override fun onNavigateUp(): Boolean {

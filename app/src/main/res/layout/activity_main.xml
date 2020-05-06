@@ -7,12 +7,10 @@
     tools:context="fr.barfou.socialnetwork.ui.activity.MainActivity">
 
     <androidx.appcompat.widget.Toolbar
-        style="@style/Header"
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         app:navigationIcon="@drawable/ic_arrow_back"
         android:layout_height="?actionBarSize"
-        android:background="@color/color_background"
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@color/color_on_background" />
 

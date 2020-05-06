@@ -46,9 +46,9 @@ class MeetingAdapter(
             super.getItemOffsets(outRect, view, parent, state)
             parent.run {
                 outRect.set(
-                    dp(16),
+                    dp(8),
                     dp(4),
-                    dp(16),
+                    dp(8),
                     dp(4)
                 )
             }
