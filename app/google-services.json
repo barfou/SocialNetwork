@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "985122142684",
+    "firebase_url": "https://socialnetwork-ad417.firebaseio.com",
+    "project_id": "socialnetwork-ad417",
+    "storage_bucket": "socialnetwork-ad417.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985122142684:android:746ab14fcf3b582c4a3719",
+        "android_client_info": {
+          "package_name": "fr.barfou.socialnetwork"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985122142684-g17dj4lud8395j6h2iegq7ivb5k7365m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt1kHRVDGS0Syd9iaLYFzY1D_RyPghaOc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985122142684-g17dj4lud8395j6h2iegq7ivb5k7365m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
