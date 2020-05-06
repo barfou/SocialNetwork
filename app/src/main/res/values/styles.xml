@@ -30,4 +30,8 @@
         <item name="itemTextAppearance">?textAppearanceBody2</item>
     </style>
 
+    <style name="Card">
+        <item name="background">@color/color_surface</item>
+    </style>
+
 </resources>
