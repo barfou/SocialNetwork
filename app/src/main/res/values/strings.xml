@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">SocialNetwork</string>
+    <string name="app_name">JoinTheMove</string>
+    <string name="vos_activites_a_venir">Vos activités à venir</string>
 </resources>
