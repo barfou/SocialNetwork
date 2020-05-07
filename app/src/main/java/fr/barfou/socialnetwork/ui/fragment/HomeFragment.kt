@@ -15,6 +15,9 @@ import kotlinx.android.synthetic.main.home_fragment.*
 class HomeFragment : Fragment(), OnMeetingClickListener {
 
     private lateinit var meetingAdapter: MeetingAdapter
+    private lateinit var meetingAdapter2: MeetingAdapter
+    private lateinit var meetingAdapter3: MeetingAdapter
+    private lateinit var meetingAdapter4: MeetingAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +44,21 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
             adapter = meetingAdapter
             if (itemDecorationCount == 0) addItemDecoration(MeetingAdapter.OffsetDecoration())
         }
+        meetingAdapter2 = MeetingAdapter(this)
+        recycler_view_2.apply {
+            adapter = meetingAdapter2
+            if (itemDecorationCount == 0) addItemDecoration(MeetingAdapter.OffsetDecoration())
+        }
+        meetingAdapter3 = MeetingAdapter(this)
+        recycler_view_3.apply {
+            adapter = meetingAdapter3
+            if (itemDecorationCount == 0) addItemDecoration(MeetingAdapter.OffsetDecoration())
+        }
+        meetingAdapter4 = MeetingAdapter(this)
+        recycler_view_4.apply {
+            adapter = meetingAdapter4
+            if (itemDecorationCount == 0) addItemDecoration(MeetingAdapter.OffsetDecoration())
+        }
         loadAdapter()
     }
 
@@ -53,6 +71,9 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
         listMeeting.add(Meeting("1", "1", "1", "Chess-Boxing", "22/08/2088", 0.0, 0.0, ""))
         listMeeting.add(Meeting("1", "1", "1", "Lancer de nain", "14/04/2018", 0.0, 0.0, ""))
         meetingAdapter.submitList(listMeeting)
+        meetingAdapter2.submitList(listMeeting)
+        meetingAdapter3.submitList(listMeeting)
+        meetingAdapter4.submitList(listMeeting)
     }
 
     // Click listener implementation
