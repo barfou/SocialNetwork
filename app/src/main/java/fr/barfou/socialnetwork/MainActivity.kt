@@ -10,7 +10,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val activitiesRef = Firebase.database.reference.child("Activities")
         var idTask = activitiesRef.push().key!!
         activitiesRef.child(idTask).setValue(true)

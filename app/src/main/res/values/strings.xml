@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">SocialNetwork</string>
+    <string name="app_name">JoinTheMove</string>
+    <string name="text_chk_cgu">En cochant, vous acceptez les CGU</string>
+    <string name="text_btn_login">Se connecter</string>
+    <string name="text_btn_register">Créer un compte</string>
+    <string name="hint_edit_text_login">Saisir votre login</string>
+    <string name="hint_edit_text_password">Saisir votre mot de passe</string>
+    <string name="hint_edit_text_mail">Saisir votre e-mail</string>
 </resources>
