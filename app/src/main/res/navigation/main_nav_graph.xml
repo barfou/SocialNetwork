@@ -10,6 +10,20 @@
         android:id="@+id/home_fragment"
         android:name="fr.barfou.socialnetwork.ui.fragment.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/home_fragment">
+        <action
+            android:id="@+id/action_home_fragment_to_details_fragment"
+            app:destination="@id/details_fragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/details_fragment"
+        android:name="fr.barfou.socialnetwork.ui.fragment.DetailsFragment"
+        android:label="details_fragment"
+        tools:layout="@layout/details_fragment"/>
 
 </navigation>

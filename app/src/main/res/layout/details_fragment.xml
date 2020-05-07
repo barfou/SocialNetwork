@@ -6,6 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/color_background"
+        android:id="@+id/container_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image_creator"
         android:layout_width="wrap_content"
@@ -25,6 +34,7 @@
         android:layout_marginStart="10dp"
         android:textStyle="bold"
         tools:text="Username"
+        android:text="Username"
         app:layout_constraintStart_toEndOf="@id/image_creator"
         app:layout_constraintBottom_toTopOf="@id/tv_date_post"
         app:layout_constraintTop_toTopOf="@id/image_creator" />
@@ -36,6 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         tools:text="03/05/2020"
+        android:text="03/05/2020"
         app:layout_constraintStart_toEndOf="@id/image_creator"
         app:layout_constraintTop_toBottomOf="@id/tv_username"
         app:layout_constraintBottom_toBottomOf="@id/image_creator"/>
@@ -48,25 +59,28 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         tools:text="Activity Name"
+        android:text="Activity Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image_creator" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image_meeting"
         android:layout_width="0dp"
-        android:layout_height="280dp"
+        android:layout_height="220dp"
         android:scaleType="fitXY"
         android:src="@drawable/bowling"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_meeting_name" />
+        app:layout_constraintTop_toBottomOf="@id/container_1" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view_1"
-        style="@style/Background"
+        app:cardBackgroundColor="@color/color_surface"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -117,10 +131,10 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view_2"
-        style="@style/Background"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
+        app:cardBackgroundColor="@color/color_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.Meeting
 import fr.barfou.socialnetwork.ui.activity.MainActivity
@@ -78,6 +79,6 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
 
     // Click listener implementation
     override fun invoke(view: View, meeting: Meeting) {
-
+        findNavController().navigate(R.id.action_home_fragment_to_details_fragment)
     }
 }
