@@ -171,9 +171,13 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_join"
+                style="@style/ButtonStyle"
+                android:background="@drawable/rounded_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
+                android:paddingHorizontal="12dp"
                 android:drawablePadding="5dp"
                 android:drawableStart="@drawable/join"
                 android:text="@string/join"
