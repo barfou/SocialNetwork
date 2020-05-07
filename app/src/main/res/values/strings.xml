@@ -4,4 +4,6 @@
     <string name="tendances">Tendance</string>
     <string name="sport">Sport</string>
     <string name="culture">Culture</string>
+    <string name="join">Rejoindre</string>
+    <string name="nb_subscribers">Nombre de participants</string>
 </resources>
