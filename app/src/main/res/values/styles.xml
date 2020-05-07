@@ -42,5 +42,8 @@
     <style name="Separator">
         <item name="background">@color/color_on_background</item>
     </style>
+    <style name="CircularCard">
+        <item name="android:background">@color/color_surface</item>
+    </style>
 
 </resources>

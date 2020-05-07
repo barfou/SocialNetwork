@@ -68,7 +68,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image_meeting"
         android:layout_width="0dp"
-        android:layout_height="220dp"
+        android:layout_height="180dp"
         android:scaleType="fitXY"
         android:src="@drawable/bowling"
         app:layout_constraintEnd_toEndOf="parent"
@@ -157,6 +157,7 @@
                 app:layout_constraintBaseline_toBaselineOf="@id/btn_join" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
