@@ -33,6 +33,9 @@
     <style name="Card">
         <item name="background">@color/color_surface</item>
     </style>
+    <style name="Background">
+        <item name="background">@color/color_background</item>
+    </style>
     <style name="Toolbar">
         <item name="background">@color/color_surface</item>
     </style>
