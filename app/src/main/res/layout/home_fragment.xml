@@ -41,7 +41,7 @@
                 android:clipToPadding="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="5"
-                tools:listitem="@layout/holder_meeting_1"
+                tools:listitem="@layout/holder_meeting"
                 app:layout_constraintTop_toBottomOf="@id/tv_my_activities"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -69,7 +69,7 @@
                 android:clipToPadding="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="5"
-                tools:listitem="@layout/holder_meeting_1"
+                tools:listitem="@layout/holder_meeting"
                 app:layout_constraintTop_toBottomOf="@id/tv_trending"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -97,7 +97,7 @@
                 android:clipToPadding="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="5"
-                tools:listitem="@layout/holder_meeting_1"
+                tools:listitem="@layout/holder_meeting"
                 app:layout_constraintTop_toBottomOf="@id/tv_sport"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -125,7 +125,7 @@
                 android:clipToPadding="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="5"
-                tools:listitem="@layout/holder_meeting_1"
+                tools:listitem="@layout/holder_meeting"
                 app:layout_constraintTop_toBottomOf="@id/tv_culture"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>

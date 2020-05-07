@@ -9,7 +9,7 @@ import fr.barfou.socialnetwork.data.model.Meeting
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
 import kotlinx.android.synthetic.main.holder_meeting.view.*
 
-class MeetingViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class FilterMeetingViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun bind(model: Meeting, onClick: OnMeetingClickListener) {
         itemView.apply {
@@ -20,13 +20,13 @@ class MeetingViewHolder private constructor(itemView: View) : RecyclerView.ViewH
     }
 
     companion object {
-        fun create(parent: ViewGroup): MeetingViewHolder {
+        fun create(parent: ViewGroup): FilterMeetingViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(
-                R.layout.holder_meeting,
+                R.layout.holder_filter_meeting,
                 parent,
                 false
             )
-            return MeetingViewHolder(view)
+            return FilterMeetingViewHolder(view)
         }
     }
 }
