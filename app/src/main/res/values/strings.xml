@@ -12,4 +12,7 @@
     <string name="hint_edit_text_login">Saisir votre login</string>
     <string name="hint_edit_text_password">Saisir votre mot de passe</string>
     <string name="hint_edit_text_mail">Saisir votre e-mail</string>
+    <string name="text_show_all_trophys">Voir tous les trophées</string>
+    <string name="text_suggest">Propose à :</string>
+    <string name="text_join">Participe  à :</string>
 </resources>
