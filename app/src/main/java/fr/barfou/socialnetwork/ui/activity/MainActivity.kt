@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.google.firebase.database.ktx.database
@@ -59,7 +60,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                findNavController(R.id.main_fragment_container).navigate(R.id.action_home_fragment_to_filter_fragment)
+                findNavController(R.id.main_fragment_container).navigate(
+                        R.id.action_home_fragment_to_filter_fragment,
+                        bundleOf(FilterFragment.SEARCH_VALUE_KEY to query)
+                )
                 mode = Mode.FILTER
                 return true
             }
@@ -82,8 +86,11 @@ class MainActivity : AppCompatActivity() {
     private fun notifyFilterFragmentIfNeeded(newText: String) {
         if (mode == Mode.FILTER) {
             getForegroundFragment()?.run {
-                try { (this as OnSearchValueChangeListener).onSearchValueChange(newText) }
-                catch (e: Exception) { e.printStackTrace() }
+                try {
+                    (this as OnSearchValueChangeListener).onSearchValueChange(newText)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
         }
     }

@@ -16,9 +16,12 @@ import kotlinx.android.synthetic.main.fragment_filter.*
 class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeListener {
 
     private lateinit var meetingAdapterFilter: MeetingAdapterFilter
+    private lateinit var searchValue: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        searchValue = arguments?.getString(SEARCH_VALUE_KEY) ?: throw IllegalStateException("No Value found")
     }
 
     override fun onCreateView(
@@ -62,5 +65,9 @@ class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeLi
         listMeeting.add(Meeting("1", "1", "1", "Chess-Boxing", "22/08/2088", 0.0, 0.0, ""))
         listMeeting.add(Meeting("1", "1", "1", "Lancer de nain", "14/04/2018", 0.0, 0.0, ""))
         meetingAdapterFilter.submitList(listMeeting)
+    }
+
+    companion object {
+        const val SEARCH_VALUE_KEY = "search_value_key"
     }
 }
