@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_2"
+        android:id="@+id/recycler_view_filter"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingVertical="4dp"

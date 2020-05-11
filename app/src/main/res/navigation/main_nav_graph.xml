@@ -18,7 +18,20 @@
             app:popExitAnim="@anim/slide_out_right"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_home_fragment_to_filter_fragment"
+            app:destination="@id/filter_fragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/filter_fragment"
+        android:name="fr.barfou.socialnetwork.ui.fragment.FilterFragment"
+        android:label="filter_fragment"
+        tools:layout="@layout/fragment_filter"/>
 
     <fragment
         android:id="@+id/details_fragment"

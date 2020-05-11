@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                findNavController(R.id.main_fragment_container).navigate(R.id.action_home_fragment_to_details_fragment)
+                findNavController(R.id.main_fragment_container).navigate(R.id.action_home_fragment_to_filter_fragment)
                 return true
             }
         })
