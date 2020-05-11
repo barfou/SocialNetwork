@@ -222,6 +222,15 @@
                         android:text="20 activités" />
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvMeetingSuggest"
+                        app:layout_constraintBottom_toBottomOf="@id/tvNumberMeetingSuggest"
+                        android:src="@drawable/ic_arrow_right_black_24dp"
+                        android:alpha="0.5"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imgMeetingJoin"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
@@ -249,6 +258,14 @@
                         app:layout_constraintStart_toEndOf="@id/imgMeetingJoin"
                         android:text="10 activités"/>
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvMeetingJoin"
+                        app:layout_constraintBottom_toBottomOf="@id/tvNumberMeetingJoin"
+                        android:src="@drawable/ic_arrow_right_black_24dp"
+                        android:alpha="0.5"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
