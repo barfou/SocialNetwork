@@ -1,6 +1,9 @@
 package fr.barfou.socialnetwork.data.model
 
+enum class Theme { CULTURE, SPORT, AUTRE }
+
 data class TypeMeeting(
-        override var firebaseId: String,
-        var name: String
-) : FirebaseItem
+        var firebaseId: String,
+        var name: String,
+        var theme: Theme = Theme.AUTRE
+)

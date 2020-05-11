@@ -1,7 +1,7 @@
 package fr.barfou.socialnetwork.data.model
 
 data class Meeting(
-        override var firebaseId: String,
+        var firebaseId: String,
         var userId: String,
         var themeId: String,
         var name: String,
@@ -9,4 +9,4 @@ data class Meeting(
         var latitude: Double,
         var longitude: Double,
         var imageUrl: String
-) : FirebaseItem
+)

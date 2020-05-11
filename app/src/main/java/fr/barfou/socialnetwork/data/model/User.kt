@@ -1,7 +1,7 @@
 package fr.barfou.socialnetwork.data.model
 
 data class User(
-        override var firebaseId: String,
+        var firebaseId: String,
         var firstName: String,
         var lastName: String,
         var imageUrl: String,
@@ -9,4 +9,4 @@ data class User(
         var about: String,
         var latitude: Double,
         var longitude: Double
-) : FirebaseItem
+)

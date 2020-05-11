@@ -8,10 +8,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import fr.barfou.socialnetwork.data.model.FirebaseItem
-import fr.barfou.socialnetwork.data.model.Meeting
-import fr.barfou.socialnetwork.data.model.TypeMeeting
-import fr.barfou.socialnetwork.data.model.User
+import fr.barfou.socialnetwork.data.model.*
 
 open class MainViewModel(
 ) : ViewModel() {
@@ -57,6 +54,7 @@ open class MainViewModel(
     private fun initData(): Boolean {
         return try {
             initUsers()
+            initTypeMeetings()
             initMeetings()
             true
         } catch (e: Exception) {
@@ -80,6 +78,24 @@ open class MainViewModel(
         }
     }
 
+    private fun initTypeMeetings() {
+        listTypeMeeting.add(TypeMeeting("", "Spectacle", Theme.CULTURE))
+        listTypeMeeting.add(TypeMeeting("", "Pièce de Théâtre", Theme.CULTURE))
+        listTypeMeeting.add(TypeMeeting("", "Exposition", Theme.CULTURE))
+        listTypeMeeting.add(TypeMeeting("", "Visite Touristique", Theme.CULTURE))
+        listTypeMeeting.add(TypeMeeting("", "Apéro Quizz", Theme.CULTURE))
+        listTypeMeeting.add(TypeMeeting("", "Opéra", Theme.CULTURE))
+        listTypeMeeting.add(TypeMeeting("", "Squash", Theme.SPORT))
+        listTypeMeeting.add(TypeMeeting("", "Karting", Theme.SPORT))
+        listTypeMeeting.add(TypeMeeting("", "Base Jump", Theme.SPORT))
+        listTypeMeeting.add(TypeMeeting("", "Chess Boxing", Theme.SPORT))
+        listTypeMeeting.add(TypeMeeting("", "Paint Ball", Theme.SPORT))
+        listTypeMeeting.add(TypeMeeting("", "Accrobranche", Theme.SPORT))
+        listTypeMeeting.forEach {
+            pushTypeMeetingToFirebase(it)
+        }
+    }
+
     private fun initMeetings() {
         listMeetings.add(Meeting("", listUsers[0].firebaseId, "1", "Bowling", "22/08/2088", 0.0, 0.0, ""))
         listMeetings.add(Meeting("", listUsers[1].firebaseId, "1", "Plage", "19/03/2020", 0.0, 0.0, ""))
@@ -98,6 +114,12 @@ open class MainViewModel(
         var firebaseId = usersRef.push().key!!
         user.firebaseId = firebaseId
         usersRef.child(firebaseId).setValue(user)
+    }
+
+    private fun pushTypeMeetingToFirebase(typeMeeting: TypeMeeting) {
+        var firebaseId = usersRef.push().key!!
+        typeMeeting.firebaseId = firebaseId
+        typeMetingsRef.child(firebaseId).setValue(typeMeeting)
     }
 
     private fun pushMeetingToFirebase(meeting: Meeting) {
