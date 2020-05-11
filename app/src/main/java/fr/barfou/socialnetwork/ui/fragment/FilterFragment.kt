@@ -8,12 +8,12 @@ import androidx.fragment.app.Fragment
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.Meeting
 import fr.barfou.socialnetwork.ui.activity.MainActivity
-import fr.barfou.socialnetwork.ui.adapter.MeetingAdapter
 import fr.barfou.socialnetwork.ui.adapter.MeetingAdapterFilter
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
+import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import kotlinx.android.synthetic.main.fragment_filter.*
 
-class FilterFragment : Fragment(), OnMeetingClickListener {
+class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeListener {
 
     private lateinit var meetingAdapterFilter: MeetingAdapterFilter
 
@@ -47,6 +47,10 @@ class FilterFragment : Fragment(), OnMeetingClickListener {
 
     override fun invoke(view: View, meeting: Meeting) {
         //
+    }
+
+    override fun onSearchValueChange(newText: String) {
+        TODO("Not yet implemented")
     }
 
     private fun loadAdapter() {

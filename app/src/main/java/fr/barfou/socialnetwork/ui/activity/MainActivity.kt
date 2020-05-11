@@ -1,17 +1,18 @@
 package fr.barfou.socialnetwork.ui.activity
 
 import android.app.SearchManager
-import android.content.ComponentName
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuItemCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import fr.barfou.socialnetwork.R
+import fr.barfou.socialnetwork.ui.fragment.FilterFragment
+import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import fr.barfou.socialnetwork.ui.utils.changeToolbarFont
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -53,19 +54,38 @@ class MainActivity : AppCompatActivity() {
         searchView.setSearchableInfo(manager.getSearchableInfo(this.componentName))
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextChange(newText: String): Boolean {
+                notifyFilterFragmentIfNeeded(newText)
                 return true
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
                 findNavController(R.id.main_fragment_container).navigate(R.id.action_home_fragment_to_filter_fragment)
+                mode = Mode.FILTER
                 return true
             }
         })
         searchView.setOnCloseListener {
-            onBackPressed()
+            if (mode == Mode.FILTER) {
+                onBackPressed()
+                mode = Mode.HOMEPAGE
+            }
             return@setOnCloseListener false
         }
         return true
+    }
+
+    private fun getForegroundFragment(): Fragment? {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container)
+        return navHostFragment?.childFragmentManager?.fragments?.get(0)
+    }
+
+    private fun notifyFilterFragmentIfNeeded(newText: String) {
+        if (mode == Mode.FILTER) {
+            getForegroundFragment()?.run {
+                try { (this as OnSearchValueChangeListener).onSearchValueChange(newText) }
+                catch (e: Exception) { e.printStackTrace() }
+            }
+        }
     }
 
     private fun testFirebase() {
