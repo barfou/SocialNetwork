@@ -15,8 +15,37 @@ class DetailsFragment : Fragment() {
 
     private lateinit var userAdapter: UserAdapter
 
+    private lateinit var userId: String
+    private lateinit var datePost: String
+    private lateinit var dateEvent: String
+    private lateinit var name: String
+    private lateinit var type: String
+    private lateinit var latitude: String
+    private lateinit var longitude: String
+    private lateinit var details: String
+
+    companion object {
+        const val USER_ID_KEY = "user_id_key"
+        const val DATE_POST_KEY = "date_post_key"
+        const val DATE_EVENT_KEY = "date_event_key"
+        const val NAME_KEY = "name_key"
+        const val TYPE_KEY = "type_key"
+        const val LATITUDE_KEY = "latitude_key"
+        const val LONGITUDE_KEY = "longitude_key"
+        const val DETAILS_KEY = "details_key"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        userId = arguments?.getString(USER_ID_KEY) ?: throw IllegalStateException("No ID found")
+        datePost = arguments?.getString(DATE_POST_KEY) ?: throw IllegalStateException("No Date found")
+        dateEvent = arguments?.getString(DATE_EVENT_KEY) ?: throw IllegalStateException("No Date found")
+        name = arguments?.getString(NAME_KEY) ?: throw IllegalStateException("No Name found")
+        type = arguments?.getString(TYPE_KEY) ?: throw IllegalStateException("No Type found")
+        latitude = arguments?.getString(LATITUDE_KEY) ?: throw IllegalStateException("No Latitude found")
+        longitude = arguments?.getString(LONGITUDE_KEY) ?: throw IllegalStateException("No Longitude found")
+        details = arguments?.getString(DETAILS_KEY) ?: throw IllegalStateException("No Details found")
     }
 
     override fun onCreateView(
@@ -35,17 +64,26 @@ class DetailsFragment : Fragment() {
             this.setDisplayHomeAsUpEnabled(false)
         }
 
+        loadData()
         customizeImageView()
+        setupAdapter()
+        loadAdapter()
+    }
+
+    private fun loadData() {
+
+    }
+
+    private fun setupAdapter() {
         userAdapter = UserAdapter()
         recycler_view.apply {
             adapter = userAdapter
             if (itemDecorationCount == 0) addItemDecoration(UserAdapter.OffsetDecoration())
         }
-        loadAdapter()
     }
 
     private fun customizeImageView() {
-        when (model.type) {
+        /*when (model.type) {
             "Karaoké" -> image_meeting.setImageResource(R.drawable.karaoke)
             "Pièce de Théâtre" -> image_meeting.setImageResource(R.drawable.theatre)
             "Exposition" -> image_meeting.setImageResource(R.drawable.exposition)
@@ -60,7 +98,7 @@ class DetailsFragment : Fragment() {
             "Accrobranche" -> image_meeting.setImageResource(R.drawable.accrobranche)
             "Bowling" -> image_meeting.setImageResource(R.drawable.bowling)
             "Escalade" -> image_meeting.setImageResource(R.drawable.escalade)
-        }
+        }*/
     }
 
     private fun loadAdapter() {

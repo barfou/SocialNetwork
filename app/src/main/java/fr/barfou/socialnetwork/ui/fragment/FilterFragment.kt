@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.navigation.fragment.findNavController
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.Meeting
 import fr.barfou.socialnetwork.ui.activity.MainActivity
@@ -56,7 +58,17 @@ class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeLi
     }
 
     override fun invoke(view: View, meeting: Meeting) {
-        //
+        findNavController().navigate(R.id.action_home_fragment_to_details_fragment,
+                bundleOf(
+                        DetailsFragment.USER_ID_KEY to meeting.userId,
+                        DetailsFragment.DATE_POST_KEY to meeting.dateCreation,
+                        DetailsFragment.DATE_EVENT_KEY to meeting.dateEvent,
+                        DetailsFragment.NAME_KEY to meeting.name,
+                        DetailsFragment.TYPE_KEY to meeting.type,
+                        DetailsFragment.LATITUDE_KEY to meeting.latitude,
+                        DetailsFragment.LONGITUDE_KEY to meeting.longitude,
+                        DetailsFragment.DETAILS_KEY to meeting.details
+                ))
     }
 
     override fun onSearchValueChange(newText: String) {
