@@ -102,4 +102,9 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-database:19.3.0'
     implementation 'com.google.firebase:firebase-database-ktx:19.3.0'
+
+    // region Location
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    // endregion
 }
