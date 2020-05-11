@@ -26,6 +26,14 @@ open class MainViewModel(
     var listUsers = mutableListOf<User>()
     var listTypeMeeting = mutableListOf<TypeMeeting>()
 
+    fun filterMeetingByTheme(theme: Theme): MutableList<Meeting> {
+        return when (theme) {
+            Theme.CULTURE -> listMeetings.filter { it.theme == Theme.CULTURE }.toMutableList()
+            Theme.SPORT -> listMeetings.filter { it.theme == Theme.SPORT }.toMutableList()
+            Theme.AUTRE -> mutableListOf()
+        }
+    }
+
     fun retrieveData(onSuccess: OnSuccess<Boolean>) {
         if (!storedData) {
             firebaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -79,32 +87,35 @@ open class MainViewModel(
     }
 
     private fun initTypeMeetings() {
-        listTypeMeeting.add(TypeMeeting("", "Spectacle", Theme.CULTURE))
-        listTypeMeeting.add(TypeMeeting("", "Pièce de Théâtre", Theme.CULTURE))
-        listTypeMeeting.add(TypeMeeting("", "Exposition", Theme.CULTURE))
-        listTypeMeeting.add(TypeMeeting("", "Visite Touristique", Theme.CULTURE))
-        listTypeMeeting.add(TypeMeeting("", "Apéro Quizz", Theme.CULTURE))
-        listTypeMeeting.add(TypeMeeting("", "Opéra", Theme.CULTURE))
-        listTypeMeeting.add(TypeMeeting("", "Squash", Theme.SPORT))
-        listTypeMeeting.add(TypeMeeting("", "Karting", Theme.SPORT))
-        listTypeMeeting.add(TypeMeeting("", "Base Jump", Theme.SPORT))
-        listTypeMeeting.add(TypeMeeting("", "Chess Boxing", Theme.SPORT))
-        listTypeMeeting.add(TypeMeeting("", "Paint Ball", Theme.SPORT))
-        listTypeMeeting.add(TypeMeeting("", "Accrobranche", Theme.SPORT))
+        listTypeMeeting.add(TypeMeeting("", "Spectacle", Theme.CULTURE)) // 0
+        listTypeMeeting.add(TypeMeeting("", "Pièce de Théâtre", Theme.CULTURE)) // 1
+        listTypeMeeting.add(TypeMeeting("", "Exposition", Theme.CULTURE)) // 2
+        listTypeMeeting.add(TypeMeeting("", "Visite Touristique", Theme.CULTURE)) // 3
+        listTypeMeeting.add(TypeMeeting("", "Concert", Theme.CULTURE)) // 4
+        listTypeMeeting.add(TypeMeeting("", "Opéra", Theme.CULTURE)) // 5
+        listTypeMeeting.add(TypeMeeting("", "Squash", Theme.SPORT)) // 6
+        listTypeMeeting.add(TypeMeeting("", "Karting", Theme.SPORT)) // 7
+        listTypeMeeting.add(TypeMeeting("", "Base Jump", Theme.SPORT)) // 8
+        listTypeMeeting.add(TypeMeeting("", "Chess Boxing", Theme.SPORT)) // 9
+        listTypeMeeting.add(TypeMeeting("", "Paint Ball", Theme.SPORT)) // 10
+        listTypeMeeting.add(TypeMeeting("", "Accrobranche", Theme.SPORT)) // 11
+        listTypeMeeting.add(TypeMeeting("", "Bowling", Theme.SPORT)) // 12
+        listTypeMeeting.add(TypeMeeting("", "Escalade", Theme.SPORT)) // 13
         listTypeMeeting.forEach {
             pushTypeMeetingToFirebase(it)
         }
     }
 
     private fun initMeetings() {
-        listMeetings.add(Meeting("", listUsers[0].firebaseId, "1", "Bowling", "22/08/2088", 0.0, 0.0, ""))
-        listMeetings.add(Meeting("", listUsers[1].firebaseId, "1", "Plage", "19/03/2020", 0.0, 0.0, ""))
-        listMeetings.add(Meeting("", listUsers[0].firebaseId, "1", "Karting", "14/05/2021", 0.0, 0.0, ""))
-        listMeetings.add(Meeting("", listUsers[3].firebaseId, "1", "Escalade", "22/01/2010", 0.0, 0.0, ""))
-        listMeetings.add(Meeting("", listUsers[3].firebaseId, "1", "Chess-Boxing", "22/08/2088", 0.0, 0.0, ""))
-        listMeetings.add(Meeting("", listUsers[0].firebaseId, "1", "Base Jump", "14/04/2018", 0.0, 0.0, ""))
-        listMeetings.add(Meeting("", listUsers[2].firebaseId, "1", "Apéro Quizz", "14/04/2018", 0.0, 0.0, ""))
-        listMeetings.add(Meeting("", listUsers[2].firebaseId, "1", "Pièce de théâtre", "14/04/2018", 0.0, 0.0, ""))
+        listMeetings.add(Meeting("", listUsers[0].firebaseId, listTypeMeeting[12].firebaseId, listTypeMeeting[12].name, Theme.SPORT, "Ludo Club", "22/08/2088", 0.0, 0.0, ""))
+        listMeetings.add(Meeting("", listUsers[1].firebaseId, listTypeMeeting[2].firebaseId, listTypeMeeting[2].name, Theme.CULTURE, "Expo Impressionniste", "19/03/2020", 0.0, 0.0, ""))
+        listMeetings.add(Meeting("", listUsers[0].firebaseId, listTypeMeeting[7].firebaseId, listTypeMeeting[7].name, Theme.SPORT, "Speed Karting", "14/05/2021", 0.0, 0.0, ""))
+        listMeetings.add(Meeting("", listUsers[3].firebaseId, listTypeMeeting[13].firebaseId, listTypeMeeting[13].name, Theme.SPORT, "Escalade", "22/01/2010", 0.0, 0.0, ""))
+        listMeetings.add(Meeting("", listUsers[3].firebaseId, listTypeMeeting[9].firebaseId, listTypeMeeting[9].name, Theme.SPORT, "Tournoi Chess-Boxing", "22/08/2088", 0.0, 0.0, ""))
+        listMeetings.add(Meeting("", listUsers[0].firebaseId, listTypeMeeting[8].firebaseId, listTypeMeeting[8].name, Theme.SPORT, "The Sky Divers", "14/04/2018", 0.0, 0.0, ""))
+        listMeetings.add(Meeting("", listUsers[2].firebaseId, listTypeMeeting[4].firebaseId, listTypeMeeting[4].name, Theme.CULTURE, "Concert U2", "14/04/2018", 0.0, 0.0, ""))
+        listMeetings.add(Meeting("", listUsers[2].firebaseId, listTypeMeeting[1].firebaseId, listTypeMeeting[1].name, Theme.CULTURE, "Le misanthrope", "14/04/2018", 0.0, 0.0, ""))
+        listMeetings.add(Meeting("", listUsers[2].firebaseId, listTypeMeeting[3].firebaseId, listTypeMeeting[3].name, Theme.CULTURE, "Le Vieux Lyon", "14/04/2018", 0.0, 0.0, ""))
         listMeetings.forEach {
             pushMeetingToFirebase(it)
         }

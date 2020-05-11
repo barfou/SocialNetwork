@@ -5,21 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.Meeting
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.MeetingAdapterFilter
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
+import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_filter.*
 
 class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeListener {
 
     private lateinit var meetingAdapterFilter: MeetingAdapterFilter
     private lateinit var searchValue: String
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activity?.run {
+            mainViewModel = ViewModelProvider(this, MainViewModel).get()
+        } ?: throw IllegalStateException("Invalid Activity")
 
         searchValue = arguments?.getString(SEARCH_VALUE_KEY) ?: throw IllegalStateException("No Value found")
     }
@@ -57,14 +64,7 @@ class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeLi
     }
 
     private fun loadAdapter() {
-        var listMeeting = mutableListOf<Meeting>()
-        listMeeting.add(Meeting("1", "1", "1", "Bowling", "22/08/2088", 0.0, 0.0, ""))
-        listMeeting.add(Meeting("1", "1", "1", "Plage", "19/03/2020", 0.0, 0.0, ""))
-        listMeeting.add(Meeting("1", "1", "1", "Karting", "14/05/2021", 0.0, 0.0, ""))
-        listMeeting.add(Meeting("1", "1", "1", "Escalade", "22/01/2010", 0.0, 0.0, ""))
-        listMeeting.add(Meeting("1", "1", "1", "Chess-Boxing", "22/08/2088", 0.0, 0.0, ""))
-        listMeeting.add(Meeting("1", "1", "1", "Lancer de nain", "14/04/2018", 0.0, 0.0, ""))
-        meetingAdapterFilter.submitList(listMeeting)
+        meetingAdapterFilter.submitList(mainViewModel.listMeetings)
     }
 
     companion object {

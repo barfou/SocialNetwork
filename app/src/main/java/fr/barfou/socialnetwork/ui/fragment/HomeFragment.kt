@@ -10,6 +10,7 @@ import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.Meeting
+import fr.barfou.socialnetwork.data.model.Theme
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.MeetingAdapter
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
@@ -84,8 +85,8 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
     private fun loadAdapters() {
         meetingAdapter.submitList(mainViewModel.listMeetings)
         meetingAdapter2.submitList(mainViewModel.listMeetings)
-        meetingAdapter3.submitList(mainViewModel.listMeetings)
-        meetingAdapter4.submitList(mainViewModel.listMeetings)
+        meetingAdapter3.submitList(mainViewModel.filterMeetingByTheme(Theme.SPORT))
+        meetingAdapter4.submitList(mainViewModel.filterMeetingByTheme(Theme.CULTURE))
     }
 
     // Click listener implementation

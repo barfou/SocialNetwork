@@ -1,9 +1,14 @@
 package fr.barfou.socialnetwork.data.model
 
+import com.google.firebase.database.Exclude
+
 data class Meeting(
         var firebaseId: String,
         var userId: String,
-        var themeId: String,
+        var typeId: String,
+        @set:Exclude @get:Exclude
+        var type: String,
+        var theme: Theme,
         var name: String,
         var dateCreation: String,
         var latitude: Double,
