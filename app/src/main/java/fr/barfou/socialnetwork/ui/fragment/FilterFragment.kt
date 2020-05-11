@@ -15,6 +15,7 @@ import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.MeetingAdapterFilter
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
+import fr.barfou.socialnetwork.ui.utils.hide
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_filter.*
 
@@ -72,10 +73,11 @@ class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeLi
     }
 
     override fun onSearchValueChange(newText: String) {
-        TODO("Not yet implemented")
+        //
     }
 
     private fun loadAdapter() {
+        progress_bar.hide()
         meetingAdapterFilter.submitList(mainViewModel.listMeetings)
     }
 

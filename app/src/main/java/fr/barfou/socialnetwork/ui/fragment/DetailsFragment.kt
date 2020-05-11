@@ -1,18 +1,23 @@
 package fr.barfou.socialnetwork.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.UserAdapter
+import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.details_fragment.*
 
 class DetailsFragment : Fragment() {
 
+    private lateinit var mainViewModel: MainViewModel
     private lateinit var userAdapter: UserAdapter
 
     private lateinit var userId: String
@@ -20,8 +25,8 @@ class DetailsFragment : Fragment() {
     private lateinit var dateEvent: String
     private lateinit var name: String
     private lateinit var type: String
-    private lateinit var latitude: String
-    private lateinit var longitude: String
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
     private lateinit var details: String
 
     companion object {
@@ -37,14 +42,16 @@ class DetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        activity?.run {
+            mainViewModel = ViewModelProvider(this, MainViewModel).get()
+        } ?: throw IllegalStateException("Invalid Activity")
         userId = arguments?.getString(USER_ID_KEY) ?: throw IllegalStateException("No ID found")
         datePost = arguments?.getString(DATE_POST_KEY) ?: throw IllegalStateException("No Date found")
         dateEvent = arguments?.getString(DATE_EVENT_KEY) ?: throw IllegalStateException("No Date found")
         name = arguments?.getString(NAME_KEY) ?: throw IllegalStateException("No Name found")
         type = arguments?.getString(TYPE_KEY) ?: throw IllegalStateException("No Type found")
-        latitude = arguments?.getString(LATITUDE_KEY) ?: throw IllegalStateException("No Latitude found")
-        longitude = arguments?.getString(LONGITUDE_KEY) ?: throw IllegalStateException("No Longitude found")
+        latitude = arguments?.getDouble(LATITUDE_KEY) ?: throw IllegalStateException("No Latitude found")
+        longitude = arguments?.getDouble(LONGITUDE_KEY) ?: throw IllegalStateException("No Longitude found")
         details = arguments?.getString(DETAILS_KEY) ?: throw IllegalStateException("No Details found")
     }
 
@@ -70,8 +77,18 @@ class DetailsFragment : Fragment() {
         loadAdapter()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun loadData() {
-
+        try {
+            mainViewModel.getUserById(userId)?.run { tv_username.text = this.firstName + " " + this.lastName }
+            tv_date_post.text = datePost
+            tv_meeting_name.text = name
+            tv_location.text = "$latitude $longitude"
+            tv_date_meeting.text = dateEvent
+            tv_details_meeting.text = details
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun setupAdapter() {
@@ -83,7 +100,7 @@ class DetailsFragment : Fragment() {
     }
 
     private fun customizeImageView() {
-        /*when (model.type) {
+        when (type) {
             "Karaoké" -> image_meeting.setImageResource(R.drawable.karaoke)
             "Pièce de Théâtre" -> image_meeting.setImageResource(R.drawable.theatre)
             "Exposition" -> image_meeting.setImageResource(R.drawable.exposition)
@@ -98,7 +115,7 @@ class DetailsFragment : Fragment() {
             "Accrobranche" -> image_meeting.setImageResource(R.drawable.accrobranche)
             "Bowling" -> image_meeting.setImageResource(R.drawable.bowling)
             "Escalade" -> image_meeting.setImageResource(R.drawable.escalade)
-        }*/
+        }
     }
 
     private fun loadAdapter() {

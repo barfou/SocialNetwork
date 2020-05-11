@@ -26,6 +26,21 @@ open class MainViewModel(
     var listUsers = mutableListOf<User>()
     var listTypeMeeting = mutableListOf<TypeMeeting>()
 
+    fun getUserById(firebaseId: String): User? {
+        var found = false
+        var i = 0
+        while (!found && i < listUsers.size) {
+            if (listUsers[i].firebaseId == firebaseId)
+                found = true
+            else
+                i++
+        }
+        return if (found)
+            listUsers[i]
+        else
+            null
+    }
+
     fun filterMeetingByTheme(theme: Theme): MutableList<Meeting> {
         return when (theme) {
             Theme.CULTURE -> listMeetings.filter { it.theme == Theme.CULTURE }.toMutableList()
