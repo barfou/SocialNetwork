@@ -5,15 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.Meeting
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.MeetingAdapter
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
+import fr.barfou.socialnetwork.ui.utils.hide
+import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.home_fragment.*
 
 class HomeFragment : Fragment(), OnMeetingClickListener {
+
+    private lateinit var mainViewModel: MainViewModel
 
     private lateinit var meetingAdapter: MeetingAdapter
     private lateinit var meetingAdapter2: MeetingAdapter
@@ -22,12 +28,15 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activity?.run {
+            mainViewModel = ViewModelProvider(this, MainViewModel).get()
+        } ?: throw IllegalStateException("Invalid Activity")
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.home_fragment, container, false)
     }
@@ -40,6 +49,16 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
             this.setDisplayHomeAsUpEnabled(false)
         }
 
+        setupRecyclerviews()
+        mainViewModel.retrieveData {
+            if (it) {
+                loadAdapters()
+                progress_bar.hide()
+            }
+        }
+    }
+
+    private fun setupRecyclerviews() {
         meetingAdapter = MeetingAdapter(this)
         recycler_view_1.apply {
             adapter = meetingAdapter
@@ -60,21 +79,13 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
             adapter = meetingAdapter4
             if (itemDecorationCount == 0) addItemDecoration(MeetingAdapter.OffsetDecoration())
         }
-        loadAdapter()
     }
 
-    private fun loadAdapter() {
-        var listMeeting = mutableListOf<Meeting>()
-        listMeeting.add(Meeting("1", "1", "1", "Bowling", "22/08/2088", 0.0, 0.0, ""))
-        listMeeting.add(Meeting("1", "1", "1", "Plage", "19/03/2020", 0.0, 0.0, ""))
-        listMeeting.add(Meeting("1", "1", "1", "Karting", "14/05/2021", 0.0, 0.0, ""))
-        listMeeting.add(Meeting("1", "1", "1", "Escalade", "22/01/2010", 0.0, 0.0, ""))
-        listMeeting.add(Meeting("1", "1", "1", "Chess-Boxing", "22/08/2088", 0.0, 0.0, ""))
-        listMeeting.add(Meeting("1", "1", "1", "Lancer de nain", "14/04/2018", 0.0, 0.0, ""))
-        meetingAdapter.submitList(listMeeting)
-        meetingAdapter2.submitList(listMeeting)
-        meetingAdapter3.submitList(listMeeting)
-        meetingAdapter4.submitList(listMeeting)
+    private fun loadAdapters() {
+        meetingAdapter.submitList(mainViewModel.listMeetings)
+        meetingAdapter2.submitList(mainViewModel.listMeetings)
+        meetingAdapter3.submitList(mainViewModel.listMeetings)
+        meetingAdapter4.submitList(mainViewModel.listMeetings)
     }
 
     // Click listener implementation
