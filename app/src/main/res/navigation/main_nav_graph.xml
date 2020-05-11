@@ -30,6 +30,17 @@
         android:id="@+id/profil_fragment"
         android:name="fr.barfou.socialnetwork.ui.fragment.ProfilFragment"
         android:label="profil_fragment"
-        tools:layout="@layout/fragment_profil"/>
+        tools:layout="@layout/fragment_profil">
+        <action
+            android:id="@+id/action_profil_fragment_to_modify_profil_fragment"
+            app:destination="@id/modify_profil_fragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/modify_profil_fragment"
+        android:name="fr.barfou.socialnetwork.ui.fragment.ModifyProfilFragment"
+        android:label="modify_profil_fragment"
+        tools:layout="@layout/fragment_modify_profil"/>
 
 </navigation>

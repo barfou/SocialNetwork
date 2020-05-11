@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import fr.barfou.socialnetwork.ui.activity.LoginActivity
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.ui.adapter.TrophyAdapter
@@ -26,7 +27,7 @@ class ProfilFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as? LoginActivity)?.supportActionBar?.apply {
-            this.setTitle(R.string.app_name)
+            this.setTitle(R.string.title_fragment_profil)
             this.setDisplayHomeAsUpEnabled(false)
         }
 
@@ -45,6 +46,12 @@ class ProfilFragment: Fragment() {
         listTrophy.add("11 Mai 2020")
 
         trophyAdapter.submitList(listTrophy)
+
+        btnNavTest.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_profil_fragment_to_modify_profil_fragment
+            )
+        }
 
 
         /*tvShowAllTrophys.setOnClickListener {
