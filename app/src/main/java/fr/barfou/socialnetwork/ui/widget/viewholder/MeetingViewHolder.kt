@@ -16,6 +16,23 @@ class MeetingViewHolder private constructor(itemView: View) : RecyclerView.ViewH
             this.setOnClickListener { onClick(it, model) }
             tv_name.text = model.name
             tv_date.text = model.dateCreation
+
+            when (model.type) {
+                "Karaoké" -> image_view.setImageResource(R.drawable.karaoke)
+                "Pièce de Théâtre" -> image_view.setImageResource(R.drawable.theatre)
+                "Exposition" -> image_view.setImageResource(R.drawable.exposition)
+                "Visite Touristique" -> image_view.setImageResource(R.drawable.visite_touristique)
+                "Concert" -> image_view.setImageResource(R.drawable.concert)
+                "Dégustation" -> image_view.setImageResource(R.drawable.degustation)
+                "Squash" -> image_view.setImageResource(R.drawable.squash)
+                "Karting" -> image_view.setImageResource(R.drawable.carting)
+                "Parapente" -> image_view.setImageResource(R.drawable.parapente)
+                "Course" -> image_view.setImageResource(R.drawable.trail)
+                "Paint Ball" -> image_view.setImageResource(R.drawable.paintball)
+                "Accrobranche" -> image_view.setImageResource(R.drawable.accrobranche)
+                "Bowling" -> image_view.setImageResource(R.drawable.bowling)
+                "Escalade" -> image_view.setImageResource(R.drawable.escalade)
+            }
         }
     }
 

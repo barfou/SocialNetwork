@@ -21,6 +21,23 @@ class FilterMeetingViewHolder private constructor(itemView: View) : RecyclerView
             tv_date_post.text = "date_poste_test"
             tv_name.text = model.name
             tv_date.text = model.dateCreation
+
+            when (model.type) {
+                "Karaoké" -> image_view_filter.setImageResource(R.drawable.karaoke)
+                "Pièce de Théâtre" -> image_view_filter.setImageResource(R.drawable.theatre)
+                "Exposition" -> image_view_filter.setImageResource(R.drawable.exposition)
+                "Visite Touristique" -> image_view_filter.setImageResource(R.drawable.visite_touristique)
+                "Concert" -> image_view_filter.setImageResource(R.drawable.concert)
+                "Dégustation" -> image_view_filter.setImageResource(R.drawable.degustation)
+                "Squash" -> image_view_filter.setImageResource(R.drawable.squash)
+                "Karting" -> image_view_filter.setImageResource(R.drawable.carting)
+                "Parapente" -> image_view_filter.setImageResource(R.drawable.parapente)
+                "Course" -> image_view_filter.setImageResource(R.drawable.trail)
+                "Paint Ball" -> image_view_filter.setImageResource(R.drawable.paintball)
+                "Accrobranche" -> image_view_filter.setImageResource(R.drawable.accrobranche)
+                "Bowling" -> image_view_filter.setImageResource(R.drawable.bowling)
+                "Escalade" -> image_view_filter.setImageResource(R.drawable.escalade)
+            }
         }
     }
 

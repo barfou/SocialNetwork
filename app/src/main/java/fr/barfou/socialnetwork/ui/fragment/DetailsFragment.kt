@@ -35,12 +35,32 @@ class DetailsFragment : Fragment() {
             this.setDisplayHomeAsUpEnabled(false)
         }
 
+        customizeImageView()
         userAdapter = UserAdapter()
         recycler_view.apply {
             adapter = userAdapter
             if (itemDecorationCount == 0) addItemDecoration(UserAdapter.OffsetDecoration())
         }
         loadAdapter()
+    }
+
+    private fun customizeImageView() {
+        when (model.type) {
+            "Karaoké" -> image_meeting.setImageResource(R.drawable.karaoke)
+            "Pièce de Théâtre" -> image_meeting.setImageResource(R.drawable.theatre)
+            "Exposition" -> image_meeting.setImageResource(R.drawable.exposition)
+            "Visite Touristique" -> image_meeting.setImageResource(R.drawable.visite_touristique)
+            "Concert" -> image_meeting.setImageResource(R.drawable.concert)
+            "Dégustation" -> image_meeting.setImageResource(R.drawable.degustation)
+            "Squash" -> image_meeting.setImageResource(R.drawable.squash)
+            "Karting" -> image_meeting.setImageResource(R.drawable.carting)
+            "Parapente" -> image_meeting.setImageResource(R.drawable.parapente)
+            "Course" -> image_meeting.setImageResource(R.drawable.trail)
+            "Paint Ball" -> image_meeting.setImageResource(R.drawable.paintball)
+            "Accrobranche" -> image_meeting.setImageResource(R.drawable.accrobranche)
+            "Bowling" -> image_meeting.setImageResource(R.drawable.bowling)
+            "Escalade" -> image_meeting.setImageResource(R.drawable.escalade)
+        }
     }
 
     private fun loadAdapter() {
