@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.navigation.findNavController
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -16,22 +18,26 @@ import fr.barfou.socialnetwork.ui.fragment.FilterFragment
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import fr.barfou.socialnetwork.ui.utils.changeToolbarFont
 import fr.barfou.socialnetwork.ui.utils.hideKeyboard
+import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var mainViewModel: MainViewModel
     enum class Mode { HOMEPAGE, FILTER }
 
     companion object {
         var mode: Mode = Mode.HOMEPAGE
+        var userId = ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mainViewModel = ViewModelProvider(this, MainViewModel).get()
         setContentView(R.layout.activity_main)
         initToolBar()
-        //testFirebase()
+        userId = intent.getStringExtra("userId") ?: ""
     }
 
     override fun onNavigateUp(): Boolean {

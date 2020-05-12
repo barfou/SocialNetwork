@@ -1,5 +1,6 @@
 package fr.barfou.socialnetwork.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +13,11 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import fr.barfou.socialnetwork.ui.activity.LoginActivity
 import fr.barfou.socialnetwork.R
+import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 
-class LoginFragment: Fragment() {
+class LoginFragment : Fragment() {
 
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var auth: FirebaseAuth
@@ -28,9 +30,9 @@ class LoginFragment: Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
@@ -50,20 +52,24 @@ class LoginFragment: Fragment() {
                 auth.signInWithEmailAndPassword(etLogin.text.toString(), etPassword.text.toString())
                         .addOnCompleteListener(this.requireActivity()) { task ->
                             if (task.isSuccessful) {
-
+                                val user = auth.currentUser
+                                user?.run {
+                                    val intent = Intent(requireContext(), MainActivity::class.java)
+                                    intent.putExtra("userId", user.uid)
+                                    startActivity(intent)
+                                }
                             } else {
                                 Toast.makeText(requireContext(), "Authentication failed.", Toast.LENGTH_SHORT).show()
                             }
                         }
-            }
-            else {
+            } else {
                 Toast.makeText(requireContext(), "Saisie incorrecte.", Toast.LENGTH_SHORT).show()
             }
         }
 
         btnRegister.setOnClickListener {
             findNavController().navigate(
-                R.id.action_login_fragment_to_register_fragment
+                    R.id.action_login_fragment_to_register_fragment
             )
         }
     }

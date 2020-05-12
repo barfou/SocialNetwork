@@ -16,6 +16,8 @@ import java.lang.IllegalStateException
 
 open class MainViewModel(
 ) : ViewModel() {
+    // Current User
+    var currentUser: User? = null
 
     // Firebase Refs
     private val firebaseRef = Firebase.database.reference
@@ -28,12 +30,37 @@ open class MainViewModel(
     var listUsers = mutableListOf<User>()
     var listTypeMeeting = mutableListOf<TypeMeeting>()
 
+    fun updateCurrentUser(userId: String) {
+        usersRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                Log.d("FirebaseError", error.message)
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                try {
+                    var user = dataSnapshot.value as HashMap<*, *>
+                    val firebaseId = user["firebaseId"] as String
+                    val mail = user["mail"] as String
+                    val pseudo = user["pseudo"] as String
+                    val imageUrl = user["imageUrl"] as String
+                    val dateInscription = user["dateInscription"] as String
+                    val about = user["about"] as String
+                    val latitude = user["latitude"] as String
+                    val longitude = user["longitude"] as String
+                    currentUser = User(firebaseId, mail, pseudo, imageUrl, dateInscription, about, latitude, longitude)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        })
+    }
+
     fun getUserById(userId: String, onSuccess: OnSuccess<User>) {
         viewModelScope.launch {
             var found = false
             var i = 0
             while (!found && i < listUsers.size) {
-                if (listUsers[i].pseudo == userId)
+                if (listUsers[i].firebaseId == userId)
                     found = true
                 else
                     i++
@@ -63,15 +90,15 @@ open class MainViewModel(
 
     fun retrieveData(onSuccess: OnSuccess<Boolean>) {
         viewModelScope.launch {
-            firebaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            firebaseRef.child("isInit").addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                     Log.d("FirebaseError", error.message)
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     try {
-                        val taskMap = dataSnapshot.value as? HashMap<*, *>
-                        if (taskMap.isNullOrEmpty())
+                        val isInit = dataSnapshot.value as Boolean
+                        if (!isInit)
                             initData().run(onSuccess)
                         else {
                             loadData {
@@ -91,6 +118,7 @@ open class MainViewModel(
             initUsers()
             initTypeMeetings()
             initMeetings()
+            firebaseRef.child("isInit").setValue(true)
             true
         } catch (e: Exception) {
             e.printStackTrace()
@@ -111,22 +139,22 @@ open class MainViewModel(
                     val data = dataSnapshot.value as HashMap<*, *>
 
                     // Get Users
-                    val users = data["Users"] as HashMap<*,*>
+                    val users = data["Users"] as HashMap<*, *>
                     users?.map { entry ->
                         val user = entry.value as HashMap<*, *>
                         val firebaseId = entry.key as String
-                        val email = user["email"] as String
+                        val mail = user["mail"] as String
                         val pseudo = user["pseudo"] as String
                         val imageUrl = user["imageUrl"] as String
                         val dateInscription = user["dateInscription"] as String
                         val about = user["about"] as String
                         val latitude = user["latitude"] as String
                         val longitude = user["longitude"] as String
-                        listUsers.add(User(firebaseId, email, pseudo, imageUrl, dateInscription, about, latitude, longitude))
+                        listUsers.add(User(firebaseId, mail, pseudo, imageUrl, dateInscription, about, latitude, longitude))
                     }
 
                     // Get Type Meeting
-                    val typesMeetings = data["TypesMeeting"] as HashMap<*,*>
+                    val typesMeetings = data["TypesMeeting"] as HashMap<*, *>
                     typesMeetings?.map { entry ->
                         val typeMeeting = entry.value as HashMap<*, *>
                         val firebaseId = entry.key as String
@@ -136,7 +164,7 @@ open class MainViewModel(
                     }
 
                     // Get Meetings
-                    val meetings = data["Meetings"] as HashMap<*,*>
+                    val meetings = data["Meetings"] as HashMap<*, *>
                     meetings?.map { entry ->
                         val meeting = entry.value as HashMap<*, *>
                         val firebaseId = entry.key as String

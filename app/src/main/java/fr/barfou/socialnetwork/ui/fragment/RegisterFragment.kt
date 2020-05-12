@@ -1,5 +1,6 @@
 package fr.barfou.socialnetwork.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import fr.barfou.socialnetwork.ui.activity.LoginActivity
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.User
+import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.utils.getCurrentDate
 import fr.barfou.socialnetwork.ui.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -68,6 +70,9 @@ class RegisterFragment : Fragment() {
                                 val user = auth.currentUser
                                 user?.run {
                                     loginViewModel.insertUserDetails(User(user!!.uid, etMail.text.toString(), etLogin.text.toString(), "", getCurrentDate(), "", "", ""))
+                                    val intent = Intent(requireContext(), MainActivity::class.java)
+                                    intent.putExtra("userId", user.uid)
+                                    startActivity(intent)
                                 }
 
                             } else {

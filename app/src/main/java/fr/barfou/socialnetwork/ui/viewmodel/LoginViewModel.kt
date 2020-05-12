@@ -23,7 +23,7 @@ open class LoginViewModel(
 
     // No password here
     fun insertUserDetails(user: User) {
-        usersRef.child(user.pseudo).setValue(user)
+        usersRef.child(user.firebaseId).setValue(user)
     }
 
     companion object Factory : ViewModelProvider.Factory {

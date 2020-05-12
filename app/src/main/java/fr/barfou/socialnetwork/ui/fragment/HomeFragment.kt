@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -54,8 +55,12 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
         setupRecyclerviews()
         mainViewModel.retrieveData {
             if (it) {
+                mainViewModel.updateCurrentUser(MainActivity.userId)
                 loadAdapters()
                 progress_bar.hide()
+            } else {
+                progress_bar.hide()
+                Toast.makeText(requireContext(), "Problem while loading data.", Toast.LENGTH_SHORT).show()
             }
         }
     }
