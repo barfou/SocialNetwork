@@ -99,23 +99,8 @@ open class MainViewModel(
     }
 
     private fun loadData(onSuccess: OnSuccess<Boolean>) {
-        loadUsers { usersOk ->
-            if (usersOk) {
-                loadTypesMeeting { typeMeetingsOk ->
-                    if (typeMeetingsOk) {
-                        loadMeetings { meetingsOk ->
-                            if (meetingsOk) onSuccess(true)
-                            else onSuccess(false)
-                        }
-                    } else onSuccess(false)
-                }
-            } else onSuccess(false)
-        }
-    }
 
-    private fun loadUsers(onSuccess: OnSuccess<Boolean>) {
-
-        usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        firebaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
                 Log.d("FirebaseError", error.message)
                 onSuccess(false)
@@ -123,8 +108,11 @@ open class MainViewModel(
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 try {
-                    val userMap = dataSnapshot.value as? HashMap<*, *>
-                    userMap?.map { entry ->
+                    val data = dataSnapshot.value as HashMap<*, *>
+
+                    // Get Users
+                    val users = data["Users"] as HashMap<*,*>
+                    users?.map { entry ->
                         val user = entry.value as HashMap<*, *>
                         val firebaseId = entry.key as String
                         val firstName = user["firstName"] as String
@@ -136,56 +124,20 @@ open class MainViewModel(
                         val longitude = user["longitude"] as String
                         listUsers.add(User(firebaseId, firstName, lastName, imageUrl, dateInscription, about, latitude, longitude))
                     }
-                    onSuccess(true)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    onSuccess(false)
-                }
-            }
-        })
-    }
 
-    private fun loadTypesMeeting(onSuccess: OnSuccess<Boolean>) {
-
-        typeMetingsRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("FirebaseError", error.message)
-                onSuccess(false)
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                try {
-                    val typeMeetingMap = dataSnapshot.value as? HashMap<*, *>
-                    typeMeetingMap?.map { entry ->
+                    // Get Type Meeting
+                    val typesMeetings = data["TypesMeeting"] as HashMap<*,*>
+                    typesMeetings?.map { entry ->
                         val typeMeeting = entry.value as HashMap<*, *>
                         val firebaseId = entry.key as String
                         val name = typeMeeting["name"] as String
                         val theme = typeMeeting["theme"] as String
                         listTypeMeeting.add(TypeMeeting(firebaseId, name, theme))
                     }
-                    onSuccess(true)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    onSuccess(false)
-                }
-            }
-        })
-    }
 
-    private fun loadMeetings(onSuccess: OnSuccess<Boolean>) {
-
-        meetingsRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("FirebaseError", error.message)
-                onSuccess(false)
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                try {
-                    val meetingsMap = dataSnapshot.value as? HashMap<*, *>
-                    meetingsMap?.map { entry ->
-
+                    // Get Meetings
+                    val meetings = data["Meetings"] as HashMap<*,*>
+                    meetings?.map { entry ->
                         val meeting = entry.value as HashMap<*, *>
                         val firebaseId = entry.key as String
                         val userId = meeting["userId"] as String
@@ -201,6 +153,7 @@ open class MainViewModel(
                         val details = meeting["details"] as String
                         listMeetings.add(Meeting(firebaseId, userId, typeId, type, getTheme(theme), name, dateCreation, dateEvent, latitude, longitude, imageUrl, details))
                     }
+
                     onSuccess(true)
                 } catch (e: Exception) {
                     e.printStackTrace()

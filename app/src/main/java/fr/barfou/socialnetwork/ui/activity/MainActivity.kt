@@ -62,11 +62,13 @@ class MainActivity : AppCompatActivity() {
 
             override fun onQueryTextSubmit(query: String): Boolean {
                 main_root_layout.hideKeyboard()
-                findNavController(R.id.main_fragment_container).navigate(
-                        R.id.action_home_fragment_to_filter_fragment,
-                        bundleOf(FilterFragment.SEARCH_VALUE_KEY to query)
-                )
-                mode = Mode.FILTER
+                if (mode == Mode.HOMEPAGE) {
+                    findNavController(R.id.main_fragment_container).navigate(
+                            R.id.action_home_fragment_to_filter_fragment,
+                            bundleOf(FilterFragment.SEARCH_VALUE_KEY to query)
+                    )
+                    mode = Mode.FILTER
+                }
                 return true
             }
         })
