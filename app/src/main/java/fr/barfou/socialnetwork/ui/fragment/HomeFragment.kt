@@ -86,8 +86,12 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
     private fun loadAdapters() {
         meetingAdapter.submitList(mainViewModel.listMeetings)
         meetingAdapter2.submitList(mainViewModel.listMeetings)
-        meetingAdapter3.submitList(mainViewModel.filterMeetingByTheme(Theme.SPORT))
-        meetingAdapter4.submitList(mainViewModel.filterMeetingByTheme(Theme.CULTURE))
+        mainViewModel.filterMeetingByTheme(Theme.SPORT) {
+            meetingAdapter3.submitList(it)
+        }
+        mainViewModel.filterMeetingByTheme(Theme.CULTURE) {
+            meetingAdapter4.submitList(it)
+        }
     }
 
     // Click listener implementation

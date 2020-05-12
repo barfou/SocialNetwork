@@ -15,6 +15,7 @@ import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.ui.fragment.FilterFragment
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import fr.barfou.socialnetwork.ui.utils.changeToolbarFont
+import fr.barfou.socialnetwork.ui.utils.hideKeyboard
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextSubmit(query: String): Boolean {
+                main_root_layout.hideKeyboard()
                 findNavController(R.id.main_fragment_container).navigate(
                         R.id.action_home_fragment_to_filter_fragment,
                         bundleOf(FilterFragment.SEARCH_VALUE_KEY to query)

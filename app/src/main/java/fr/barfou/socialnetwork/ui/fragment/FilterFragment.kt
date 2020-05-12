@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_filter.*
 class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeListener {
 
     private lateinit var meetingAdapterFilter: MeetingAdapterFilter
-    private lateinit var searchValue: String
+    private lateinit var initialSearchValue: String
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +31,7 @@ class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeLi
             mainViewModel = ViewModelProvider(this, MainViewModel).get()
         } ?: throw IllegalStateException("Invalid Activity")
 
-        searchValue = arguments?.getString(SEARCH_VALUE_KEY) ?: throw IllegalStateException("No Value found")
+        initialSearchValue = arguments?.getString(SEARCH_VALUE_KEY) ?: throw IllegalStateException("No Value found")
     }
 
     override fun onCreateView(
@@ -73,12 +73,17 @@ class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeLi
     }
 
     override fun onSearchValueChange(newText: String) {
-        //
+        mainViewModel.filterMeetingByName(newText) {
+            meetingAdapterFilter.submitList(it)
+        }
     }
 
     private fun loadAdapter() {
-        progress_bar.hide()
-        meetingAdapterFilter.submitList(mainViewModel.listMeetings)
+
+        mainViewModel.filterMeetingByName(initialSearchValue) {
+            progress_bar.hide()
+            meetingAdapterFilter.submitList(it)
+        }
     }
 
     companion object {

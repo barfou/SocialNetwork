@@ -12,8 +12,8 @@ data class Meeting(
         var name: String,
         var dateCreation: String,
         var dateEvent: String,
-        var latitude: Double,
-        var longitude: Double,
+        var latitude: String,
+        var longitude: String,
         var imageUrl: String,
         var details: String = ""
 )

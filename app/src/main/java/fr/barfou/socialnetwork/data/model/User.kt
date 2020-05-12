@@ -7,6 +7,6 @@ data class User(
         var imageUrl: String,
         var dateInscription: String,
         var about: String,
-        var latitude: Double,
-        var longitude: Double
+        var latitude: String,
+        var longitude: String
 )
