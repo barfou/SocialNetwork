@@ -81,7 +81,7 @@ class DetailsFragment : Fragment() {
     private fun loadData() {
         try {
             mainViewModel.getUserById(userId) { user ->
-                tv_username.text = user.firstName + " " + user.lastName
+                tv_username.text = user.pseudo
             }
             tv_date_post.text = datePost
             tv_meeting_name.text = name
@@ -122,9 +122,9 @@ class DetailsFragment : Fragment() {
 
     private fun loadAdapter() {
         var list = mutableListOf<User>()
-        list.add(User("1", "Jack", "The Ripper", "", "12/05/2020", "Je m'appelle Jack", "0.0", "0.0"))
-        list.add(User("1", "John", "Doe", "", "12/05/2020", "Je m'appelle John", "0.0", "0.0"))
-        list.add(User("1", "Kurt", "Cobain", "", "12/05/2020", "Je m'appelle Kurt", "0.0", "0.0"))
+        list.add(User("", "", "Jack The Ripper", "", "12/05/2020", "Je m'appelle Jack", "0.0", "0.0"))
+        list.add(User("", "", "John Doe", "", "12/05/2020", "Je m'appelle John", "0.0", "0.0"))
+        list.add(User("", "", "Kurt Cobain", "", "12/05/2020", "Je m'appelle Kurt", "0.0", "0.0"))
         userAdapter.submitList(list)
     }
 }
