@@ -48,8 +48,8 @@ class LoginFragment : Fragment() {
         }
 
         btnLogin.setOnClickListener {
-            if (!etLogin.text.isNullOrBlank() && !etPassword.text.isNullOrBlank()) {
-                auth.signInWithEmailAndPassword(etLogin.text.toString(), etPassword.text.toString())
+            if (!etPseudo.text.isNullOrBlank() && !etPassword.text.isNullOrBlank()) {
+                auth.signInWithEmailAndPassword(etPseudo.text.toString(), etPassword.text.toString())
                         .addOnCompleteListener(this.requireActivity()) { task ->
                             if (task.isSuccessful) {
                                 val user = auth.currentUser
