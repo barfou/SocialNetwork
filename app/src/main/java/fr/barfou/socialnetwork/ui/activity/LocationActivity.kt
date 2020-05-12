@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -17,10 +19,17 @@ import com.google.android.gms.location.*
 import fr.barfou.socialnetwork.R
 import kotlinx.android.synthetic.main.activity_location.*
 
+
 class LocationActivity : AppCompatActivity() {
 
     val PERMISSION_ID = 42
+
     lateinit var mFusedLocationClient: FusedLocationProviderClient
+
+    lateinit var geocoder : Geocoder
+
+    lateinit var addresses : List<Address>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location)
@@ -42,7 +51,19 @@ class LocationActivity : AppCompatActivity() {
                     if (location == null) {
                         requestNewLocationData()
                     } else {
-                        tvLocation.text = location.latitude.toString() + " " + location.longitude.toString()
+                        try {
+                            geocoder = Geocoder(this)
+
+                            addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+
+                            val city = addresses[0].locality
+                            val country = addresses[0].countryName
+
+                            tvLatLong.text = location.latitude.toString() + " " + location.longitude.toString()
+                            tvLocation.text = city.toString() + " / " + country.toString()
+                        } catch (e: Exception) {
+                            println(e.toString())
+                        }
                     }
                 }
             } else {
@@ -57,7 +78,7 @@ class LocationActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun requestNewLocationData() {
-        var mLocationRequest = LocationRequest()
+        val mLocationRequest = LocationRequest()
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         mLocationRequest.interval = 0
         mLocationRequest.fastestInterval = 0
@@ -72,13 +93,12 @@ class LocationActivity : AppCompatActivity() {
 
     private val mLocationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
-            var mLastLocation: Location = locationResult.lastLocation
-            tvLocation.text = mLastLocation.latitude.toString() + " " + mLastLocation.longitude.toString()
+            val mLastLocation: Location = locationResult.lastLocation
         }
     }
 
     private fun isLocationEnabled(): Boolean {
-        var locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
         )

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "985122142684-qfus18us3fcne5fhvrn3t6ueb3rhfevq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.barfou.socialnetwork",
+            "certificate_hash": "1cacb6e688dbb1c9411698b8421bff406342b7ac"
+          }
+        },
+        {
           "client_id": "985122142684-g17dj4lud8395j6h2iegq7ivb5k7365m.apps.googleusercontent.com",
           "client_type": 3
         }
