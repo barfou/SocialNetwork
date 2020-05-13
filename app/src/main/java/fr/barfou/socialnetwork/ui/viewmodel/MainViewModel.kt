@@ -34,15 +34,15 @@ open class MainViewModel(
     var listTypeMeeting = mutableListOf<TypeMeeting>()
     var listUserMeetingJoin = mutableListOf<UserMeetingJoin>()
 
-    fun User.getMeetingsJoined(): MutableList<Meeting> {
-        return listUserMeetingJoin.filter { it.userId == this.firebaseId }
+    fun getMeetingsJoined(user: User): MutableList<Meeting> {
+        return listUserMeetingJoin.filter { it.userId == user.firebaseId }
                 .map { it.meetingId }
                 .mapNotNull { getMeetingById(it) }
                 .toMutableList()
     }
 
-    fun Meeting.getSubscribedUsers(): MutableList<User> {
-        return listUserMeetingJoin.filter { it.meetingId == this.firebaseId }
+    fun getSubscribedUsers(meeting: Meeting): MutableList<User> {
+        return listUserMeetingJoin.filter { it.meetingId == meeting.firebaseId }
                 .map { it.userId }
                 .mapNotNull { getUserById(it) }
                 .toMutableList()
@@ -222,6 +222,16 @@ open class MainViewModel(
                         val imageUrl = meeting["imageUrl"] as String
                         val details = meeting["details"] as String
                         listMeetings.add(Meeting(firebaseId, userId, typeId, type, getTheme(theme), name, dateCreation, dateEvent, latitude, longitude, imageUrl, details))
+                    }
+
+                    // GetUserMeetingJoin
+                    val userMeetingJoin = data["UserMeetingJoin"] as HashMap<*, *>
+                    userMeetingJoin?.map { entry ->
+                        val userMeetingJoin = entry.value as HashMap<*, *>
+                        val firebaseId = entry.key as String
+                        val userId = userMeetingJoin["userId"] as String
+                        val meetingId = userMeetingJoin["meetingId"] as String
+                        listUserMeetingJoin.add(UserMeetingJoin(firebaseId, userId, meetingId))
                     }
 
                     storedData = true

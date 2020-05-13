@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
@@ -14,6 +15,7 @@ import androidx.navigation.findNavController
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import fr.barfou.socialnetwork.R
+import fr.barfou.socialnetwork.data.model.Meeting
 import fr.barfou.socialnetwork.ui.fragment.FilterFragment
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import fr.barfou.socialnetwork.ui.utils.changeToolbarFont
@@ -86,6 +88,17 @@ class MainActivity : AppCompatActivity() {
             return@setOnCloseListener false
         }
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.more_item -> {
+                var tot = mainViewModel.listUserMeetingJoin
+                var res = mainViewModel.getMeetingsJoined(mainViewModel.listUsers[0])
+                var str = "UHY"
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun getForegroundFragment(): Fragment? {
