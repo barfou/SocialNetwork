@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
@@ -14,6 +15,8 @@ import androidx.navigation.findNavController
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import fr.barfou.socialnetwork.R
+import fr.barfou.socialnetwork.data.model.Meeting
+import fr.barfou.socialnetwork.data.model.Theme
 import fr.barfou.socialnetwork.ui.fragment.FilterFragment
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import fr.barfou.socialnetwork.ui.utils.changeToolbarFont
@@ -88,6 +91,15 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.more_item -> {
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }*/
+
     private fun getForegroundFragment(): Fragment? {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container)
         return navHostFragment?.childFragmentManager?.fragments?.get(0)
@@ -103,11 +115,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun testFirebase() {
-        val activitiesRef = Firebase.database.reference.child("Activities")
-        var idTask = activitiesRef.push().key!!
-        activitiesRef.child(idTask).setValue(true)
     }
 }

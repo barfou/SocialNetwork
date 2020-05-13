@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -20,6 +21,8 @@ class DetailsFragment : Fragment() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var userAdapter: UserAdapter
 
+    private var joined: Boolean = false
+    private lateinit var meetingId: String
     private lateinit var userId: String
     private lateinit var datePost: String
     private lateinit var dateEvent: String
@@ -30,6 +33,7 @@ class DetailsFragment : Fragment() {
     private lateinit var details: String
 
     companion object {
+        const val MEETING_ID_KEY = "meeting_id_key"
         const val USER_ID_KEY = "user_id_key"
         const val DATE_POST_KEY = "date_post_key"
         const val DATE_EVENT_KEY = "date_event_key"
@@ -45,6 +49,8 @@ class DetailsFragment : Fragment() {
         activity?.run {
             mainViewModel = ViewModelProvider(this, MainViewModel).get()
         } ?: throw IllegalStateException("Invalid Activity")
+        meetingId = arguments?.getString(MEETING_ID_KEY) ?: throw IllegalStateException("No ID found")
+        joined = mainViewModel.isJoined(meetingId)
         userId = arguments?.getString(USER_ID_KEY) ?: throw IllegalStateException("No ID found")
         datePost = arguments?.getString(DATE_POST_KEY) ?: throw IllegalStateException("No Date found")
         dateEvent = arguments?.getString(DATE_EVENT_KEY) ?: throw IllegalStateException("No Date found")
@@ -75,13 +81,32 @@ class DetailsFragment : Fragment() {
         customizeImageView()
         setupAdapter()
         loadAdapter()
+        customizeButton()
+
+        btn_join.setOnClickListener {
+            if (!joined) {
+                mainViewModel.joinMeeting(meetingId) { handleResult(it) }
+            } else {
+                mainViewModel.exitMeeting(meetingId) { handleResult(it) }
+            }
+        }
+    }
+
+    private fun handleResult(result: Boolean) {
+        if (result) {
+            Toast.makeText(requireContext(), "Changement enregistré.", Toast.LENGTH_LONG).show()
+            joined = !joined
+            customizeButton()
+        } else {
+            Toast.makeText(requireContext(), "Un problème a empêché le traitement des données.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private fun loadData() {
         try {
-            mainViewModel.getUserById(userId) { user ->
-                tv_username.text = user.pseudo
+            mainViewModel.getUserById(userId)?.run {
+                tv_username.text = this.pseudo
             }
             tv_date_post.text = datePost
             tv_meeting_name.text = name
@@ -90,6 +115,18 @@ class DetailsFragment : Fragment() {
             tv_details_meeting.text = details
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    private fun customizeButton() {
+        if (joined) {
+            btn_join.setBackgroundResource(R.drawable.rounded_button_quit)
+            btn_join.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_exit, 0, 0, 0)
+            btn_join.text = resources.getString(R.string.quit)
+        } else {
+            btn_join.setBackgroundResource(R.drawable.rounded_button)
+            btn_join.setCompoundDrawablesWithIntrinsicBounds(R.drawable.join, 0, 0, 0)
+            btn_join.text = resources.getString(R.string.join)
         }
     }
 

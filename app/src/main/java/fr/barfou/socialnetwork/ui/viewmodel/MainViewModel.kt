@@ -16,6 +16,8 @@ import java.lang.IllegalStateException
 
 open class MainViewModel(
 ) : ViewModel() {
+    var storedData = false
+
     // Current User
     var currentUser: User? = null
 
@@ -23,51 +25,146 @@ open class MainViewModel(
     private val firebaseRef = Firebase.database.reference
     private val meetingsRef = firebaseRef.child("Meetings")
     private val usersRef = firebaseRef.child("Users")
-    private val typeMetingsRef = firebaseRef.child("TypesMeeting")
+    private val typeMeetingsRef = firebaseRef.child("TypesMeeting")
+    private val userMeetingJoinRef = firebaseRef.child("UserMeetingJoin")
 
     // Data
     var listMeetings = mutableListOf<Meeting>()
     var listUsers = mutableListOf<User>()
     var listTypeMeeting = mutableListOf<TypeMeeting>()
+    var listUserMeetingJoin = mutableListOf<UserMeetingJoin>()
 
-    fun updateCurrentUser(userId: String) {
-        usersRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("FirebaseError", error.message)
-            }
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                try {
-                    var user = dataSnapshot.value as HashMap<*, *>
-                    val firebaseId = user["firebaseId"] as String
-                    val mail = user["mail"] as String
-                    val pseudo = user["pseudo"] as String
-                    val imageUrl = user["imageUrl"] as String
-                    val dateInscription = user["dateInscription"] as String
-                    val about = user["about"] as String
-                    val latitude = user["latitude"] as String
-                    val longitude = user["longitude"] as String
-                    currentUser = User(firebaseId, mail, pseudo, imageUrl, dateInscription, about, latitude, longitude)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-        })
-    }
-
-    fun getUserById(userId: String, onSuccess: OnSuccess<User>) {
-        viewModelScope.launch {
+    fun isJoined(meetingId: String): Boolean {
+        return if (currentUser != null) {
             var found = false
             var i = 0
-            while (!found && i < listUsers.size) {
-                if (listUsers[i].firebaseId == userId)
+            while (!found && i < listUserMeetingJoin.size) {
+                if (listUserMeetingJoin[i].userId == currentUser!!.firebaseId && listUserMeetingJoin[i].meetingId == meetingId)
                     found = true
                 else
                     i++
             }
-            if (found)
-                onSuccess(listUsers[i])
+            found
+        } else {
+            false
         }
+    }
+
+    fun exitMeeting(meetingId: String, onSuccess: OnSuccess<Boolean>) {
+        if (currentUser != null) {
+            val res = getUserMeetingJoin(currentUser!!.firebaseId, meetingId)
+            if (res != null) {
+                listUserMeetingJoin.removeAt(res.second)
+                userMeetingJoinRef.child(res.first.firebaseId).removeValue()
+                onSuccess(true)
+            } else
+              onSuccess(false)
+        } else
+            onSuccess(false)
+    }
+
+    fun joinMeeting(meetingId: String, onSuccess: OnSuccess<Boolean>) {
+        try {
+            if (currentUser != null) {
+                var userMeetingJoin = UserMeetingJoin("", currentUser!!.firebaseId, meetingId)
+                listUserMeetingJoin.add(userMeetingJoin)
+                pushUserMeetingJoin(userMeetingJoin)
+                onSuccess(true)
+            } else {
+                onSuccess(false)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            onSuccess(false)
+        }
+    }
+
+    fun getMeetingsJoined(user: User): MutableList<Meeting> {
+        return listUserMeetingJoin.filter { it.userId == user.firebaseId }
+                .map { it.meetingId }
+                .mapNotNull { getMeetingById(it) }
+                .toMutableList()
+    }
+
+    fun getSubscribedUsers(meeting: Meeting): MutableList<User> {
+        return listUserMeetingJoin.filter { it.meetingId == meeting.firebaseId }
+                .map { it.userId }
+                .mapNotNull { getUserById(it) }
+                .toMutableList()
+    }
+
+    // Return Element & Position
+    private fun getUserMeetingJoin(userId: String, meetingId: String): Pair<UserMeetingJoin, Int>? {
+        var found = false
+        var i = 0
+        while (!found && i < listUserMeetingJoin.size) {
+            if (listUserMeetingJoin[i].userId == currentUser!!.firebaseId && listUserMeetingJoin[i].meetingId == meetingId)
+                found = true
+            else
+                i++
+        }
+        return if (found)
+            Pair(listUserMeetingJoin[i], i)
+        else
+            null
+    }
+
+    private fun getMeetingById(meetingId: String): Meeting? {
+        var found = false
+        var i = 0
+        while (!found && i < listMeetings.size) {
+            if (listMeetings[i].firebaseId == meetingId)
+                found = true
+            else
+                i++
+        }
+        return if (found)
+            listMeetings[i]
+        else
+            null
+    }
+
+    fun updateCurrentUser(userId: String) {
+
+        if (currentUser == null) {
+            usersRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d("FirebaseError", error.message)
+                }
+
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    try {
+                        var user = dataSnapshot.value as HashMap<*, *>
+                        val firebaseId = user["firebaseId"] as String
+                        val mail = user["mail"] as String
+                        val pseudo = user["pseudo"] as String
+                        val imageUrl = user["imageUrl"] as String
+                        val dateInscription = user["dateInscription"] as String
+                        val about = user["about"] as String
+                        val latitude = user["latitude"] as String
+                        val longitude = user["longitude"] as String
+                        currentUser = User(firebaseId, mail, pseudo, imageUrl, dateInscription, about, latitude, longitude)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            })
+        }
+    }
+
+    fun getUserById(userId: String): User? {
+        var found = false
+        var i = 0
+        while (!found && i < listUsers.size) {
+            if (listUsers[i].firebaseId == userId)
+                found = true
+            else
+                i++
+        }
+        return if (found)
+            listUsers[i]
+        else
+            null
     }
 
     fun filterMeetingByName(name: String, onSuccess: OnSuccess<List<Meeting>>) {
@@ -90,26 +187,30 @@ open class MainViewModel(
 
     fun retrieveData(onSuccess: OnSuccess<Boolean>) {
         viewModelScope.launch {
-            firebaseRef.child("isInit").addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {
-                    Log.d("FirebaseError", error.message)
-                }
-
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    try {
-                        val isInit = dataSnapshot.value as Boolean
-                        if (!isInit)
-                            initData().run(onSuccess)
-                        else {
-                            loadData {
-                                onSuccess(it)
-                            }
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+            if (!storedData) {
+                firebaseRef.child("isInit").addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.d("FirebaseError", error.message)
                     }
-                }
-            })
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        try {
+                            val isInit = dataSnapshot.value as Boolean
+                            if (!isInit)
+                                initData().run(onSuccess)
+                            else {
+                                loadData {
+                                    onSuccess(it)
+                                }
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                })
+            } else {
+                onSuccess(true)
+            }
         }
     }
 
@@ -118,7 +219,9 @@ open class MainViewModel(
             initUsers()
             initTypeMeetings()
             initMeetings()
+            initUserMeetingJoin()
             firebaseRef.child("isInit").setValue(true)
+            storedData = true
             true
         } catch (e: Exception) {
             e.printStackTrace()
@@ -182,6 +285,17 @@ open class MainViewModel(
                         listMeetings.add(Meeting(firebaseId, userId, typeId, type, getTheme(theme), name, dateCreation, dateEvent, latitude, longitude, imageUrl, details))
                     }
 
+                    // GetUserMeetingJoin
+                    val userMeetingJoin = data["UserMeetingJoin"] as HashMap<*, *>
+                    userMeetingJoin?.map { entry ->
+                        val userMeetingJoin = entry.value as HashMap<*, *>
+                        val firebaseId = entry.key as String
+                        val userId = userMeetingJoin["userId"] as String
+                        val meetingId = userMeetingJoin["meetingId"] as String
+                        listUserMeetingJoin.add(UserMeetingJoin(firebaseId, userId, meetingId))
+                    }
+
+                    storedData = true
                     onSuccess(true)
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -253,6 +367,24 @@ open class MainViewModel(
         }
     }
 
+    private fun initUserMeetingJoin() {
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[0].firebaseId, listMeetings[0].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[0].firebaseId, listMeetings[1].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[0].firebaseId, listMeetings[2].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[0].firebaseId, listMeetings[5].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[1].firebaseId, listMeetings[1].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[1].firebaseId, listMeetings[2].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[1].firebaseId, listMeetings[6].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[1].firebaseId, listMeetings[8].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[2].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[3].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[5].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[7].firebaseId))
+        listUserMeetingJoin.forEach {
+            pushUserMeetingJoin(it)
+        }
+    }
+
     private fun pushUserToFirebase(user: User) {
         val firebaseId = usersRef.push().key!!
         user.firebaseId = firebaseId
@@ -262,13 +394,19 @@ open class MainViewModel(
     private fun pushTypeMeetingToFirebase(typeMeeting: TypeMeeting) {
         val firebaseId = usersRef.push().key!!
         typeMeeting.firebaseId = firebaseId
-        typeMetingsRef.child(firebaseId).setValue(typeMeeting)
+        typeMeetingsRef.child(firebaseId).setValue(typeMeeting)
     }
 
     private fun pushMeetingToFirebase(meeting: Meeting) {
         val firebaseId = usersRef.push().key!!
         meeting.firebaseId = firebaseId
         meetingsRef.child(firebaseId).setValue(meeting)
+    }
+
+    private fun pushUserMeetingJoin(userMeetingJoin: UserMeetingJoin) {
+        val firebaseId = userMeetingJoinRef.push().key!!
+        userMeetingJoin.firebaseId = firebaseId
+        userMeetingJoinRef.child(firebaseId).setValue(userMeetingJoin)
     }
 
     companion object Factory : ViewModelProvider.Factory {

@@ -5,6 +5,7 @@
     <string name="sport">Sport</string>
     <string name="culture">Culture</string>
     <string name="join">Rejoindre</string>
+    <string name="quit">Quitter</string>
     <string name="nb_subscribers">Nombre de participants</string>
     <string name="text_chk_cgu">En cochant, vous acceptez les CGU</string>
     <string name="text_btn_login">Se connecter</string>
