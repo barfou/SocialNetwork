@@ -16,6 +16,8 @@ import java.lang.IllegalStateException
 
 open class MainViewModel(
 ) : ViewModel() {
+    var storedData = false
+
     // Current User
     var currentUser: User? = null
 
@@ -31,28 +33,31 @@ open class MainViewModel(
     var listTypeMeeting = mutableListOf<TypeMeeting>()
 
     fun updateCurrentUser(userId: String) {
-        usersRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                Log.d("FirebaseError", error.message)
-            }
 
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                try {
-                    var user = dataSnapshot.value as HashMap<*, *>
-                    val firebaseId = user["firebaseId"] as String
-                    val mail = user["mail"] as String
-                    val pseudo = user["pseudo"] as String
-                    val imageUrl = user["imageUrl"] as String
-                    val dateInscription = user["dateInscription"] as String
-                    val about = user["about"] as String
-                    val latitude = user["latitude"] as String
-                    val longitude = user["longitude"] as String
-                    currentUser = User(firebaseId, mail, pseudo, imageUrl, dateInscription, about, latitude, longitude)
-                } catch (e: Exception) {
-                    e.printStackTrace()
+        currentUser?.run {
+            usersRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d("FirebaseError", error.message)
                 }
-            }
-        })
+
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    try {
+                        var user = dataSnapshot.value as HashMap<*, *>
+                        val firebaseId = user["firebaseId"] as String
+                        val mail = user["mail"] as String
+                        val pseudo = user["pseudo"] as String
+                        val imageUrl = user["imageUrl"] as String
+                        val dateInscription = user["dateInscription"] as String
+                        val about = user["about"] as String
+                        val latitude = user["latitude"] as String
+                        val longitude = user["longitude"] as String
+                        currentUser = User(firebaseId, mail, pseudo, imageUrl, dateInscription, about, latitude, longitude)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            })
+        }
     }
 
     fun getUserById(userId: String, onSuccess: OnSuccess<User>) {
@@ -90,26 +95,30 @@ open class MainViewModel(
 
     fun retrieveData(onSuccess: OnSuccess<Boolean>) {
         viewModelScope.launch {
-            firebaseRef.child("isInit").addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {
-                    Log.d("FirebaseError", error.message)
-                }
-
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    try {
-                        val isInit = dataSnapshot.value as Boolean
-                        if (!isInit)
-                            initData().run(onSuccess)
-                        else {
-                            loadData {
-                                onSuccess(it)
-                            }
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+            if (!storedData) {
+                firebaseRef.child("isInit").addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.d("FirebaseError", error.message)
                     }
-                }
-            })
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        try {
+                            val isInit = dataSnapshot.value as Boolean
+                            if (!isInit)
+                                initData().run(onSuccess)
+                            else {
+                                loadData {
+                                    onSuccess(it)
+                                }
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                })
+            } else {
+                onSuccess(true)
+            }
         }
     }
 
@@ -119,6 +128,7 @@ open class MainViewModel(
             initTypeMeetings()
             initMeetings()
             firebaseRef.child("isInit").setValue(true)
+            storedData = true
             true
         } catch (e: Exception) {
             e.printStackTrace()
@@ -182,6 +192,7 @@ open class MainViewModel(
                         listMeetings.add(Meeting(firebaseId, userId, typeId, type, getTheme(theme), name, dateCreation, dateEvent, latitude, longitude, imageUrl, details))
                     }
 
+                    storedData = true
                     onSuccess(true)
                 } catch (e: Exception) {
                     e.printStackTrace()
