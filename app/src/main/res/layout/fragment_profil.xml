@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/color_surface">
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        style="@style/ButtonStyleGrey"
-        android:translationZ="2dp"
         android:id="@+id/btnNavEditProfil"
+        style="@style/ButtonStyleGrey"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnNavPreferences"
-        android:src="@drawable/ic_mode_edit_black_24dp"/>
-
-    <androidx.appcompat.widget.AppCompatImageButton
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        style="@style/ButtonStyleGrey"
+        android:src="@drawable/ic_mode_edit_black_24dp"
         android:translationZ="2dp"
+        app:layout_constraintEnd_toStartOf="@id/btnNavPreferences"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/btnNavPreferences"
+        style="@style/ButtonStyleGrey"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_settings"
+        android:translationZ="2dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_settings"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:scrollbars="none"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -47,145 +46,164 @@
                 android:id="@+id/imgBackgroud"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                app:layout_constraintTop_toTopOf="parent"
+                android:scaleType="fitXY"
                 android:src="@drawable/bowling"
-                android:scaleType="fitXY"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvImgProfil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="50dp"
-                app:strokeColor="@android:color/black"
-                app:layout_constraintTop_toTopOf="@+id/imgBackgroud"
                 app:layout_constraintBottom_toBottomOf="@+id/imgBackgroud"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent">
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imgBackgroud"
+                app:strokeColor="@android:color/black">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgProfil"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/user"/>
+                    android:src="@drawable/user" />
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvLoginUser"
-                android:layout_width="wrap_content"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_view_1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/imgBackgroud"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="10dp"
+                app:cardBackgroundColor="@color/color_surface"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="8dp"
-                android:textStyle="bold"
-                android:textSize="18sp"
-                android:textColor="#000000"
-                android:text="Clément BAR"
-                tools:text="Clément BAR"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvLevelUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tvLoginUser"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="8dp"
-                android:text="Niveau 10"
-                tools:text="Niveau 10"/>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvFirstUserInfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tvLevelUser"
-                android:layout_marginTop="8dp">
+                app:layout_constraintTop_toBottomOf="@id/imgBackgroud">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="8dp">
+                    android:paddingVertical="10dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLoginUser"
+                        style="@style/Header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Clément BAR"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Clément BAR" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLevelUser"
+                        style="@style/OnSurface"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Niveau 10"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvLoginUser"
+                        tools:text="Niveau 10" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imgLocalisation"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/tvCountry"
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/location_on"
                         app:layout_constraintBottom_toBottomOf="@+id/tvTown"
-                        android:src="@drawable/location_on"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvLevelUser" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvCountry"
+                        style="@style/OnSurface"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="10dp"
+                        android:text="France"
                         app:layout_constraintStart_toEndOf="@id/imgLocalisation"
-                        android:text="France"/>
+                        app:layout_constraintTop_toTopOf="@id/imgLocalisation" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvTown"
+                        style="@style/OnSurface"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/tvCountry"
+                        android:layout_marginStart="10dp"
+                        android:text="Bourg-en-Bresse"
                         app:layout_constraintStart_toEndOf="@id/imgLocalisation"
-                        android:text="Bourg-en-Bresse" />
+                        app:layout_constraintTop_toBottomOf="@+id/tvCountry" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imgBio"
+                        style="@style/OnSurface"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvTown"
+                        android:layout_marginStart="10dp"
                         android:layout_marginTop="8dp"
-                        android:src="@drawable/ic_info"/>
+                        android:src="@drawable/ic_info"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvTown" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvBio"
+                        style="@style/OnSurface"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintTop_toTopOf="@+id/imgBio"
+                        android:layout_marginStart="10dp"
+                        android:text="Bonjour blabla \nb blabla \nb blabla"
                         app:layout_constraintStart_toEndOf="@id/imgLocalisation"
-                        android:text="Bonjour blabla \nb blabla \nb blabla"/>
+                        app:layout_constraintTop_toTopOf="@+id/imgBio" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvTrophys"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/cvFirstUserInfo"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="@color/color_background"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_1">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp">
+                    android:layout_height="wrap_content">
 
                     <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="10dp"
                         android:id="@+id/rvTrophys"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:clipToPadding="false"
                         android:orientation="horizontal"
+                        android:paddingHorizontal="8dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintTop_toTopOf="parent"
                         tools:itemCount="5"
-                        tools:listitem="@layout/holder_trophy"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        tools:listitem="@layout/holder_trophy" />
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toBottomOf="@id/rvTrophys"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/rvTrophys">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_marginStart="10dp"
+                            android:layout_marginBottom="10dp"
                             android:id="@+id/tvShowAllTrophys"
+                            style="@style/OnSurface"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/text_show_all_trophys"
@@ -196,106 +214,111 @@
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/tvShowAllTrophys"
-                            app:layout_constraintBottom_toBottomOf="@id/tvShowAllTrophys"
+                            android:alpha="0.5"
                             android:src="@drawable/ic_arrow_right_black_24dp"
-                            android:alpha="0.5"/>
+                            app:layout_constraintBottom_toBottomOf="@id/tvShowAllTrophys"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/tvShowAllTrophys" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvMeetingUserInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/cvTrophys"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="@color/color_background"
+                app:layout_constraintTop_toBottomOf="@+id/cvTrophys">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp">
+                    android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
                         android:id="@+id/imgMeetingSuggest"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:src="@drawable/ic_timeline_black_24dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/tvMeetingSuggest"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvNumberMeetingSuggest"
-                        android:src="@drawable/ic_timeline_black_24dp"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvMeetingSuggest"
+                        style="@style/OnSurface"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/text_suggest"
                         app:layout_constraintStart_toEndOf="@id/imgMeetingSuggest"
-                        android:text="@string/text_suggest"/>
+                        app:layout_constraintTop_toTopOf="@id/imgMeetingSuggest" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvNumberMeetingSuggest"
+                        style="@style/OnSurface"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/tvMeetingSuggest"
+                        android:layout_marginStart="10dp"
+                        android:text="20 activités"
                         app:layout_constraintStart_toEndOf="@id/imgMeetingSuggest"
-                        android:text="20 activités" />
+                        app:layout_constraintTop_toBottomOf="@+id/tvMeetingSuggest" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tvMeetingSuggest"
-                        app:layout_constraintBottom_toBottomOf="@id/tvNumberMeetingSuggest"
+                        android:alpha="0.5"
                         android:src="@drawable/ic_arrow_right_black_24dp"
-                        android:alpha="0.5"/>
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tvMeetingSuggest"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvNumberMeetingSuggest" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imgMeetingJoin"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/tvMeetingJoin"
-                        app:layout_constraintBottom_toBottomOf="@id/tvNumberMeetingJoin"
-                        android:src="@drawable/ic_redo_black_24dp"/>
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/ic_redo_black_24dp"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintTop_toBottomOf="@id/tvNumberMeetingSuggest"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvMeetingJoin"
+                        style="@style/OnSurface"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintTop_toBottomOf="@id/tvNumberMeetingSuggest"
-                        app:layout_constraintStart_toEndOf="@id/imgMeetingJoin"
+                        android:layout_marginStart="10dp"
                         android:text="@string/text_join"
-                        android:layout_marginTop="8dp"/>
+                        app:layout_constraintStart_toEndOf="@id/imgMeetingJoin"
+                        app:layout_constraintTop_toTopOf="@id/imgMeetingJoin" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvNumberMeetingJoin"
+                        style="@style/OnSurface"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/tvMeetingJoin"
-                        app:layout_constraintStart_toEndOf="@id/imgMeetingJoin"
-                        android:text="10 activités"/>
+                        android:text="10 activités"
+                        app:layout_constraintStart_toStartOf="@id/tvMeetingJoin"
+                        app:layout_constraintTop_toBottomOf="@id/tvMeetingJoin"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        style="@style/OnSurface"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tvMeetingJoin"
-                        app:layout_constraintBottom_toBottomOf="@id/tvNumberMeetingJoin"
+                        android:alpha="0.5"
                         android:src="@drawable/ic_arrow_right_black_24dp"
-                        android:alpha="0.5"/>
+                        app:layout_constraintBottom_toBottomOf="@id/tvNumberMeetingJoin"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvMeetingJoin" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

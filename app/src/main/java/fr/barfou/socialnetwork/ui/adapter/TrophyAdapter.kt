@@ -43,9 +43,9 @@ class TrophyAdapter(
             super.getItemOffsets(outRect, view, parent, state)
             parent.run {
                 outRect.set(
+                    dp(8),
                     dp(4),
-                    dp(4),
-                    dp(4),
+                    dp(8),
                     dp(4)
                 )
             }
