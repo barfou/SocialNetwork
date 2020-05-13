@@ -12,11 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.findNavController
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import fr.barfou.socialnetwork.R
-import fr.barfou.socialnetwork.data.model.Meeting
-import fr.barfou.socialnetwork.data.model.Theme
 import fr.barfou.socialnetwork.ui.fragment.FilterFragment
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import fr.barfou.socialnetwork.ui.utils.changeToolbarFont
@@ -55,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        menuInflater.inflate(R.menu.toolbar_menu_main_activity, menu)
 
         val manager = this.getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
@@ -91,14 +87,19 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.more_item -> {
-
+            /**
+             * Handling toolbar submenu item click here
+             */
+            R.id.profil_item -> {
+                findNavController(R.id.main_fragment_container).navigate(
+                    R.id.action_home_fragment_to_profil_fragment
+                )
             }
         }
         return super.onOptionsItemSelected(item)
-    }*/
+    }
 
     private fun getForegroundFragment(): Fragment? {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container)
