@@ -17,6 +17,8 @@ import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.utils.getCurrentDate
+import fr.barfou.socialnetwork.ui.utils.hide
+import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.btnLogin
 import kotlinx.android.synthetic.main.fragment_login.btnRegister
@@ -61,24 +63,33 @@ class RegisterFragment : Fragment() {
         }
 
         btnRegister.setOnClickListener {
+            progress_bar.show()
             if (!etPseudoRegister.text.isNullOrBlank() && !etMail.text.isNullOrBlank() && !etPassword.text.isNullOrBlank()) {
-                auth.createUserWithEmailAndPassword(etMail.text.toString(), etPassword.text.toString())
-                        .addOnCompleteListener(this.requireActivity()) { task ->
-                            if (task.isSuccessful) {
-                                val user = auth.currentUser
-                                user?.run {
-                                    loginViewModel.insertUserDetails(User(user!!.uid, etMail.text.toString(), etPseudoRegister.text.toString(), "", getCurrentDate(), "", "", ""))
-                                    val intent = Intent(requireContext(), MainActivity::class.java)
-                                    intent.putExtra("userId", user.uid)
-                                    startActivity(intent)
-                                }
+                if (chkCGU.isChecked) {
+                    auth.createUserWithEmailAndPassword(etMail.text.toString(), etPassword.text.toString())
+                            .addOnCompleteListener(this.requireActivity()) { task ->
+                                if (task.isSuccessful) {
+                                    val user = auth.currentUser
+                                    user?.run {
+                                        progress_bar.hide()
+                                        loginViewModel.insertUserDetails(User(user!!.uid, etMail.text.toString(), etPseudoRegister.text.toString(), "", getCurrentDate(), "", "", ""))
+                                        val intent = Intent(requireContext(), MainActivity::class.java)
+                                        intent.putExtra("userId", user.uid)
+                                        startActivity(intent)
+                                    }
 
-                            } else {
-                                Toast.makeText(requireContext(), "Creation failed." + task.exception, Toast.LENGTH_SHORT).show()
+                                } else {
+                                    progress_bar.hide()
+                                    Toast.makeText(requireContext(), "Creation failed." + task.exception, Toast.LENGTH_LONG).show()
+                                }
                             }
-                        }
+                } else {
+                    progress_bar.hide()
+                    Toast.makeText(requireContext(), "Veuillez acceptez les CGU.", Toast.LENGTH_LONG).show()
+                }
             } else {
-                Toast.makeText(requireContext(), "Saisie incorrecte.", Toast.LENGTH_SHORT).show()
+                progress_bar.hide()
+                Toast.makeText(requireContext(), "Saisie incorrecte.", Toast.LENGTH_LONG).show()
             }
         }
     }

@@ -21,6 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <ProgressBar
+        style="@style/ProgressBarStyle"
         android:id="@+id/progress_bar"
         android:layout_width="80dp"
         android:layout_height="80dp"

@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseAuth
 import fr.barfou.socialnetwork.ui.activity.LoginActivity
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.ui.activity.MainActivity
+import fr.barfou.socialnetwork.ui.utils.hide
+import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 
@@ -48,21 +50,25 @@ class LoginFragment : Fragment() {
         }
 
         btnLogin.setOnClickListener {
+            progress_bar.show()
             if (!etPseudo.text.isNullOrBlank() && !etPassword.text.isNullOrBlank()) {
                 auth.signInWithEmailAndPassword(etPseudo.text.toString(), etPassword.text.toString())
                         .addOnCompleteListener(this.requireActivity()) { task ->
                             if (task.isSuccessful) {
                                 val user = auth.currentUser
                                 user?.run {
+                                    progress_bar.hide()
                                     val intent = Intent(requireContext(), MainActivity::class.java)
                                     intent.putExtra("userId", user.uid)
                                     startActivity(intent)
                                 }
                             } else {
+                                progress_bar.hide()
                                 Toast.makeText(requireContext(), "Authentication failed.", Toast.LENGTH_SHORT).show()
                             }
                         }
             } else {
+                progress_bar.hide()
                 Toast.makeText(requireContext(), "Saisie incorrecte.", Toast.LENGTH_SHORT).show()
             }
         }
