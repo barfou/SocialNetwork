@@ -20,7 +20,7 @@ class SplashScreenActivity : AppCompatActivity() {
             // This method will be executed once the timer is over
             // Start your app main activity
 
-            startActivity(Intent(this, LocationActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
 
             // close this activity
             finish()

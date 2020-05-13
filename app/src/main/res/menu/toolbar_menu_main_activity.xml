@@ -13,8 +13,8 @@
         android:title="@string/filter_menu_text"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/more_item"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/more_menu_text"
+        android:id="@+id/profil_item"
+        android:icon="@drawable/ic_account_circle_black_24dp"
+        android:title="@string/profil_menu_text"
         app:showAsAction="ifRoom"/>
 </menu>
