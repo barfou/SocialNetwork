@@ -16,6 +16,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.Meeting
+import fr.barfou.socialnetwork.data.model.Theme
 import fr.barfou.socialnetwork.ui.fragment.FilterFragment
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import fr.barfou.socialnetwork.ui.utils.changeToolbarFont
@@ -90,16 +91,14 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.more_item -> {
-                var tot = mainViewModel.listUserMeetingJoin
-                var res = mainViewModel.getMeetingsJoined(mainViewModel.listUsers[0])
-                var str = "UHY"
+
             }
         }
         return super.onOptionsItemSelected(item)
-    }
+    }*/
 
     private fun getForegroundFragment(): Fragment? {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_fragment_container)
@@ -116,11 +115,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun testFirebase() {
-        val activitiesRef = Firebase.database.reference.child("Activities")
-        var idTask = activitiesRef.push().key!!
-        activitiesRef.child(idTask).setValue(true)
     }
 }
