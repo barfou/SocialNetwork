@@ -14,7 +14,7 @@
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/more_item"
-        android:icon="@drawable/ic_more"
+        android:icon="@drawable/ic_settings"
         android:title="@string/more_menu_text"
         app:showAsAction="ifRoom"/>
 </menu>

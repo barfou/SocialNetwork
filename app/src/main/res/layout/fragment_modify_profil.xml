@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clFirstInfos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgBackgroud"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:src="@drawable/bowling"/>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvImgProfil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="50dp"
+                    app:strokeColor="@android:color/black"
+                    app:layout_constraintTop_toTopOf="@+id/imgBackgroud"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgBackgroud"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgProfil"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/user"/>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/clFirstInfos">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLoginUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/text_login"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etLoginUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tvLoginUser"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTownUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/etLoginUser"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/text_town"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etTownUser"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tvTownUser"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCountryUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_country"
+                    app:layout_constraintBottom_toBottomOf="@id/tvTownUser"
+                    app:layout_constraintStart_toStartOf="@+id/etCountryUser"
+                    app:layout_constraintTop_toTopOf="@id/tvTownUser"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etCountryUser"
+                    android:layout_width="190dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/etTownUser"
+                    app:layout_constraintStart_toEndOf="@+id/etTownUser"
+                    app:layout_constraintTop_toTopOf="@id/etTownUser" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgLocalisation"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/etTownUser"
+                    android:src="@drawable/location_on"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/imgLocalisation"
+                    app:layout_constraintTop_toTopOf="@id/imgLocalisation"
+                    app:layout_constraintBottom_toBottomOf="@id/imgLocalisation"
+                    android:text="@string/text_update_with_loc"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/imgLocalisation"
+                    android:text="@string/text_bio"
+                    android:layout_marginTop="8dp"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etBio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tvBio"
+                    android:inputType="textMultiLine"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvConfidentiel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/etBio"
+                    android:text="@string/text_confidentiel"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tvConfidentiel"
+                    android:text="@string/text_password"
+                    android:layout_marginTop="8dp"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tvPassword"
+                    android:inputType="textPassword"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBirthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/etPassword"
+                    android:text="@string/text_birthday"
+                    android:layout_marginTop="8dp"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etBirthday"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tvBirthday"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:inputType="datetime"/>
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/dtpBirthday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/etBirthday"
+                    app:layout_constraintTop_toTopOf="@id/etBirthday"
+                    app:layout_constraintBottom_toBottomOf="@id/etBirthday"
+                    android:src="@drawable/ic_date_range_black_24dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,4 +15,18 @@
     <string name="search_menu_text">Search</string>
     <string name="filter_menu_text">Filter</string>
     <string name="more_menu_text">More</string>
+    <string name="text_show_all_trophys">Voir tous les trophées</string>
+    <string name="text_suggest">Propose à :</string>
+    <string name="text_join">Participe  à :</string>
+    <string name="text_login">Login</string>
+    <string name="text_town">Ville</string>
+    <string name="text_country">Pays</string>
+    <string name="text_update_with_loc">Mettre à jour via ma localisation</string>
+    <string name="text_bio">Biographie</string>
+    <string name="text_confidentiel">Confidentialité</string>
+    <string name="text_password">Mot de passe</string>
+    <string name="text_birthday">Date de naissance</string>
+
+    <string name="title_fragment_profil">Profil</string>
+    <string name="title_fragment_modify_profil">Modifier le profil</string>
 </resources>
