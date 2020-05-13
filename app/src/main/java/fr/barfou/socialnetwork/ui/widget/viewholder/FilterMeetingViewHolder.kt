@@ -20,7 +20,7 @@ class FilterMeetingViewHolder private constructor(itemView: View) : RecyclerView
             tv_username.text = "username_test"
             tv_date_post.text = "date_poste_test"
             tv_name.text = model.name
-            tv_date.text = model.dateCreation
+            tv_date.text = model.dateEvent
 
             when (model.type) {
                 "Karaoké" -> image_view_filter.setImageResource(R.drawable.karaoke)

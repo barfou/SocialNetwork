@@ -15,7 +15,7 @@ class MeetingViewHolder private constructor(itemView: View) : RecyclerView.ViewH
         itemView.apply {
             this.setOnClickListener { onClick(it, model) }
             tv_name.text = model.name
-            tv_date.text = model.dateCreation
+            tv_date.text = model.dateEvent
 
             when (model.type) {
                 "Karaoké" -> image_view.setImageResource(R.drawable.karaoke)
