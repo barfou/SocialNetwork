@@ -17,7 +17,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
 import fr.barfou.socialnetwork.R
+import fr.barfou.socialnetwork.data.model.ConvertedLocation
+import fr.barfou.socialnetwork.ui.utils.convertLatLongToLocation
 import kotlinx.android.synthetic.main.activity_location.*
+
 
 
 class LocationActivity : AppCompatActivity() {
@@ -26,7 +29,7 @@ class LocationActivity : AppCompatActivity() {
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
 
-    lateinit var geocoder : Geocoder
+    //lateinit var geocoder : Geocoder
 
     lateinit var addresses : List<Address>
 
@@ -52,15 +55,21 @@ class LocationActivity : AppCompatActivity() {
                         requestNewLocationData()
                     } else {
                         try {
-                            geocoder = Geocoder(this)
+
+                            /*geocoder = Geocoder(this)
 
                             addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
 
                             val city = addresses[0].locality
-                            val country = addresses[0].countryName
+                            val country = addresses[0].countryName*/
 
-                            tvLatLong.text = location.latitude.toString() + " " + location.longitude.toString()
-                            tvLocation.text = city.toString() + " / " + country.toString()
+                            val myLocation : ConvertedLocation = convertLatLongToLocation(this, location.latitude, location.longitude)
+
+                            val town = myLocation.town
+                            val country = myLocation.country
+
+                            tvLatLong.text = location.latitude.toString() + " / " + location.longitude.toString()
+                            tvLocation.text = town + " / " + country
                         } catch (e: Exception) {
                             println(e.toString())
                         }
