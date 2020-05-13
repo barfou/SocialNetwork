@@ -26,11 +26,42 @@ open class MainViewModel(
     private val meetingsRef = firebaseRef.child("Meetings")
     private val usersRef = firebaseRef.child("Users")
     private val typeMetingsRef = firebaseRef.child("TypesMeeting")
+    private val userMeetingJoinRef = firebaseRef.child("UserMeetingJoin")
 
     // Data
     var listMeetings = mutableListOf<Meeting>()
     var listUsers = mutableListOf<User>()
     var listTypeMeeting = mutableListOf<TypeMeeting>()
+    var listUserMeetingJoin = mutableListOf<UserMeetingJoin>()
+
+    fun User.getMeetingsJoined(): MutableList<Meeting> {
+        return listUserMeetingJoin.filter { it.userId == this.firebaseId }
+                .map { it.meetingId }
+                .mapNotNull { getMeetingById(it) }
+                .toMutableList()
+    }
+
+    fun Meeting.getSubscribedUsers(): MutableList<User> {
+        return listUserMeetingJoin.filter { it.meetingId == this.firebaseId }
+                .map { it.userId }
+                .mapNotNull { getUserById(it) }
+                .toMutableList()
+    }
+
+    private fun getMeetingById(meetingId: String): Meeting? {
+        var found = false
+        var i = 0
+        while (!found && i < listMeetings.size) {
+            if (listMeetings[i].firebaseId == meetingId)
+                found = true
+            else
+                i++
+        }
+        return if (found)
+            listMeetings[i]
+        else
+            null
+    }
 
     fun updateCurrentUser(userId: String) {
 
@@ -60,19 +91,19 @@ open class MainViewModel(
         }
     }
 
-    fun getUserById(userId: String, onSuccess: OnSuccess<User>) {
-        viewModelScope.launch {
-            var found = false
-            var i = 0
-            while (!found && i < listUsers.size) {
-                if (listUsers[i].firebaseId == userId)
-                    found = true
-                else
-                    i++
-            }
-            if (found)
-                onSuccess(listUsers[i])
+    fun getUserById(userId: String): User? {
+        var found = false
+        var i = 0
+        while (!found && i < listUsers.size) {
+            if (listUsers[i].firebaseId == userId)
+                found = true
+            else
+                i++
         }
+        return if (found)
+            listUsers[i]
+        else
+            null
     }
 
     fun filterMeetingByName(name: String, onSuccess: OnSuccess<List<Meeting>>) {
@@ -127,6 +158,7 @@ open class MainViewModel(
             initUsers()
             initTypeMeetings()
             initMeetings()
+            initUserMeetingJoin()
             firebaseRef.child("isInit").setValue(true)
             storedData = true
             true
@@ -264,6 +296,24 @@ open class MainViewModel(
         }
     }
 
+    private fun initUserMeetingJoin() {
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[0].firebaseId, listMeetings[0].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[0].firebaseId, listMeetings[1].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[0].firebaseId, listMeetings[2].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[0].firebaseId, listMeetings[5].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[1].firebaseId, listMeetings[1].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[1].firebaseId, listMeetings[2].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[1].firebaseId, listMeetings[6].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[1].firebaseId, listMeetings[8].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[2].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[3].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[5].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[7].firebaseId))
+        listUserMeetingJoin.forEach {
+            pushUserMeetingJoin(it)
+        }
+    }
+
     private fun pushUserToFirebase(user: User) {
         val firebaseId = usersRef.push().key!!
         user.firebaseId = firebaseId
@@ -280,6 +330,12 @@ open class MainViewModel(
         val firebaseId = usersRef.push().key!!
         meeting.firebaseId = firebaseId
         meetingsRef.child(firebaseId).setValue(meeting)
+    }
+
+    private fun pushUserMeetingJoin(userMeetingJoin: UserMeetingJoin) {
+        val firebaseId = userMeetingJoinRef.push().key!!
+        userMeetingJoin.firebaseId = firebaseId
+        userMeetingJoinRef.child(firebaseId).setValue(userMeetingJoin)
     }
 
     companion object Factory : ViewModelProvider.Factory {

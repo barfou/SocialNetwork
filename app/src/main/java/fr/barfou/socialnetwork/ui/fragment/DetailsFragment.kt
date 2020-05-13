@@ -80,8 +80,8 @@ class DetailsFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun loadData() {
         try {
-            mainViewModel.getUserById(userId) { user ->
-                tv_username.text = user.pseudo
+            mainViewModel.getUserById(userId)?.run {
+                tv_username.text = this.pseudo
             }
             tv_date_post.text = datePost
             tv_meeting_name.text = name
