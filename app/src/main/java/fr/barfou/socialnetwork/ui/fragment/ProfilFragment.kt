@@ -47,7 +47,7 @@ class ProfilFragment: Fragment() {
 
         btnNavEditProfil.setOnClickListener {
             findNavController().navigate(
-                R.id.action_profil_fragment_to_modify_profil_fragment
+                R.id.action_to_modify_profil_fragment
             )
         }
 

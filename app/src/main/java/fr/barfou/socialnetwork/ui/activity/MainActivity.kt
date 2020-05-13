@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                 main_root_layout.hideKeyboard()
                 if (mode == Mode.HOMEPAGE) {
                     findNavController(R.id.main_fragment_container).navigate(
-                            R.id.action_home_fragment_to_filter_fragment,
+                            R.id.action_to_filter_fragment,
                             bundleOf(FilterFragment.SEARCH_VALUE_KEY to query)
                     )
                     mode = Mode.FILTER
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
              */
             R.id.profil_item -> {
                 findNavController(R.id.main_fragment_container).navigate(
-                    R.id.action_home_fragment_to_profil_fragment
+                    R.id.action_to_profil_fragment
                 )
             }
         }
