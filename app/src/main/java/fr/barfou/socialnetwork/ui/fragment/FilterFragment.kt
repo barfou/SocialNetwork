@@ -61,6 +61,7 @@ class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeLi
     override fun invoke(view: View, meeting: Meeting) {
         findNavController().navigate(R.id.action_filter_fragment_to_details_fragment,
                 bundleOf(
+                        DetailsFragment.MEETING_ID_KEY to meeting.firebaseId,
                         DetailsFragment.USER_ID_KEY to meeting.userId,
                         DetailsFragment.DATE_POST_KEY to meeting.dateCreation,
                         DetailsFragment.DATE_EVENT_KEY to meeting.dateEvent,
