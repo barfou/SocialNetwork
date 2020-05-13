@@ -66,6 +66,14 @@
         android:id="@+id/modify_profil_fragment"
         android:name="fr.barfou.socialnetwork.ui.fragment.ModifyProfilFragment"
         android:label="modify_profil_fragment"
-        tools:layout="@layout/fragment_modify_profil"/>
+        tools:layout="@layout/fragment_modify_profil">
+        <action
+            android:id="@+id/action_modify_profil_fragment_to_profil_fragment"
+            app:destination="@id/profil_fragment"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
 
 </navigation>

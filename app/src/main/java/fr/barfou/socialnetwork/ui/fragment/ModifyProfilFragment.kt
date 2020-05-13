@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import fr.barfou.socialnetwork.ui.activity.LoginActivity
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.ui.adapter.TrophyAdapter
@@ -38,7 +39,14 @@ class ModifyProfilFragment: Fragment() {
             this.setDisplayHomeAsUpEnabled(false)
         }
 
+        btnCancelEditProfil.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
 
+        btnConfirmEditProfil.setOnClickListener {
+            //Traitement des données changées
+            requireActivity().onBackPressed()
+        }
 
         dtpBirthday.setOnClickListener {
             if(etBirthday.text.toString() == "") {

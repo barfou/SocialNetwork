@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
@@ -86,6 +87,20 @@ class MainActivity : AppCompatActivity() {
             return@setOnCloseListener false
         }
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            /**
+             * Handling toolbar submenu item click here
+             */
+            R.id.profil_item -> {
+                findNavController(R.id.main_fragment_container).navigate(
+                    R.id.action_home_fragment_to_profil_fragment
+                )
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun getForegroundFragment(): Fragment? {
