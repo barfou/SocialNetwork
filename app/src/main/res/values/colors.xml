@@ -18,7 +18,8 @@
     <color name="color_subtitle2">#80000000</color>
     <color name="color_body1">#bf000000</color>
     <color name="color_body2">#80000000</color>
-    <color name="color_button">#4FC3F7</color>
-    <color name="color_button_joined">#2FA067</color>
-    <color name="color_button_quit">#FF4C4C</color>
+    <color name="color_button">#CC4FC3F7</color>
+    <color name="color_button_joined">#CC2FA067</color>
+    <color name="color_button_quit">#CCFF4C4C</color>
+    <color name="color_button_grey">#CCB0BEC5</color>
 </resources>
