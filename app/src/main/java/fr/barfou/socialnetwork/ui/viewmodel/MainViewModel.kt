@@ -34,7 +34,7 @@ open class MainViewModel(
 
     fun updateCurrentUser(userId: String) {
 
-        currentUser?.run {
+        if (currentUser == null) {
             usersRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                     Log.d("FirebaseError", error.message)

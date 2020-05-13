@@ -59,7 +59,7 @@ class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeLi
     }
 
     override fun invoke(view: View, meeting: Meeting) {
-        findNavController().navigate(R.id.action_home_fragment_to_details_fragment,
+        findNavController().navigate(R.id.action_filter_fragment_to_details_fragment,
                 bundleOf(
                         DetailsFragment.USER_ID_KEY to meeting.userId,
                         DetailsFragment.DATE_POST_KEY to meeting.dateCreation,
