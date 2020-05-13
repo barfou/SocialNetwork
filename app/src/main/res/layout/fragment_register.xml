@@ -22,6 +22,8 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etMail"
         android:layout_height="40dp"
+        android:inputType="textEmailAddress"
+        android:nextFocusDown="@id/etPseudoRegister"
         style="@style/EditTextLoginActivity"
         android:layout_marginTop="55dp"
         android:drawableStart="@drawable/ic_email_black_24dp"
@@ -33,6 +35,8 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etPseudoRegister"
         android:layout_height="40dp"
+        android:inputType="textNoSuggestions"
+        android:nextFocusDown="@id/etPassword"
         style="@style/EditTextLoginActivity"
         android:layout_marginTop="20dp"
         android:drawableStart="@drawable/ic_person_black_24dp"
@@ -44,6 +48,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etPassword"
         android:layout_height="40dp"
+        android:inputType="textPassword"
         style="@style/EditTextLoginActivity"
         android:layout_marginTop="20dp"
         android:drawableStart="@drawable/ic_lock_black_24dp"

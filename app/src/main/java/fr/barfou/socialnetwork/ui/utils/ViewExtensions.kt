@@ -11,13 +11,13 @@ import kotlin.math.roundToInt
 
 fun View.dp(number: Number): Int {
     return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_DIP,
-        number.toFloat(),
-        this.resources.displayMetrics
+            TypedValue.COMPLEX_UNIT_DIP,
+            number.toFloat(),
+            this.resources.displayMetrics
     ).roundToInt()
 }
 
-fun Toolbar.changeToolbarFont(){
+fun Toolbar.changeToolbarFont() {
     for (i in 0 until childCount) {
         val view = getChildAt(i)
         if (view is TextView && view.text == title) {
@@ -32,10 +32,10 @@ fun View.hideKeyboard() {
     imm.hideSoftInputFromWindow(windowToken, 0)
 }
 
-fun View.show(){
+fun View.show() {
     visibility = View.VISIBLE
 }
 
-fun View.hide(){
+fun View.hide() {
     visibility = View.GONE
 }
