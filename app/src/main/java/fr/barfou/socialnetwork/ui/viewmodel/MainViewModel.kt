@@ -10,6 +10,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import fr.barfou.socialnetwork.data.model.*
+import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.utils.unAccent
 import kotlinx.coroutines.launch
 import java.lang.IllegalStateException
@@ -33,6 +34,29 @@ open class MainViewModel(
     var listUsers = mutableListOf<User>()
     var listTypeMeeting = mutableListOf<TypeMeeting>()
     var listUserMeetingJoin = mutableListOf<UserMeetingJoin>()
+    var popularityMap = mutableMapOf<String, Int>()
+
+    fun getMostPopularMeetings(): MutableList<Meeting> {
+        updatePopularityMap()
+        return popularityMap.toList().sortedByDescending { (_, value) -> value }
+                .map { it.first }
+                .filter { it !in getMeetingsJoined(MainActivity.userId).map { it.firebaseId } }
+                .take(5)
+                .mapNotNull { getMeetingById(it) }
+                .toMutableList()
+    }
+
+    private fun updatePopularityMap() {
+        popularityMap = mutableMapOf()
+        listUserMeetingJoin.forEach { userMeetingJoin ->
+            if (popularityMap.containsKey(userMeetingJoin.meetingId)) {
+                var current: Int = popularityMap[userMeetingJoin.meetingId] as Int
+                current++
+                popularityMap[userMeetingJoin.meetingId] = current
+            } else
+                popularityMap[userMeetingJoin.meetingId] = 1
+        }
+    }
 
     fun isJoined(meetingId: String): Boolean {
         return if (currentUser != null) {
@@ -56,9 +80,10 @@ open class MainViewModel(
             if (res != null) {
                 listUserMeetingJoin.removeAt(res.second)
                 userMeetingJoinRef.child(res.first.firebaseId).removeValue()
+                updatePopularityMap()
                 onSuccess(true)
             } else
-              onSuccess(false)
+                onSuccess(false)
         } else
             onSuccess(false)
     }
@@ -69,6 +94,7 @@ open class MainViewModel(
                 var userMeetingJoin = UserMeetingJoin("", currentUser!!.firebaseId, meetingId)
                 listUserMeetingJoin.add(userMeetingJoin)
                 pushUserMeetingJoin(userMeetingJoin)
+                updatePopularityMap()
                 onSuccess(true)
             } else {
                 onSuccess(false)
@@ -209,6 +235,7 @@ open class MainViewModel(
                     }
                 })
             } else {
+                updatePopularityMap()
                 onSuccess(true)
             }
         }
@@ -220,6 +247,7 @@ open class MainViewModel(
             initTypeMeetings()
             initMeetings()
             initUserMeetingJoin()
+            updatePopularityMap()
             firebaseRef.child("isInit").setValue(true)
             storedData = true
             true
@@ -295,6 +323,7 @@ open class MainViewModel(
                         listUserMeetingJoin.add(UserMeetingJoin(firebaseId, userId, meetingId))
                     }
 
+                    updatePopularityMap()
                     storedData = true
                     onSuccess(true)
                 } catch (e: Exception) {

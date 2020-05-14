@@ -94,6 +94,7 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
         mainViewModel.getMeetingsJoined(MainActivity.userId).run {
             if (this.size > 0) {
                 tv_my_activities.show()
+                recycler_view_1.show()
                 meetingAdapter.submitList(this)
             } else {
                 recycler_view_1.hide()
@@ -102,8 +103,10 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
         }
 
         // Recycler View 2
-        tv_trending.show()
-        meetingAdapter2.submitList(mainViewModel.listMeetings)
+        mainViewModel.getMostPopularMeetings().run {
+            tv_trending.show()
+            meetingAdapter2.submitList(this)
+        }
 
         // Recycler View 3
         mainViewModel.filterMeetingByTheme(Theme.SPORT) {
