@@ -13,7 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.findNavController
 import fr.barfou.socialnetwork.R
+import fr.barfou.socialnetwork.ui.fragment.DetailsFragment
 import fr.barfou.socialnetwork.ui.fragment.FilterFragment
+import fr.barfou.socialnetwork.ui.fragment.ProfilFragment
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import fr.barfou.socialnetwork.ui.utils.changeToolbarFont
 import fr.barfou.socialnetwork.ui.utils.hideKeyboard
@@ -94,7 +96,8 @@ class MainActivity : AppCompatActivity() {
              */
             R.id.profil_item -> {
                 findNavController(R.id.main_fragment_container).navigate(
-                    R.id.action_to_profil_fragment
+                    R.id.action_to_profil_fragment,
+                    bundleOf(ProfilFragment.USER_ID_KEY to userId)
                 )
             }
         }

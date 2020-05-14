@@ -72,25 +72,43 @@
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:textColor="#000000"
-                android:text="Clément BAR"
                 tools:text="Clément BAR"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvLevelUser"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clLeveluser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/tvLoginUser"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="8dp"
-                android:text="Niveau 10"
-                tools:text="Niveau 10"/>
+                android:layout_marginTop="8dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLevelUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/text_level"
+                    tools:text="Niveau"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvNumberLevelUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@+id/tvLevelUser"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvLevelUser"
+                    app:layout_constraintStart_toEndOf="@id/tvLevelUser"
+                    android:layout_marginStart="8dp"
+                    tools:text="10"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvFirstUserInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tvLevelUser"
+                app:layout_constraintTop_toBottomOf="@+id/clLeveluser"
                 android:layout_marginTop="8dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -108,29 +126,29 @@
                         android:src="@drawable/location_on"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvCountry"
+                        android:id="@+id/tvTown"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="@id/imgLocalisation"
-                        android:text="France"/>
+                        tools:text="Bourg-en-Bresse"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvTown"
+                        android:id="@+id/tvCountry"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        app:layout_constraintTop_toBottomOf="@+id/tvCountry"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTown"
                         app:layout_constraintStart_toEndOf="@id/imgLocalisation"
-                        android:text="Bourg-en-Bresse" />
+                        tools:text="France" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imgBio"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvTown"
+                        app:layout_constraintTop_toBottomOf="@id/tvCountry"
                         android:layout_marginTop="8dp"
                         android:src="@drawable/ic_info"/>
 
@@ -141,7 +159,8 @@
                         android:layout_marginStart="8dp"
                         app:layout_constraintTop_toTopOf="@+id/imgBio"
                         app:layout_constraintStart_toEndOf="@id/imgLocalisation"
-                        android:text="Bonjour blabla \nb blabla \nb blabla"/>
+                        android:inputType="textMultiLine"
+                        tools:text="Bonjour blabla \n blabla \n blabla"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
@@ -236,7 +255,17 @@
                         android:layout_marginStart="8dp"
                         app:layout_constraintTop_toBottomOf="@+id/tvMeetingSuggest"
                         app:layout_constraintStart_toEndOf="@id/imgMeetingSuggest"
-                        android:text="20 activités" />
+                        tools:text="20" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTextMeetingSuggest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@id/tvNumberMeetingSuggest"
+                        app:layout_constraintTop_toTopOf="@id/tvNumberMeetingSuggest"
+                        app:layout_constraintBottom_toBottomOf="@id/tvNumberMeetingSuggest"
+                        android:text="@string/text_activity" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
@@ -273,7 +302,17 @@
                         android:layout_marginStart="8dp"
                         app:layout_constraintTop_toBottomOf="@+id/tvMeetingJoin"
                         app:layout_constraintStart_toEndOf="@id/imgMeetingJoin"
-                        android:text="10 activités"/>
+                        tools:text="10"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTextMeetingJoin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@id/tvNumberMeetingJoin"
+                        app:layout_constraintTop_toTopOf="@id/tvNumberMeetingJoin"
+                        app:layout_constraintBottom_toBottomOf="@id/tvNumberMeetingJoin"
+                        android:text="@string/text_activity" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"

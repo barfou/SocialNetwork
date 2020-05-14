@@ -29,7 +29,9 @@
     <string name="text_password">Mot de passe</string>
     <string name="text_birthday">Date de naissance</string>
     <string name="edit_profil_menu_text">Modifier le profile</string>
+    <string name="text_level">Niveau</string>
 
     <string name="title_fragment_profil">Profil</string>
     <string name="title_fragment_modify_profil">Modifier le profil</string>
+    <string name="text_activity">activités</string>
 </resources>

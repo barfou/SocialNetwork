@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import fr.barfou.socialnetwork.ui.activity.LoginActivity
 import fr.barfou.socialnetwork.R
+import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.TrophyAdapter
 import kotlinx.android.synthetic.main.fragment_modify_profil.*
 import java.time.LocalDate
@@ -34,7 +35,7 @@ class ModifyProfilFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as? LoginActivity)?.supportActionBar?.apply {
+        (activity as? MainActivity)?.supportActionBar?.apply {
             this.setTitle(R.string.title_fragment_modify_profil)
             this.setDisplayHomeAsUpEnabled(false)
         }
