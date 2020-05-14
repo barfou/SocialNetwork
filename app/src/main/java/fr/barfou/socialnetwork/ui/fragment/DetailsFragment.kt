@@ -77,10 +77,9 @@ class DetailsFragment : Fragment() {
             this.setDisplayHomeAsUpEnabled(false)
         }
 
-        loadData()
         customizeImageView()
         setupAdapter()
-        loadAdapter()
+        loadData()
         customizeButton()
 
         btn_join.setOnClickListener {
@@ -97,6 +96,7 @@ class DetailsFragment : Fragment() {
             Toast.makeText(requireContext(), "Changement enregistré.", Toast.LENGTH_LONG).show()
             joined = !joined
             customizeButton()
+            showUsers()
         } else {
             Toast.makeText(requireContext(), "Un problème a empêché le traitement des données.", Toast.LENGTH_SHORT).show()
         }
@@ -108,13 +108,21 @@ class DetailsFragment : Fragment() {
             mainViewModel.getUserById(userId)?.run {
                 tv_username.text = this.pseudo
             }
-            tv_date_post.text = datePost
+            tv_date_post.text = "Evènement créé le $datePost"
             tv_meeting_name.text = name
             tv_location.text = "$latitude $longitude"
-            tv_date_meeting.text = dateEvent
+            tv_date_meeting.text = "Aura lieu le $dateEvent"
             tv_details_meeting.text = details
+            showUsers()
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    private fun showUsers() {
+        mainViewModel.getSubscribedUsers(meetingId).run {
+            tv_nb_person.text = this.size.toString() + " participants"
+            userAdapter.submitList(this)
         }
     }
 
@@ -155,13 +163,5 @@ class DetailsFragment : Fragment() {
             "Bowling" -> image_meeting.setImageResource(R.drawable.bowling)
             "Escalade" -> image_meeting.setImageResource(R.drawable.escalade)
         }
-    }
-
-    private fun loadAdapter() {
-        var list = mutableListOf<User>()
-        list.add(User("", "", "Jack The Ripper", "", "12/05/2020", "Je m'appelle Jack", "0.0", "0.0"))
-        list.add(User("", "", "John Doe", "", "12/05/2020", "Je m'appelle John", "0.0", "0.0"))
-        list.add(User("", "", "Kurt Cobain", "", "12/05/2020", "Je m'appelle Kurt", "0.0", "0.0"))
-        userAdapter.submitList(list)
     }
 }
