@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.navigation.fragment.findNavController
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
@@ -17,7 +19,6 @@ import fr.barfou.socialnetwork.ui.listener.OnUserClickListener
 import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.details_fragment.*
-import kotlinx.android.synthetic.main.holder_filter_meeting.*
 
 class DetailsFragment : Fragment(), OnUserClickListener {
 
@@ -112,6 +113,9 @@ class DetailsFragment : Fragment(), OnUserClickListener {
                 card_creator.show()
                 tv_user_pseudo.text = this.getInitials()
                 tv_date_upload.text = " le $datePost"
+                tv_user_pseudo.setOnClickListener {
+                    navigateToProfileFragment(userId)
+                }
             }
             tv_meeting_name.text = name
             tv_location.text = "$latitude $longitude"
@@ -169,8 +173,15 @@ class DetailsFragment : Fragment(), OnUserClickListener {
         }
     }
 
+    private fun navigateToProfileFragment(userId: String) {
+        findNavController().navigate(
+                R.id.action_to_profil_fragment,
+                bundleOf(ProfilFragment.USER_ID_KEY to userId)
+        )
+    }
+
     // OnUserClickListener Implementation
     override fun invoke(view: View, user: User) {
-        TODO("Not yet implemented")
+        navigateToProfileFragment(user.firebaseId)
     }
 }
