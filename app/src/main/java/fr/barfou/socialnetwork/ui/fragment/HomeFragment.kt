@@ -96,9 +96,11 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
                 tv_my_activities.show()
                 recycler_view_1.show()
                 meetingAdapter.submitList(this)
+                spacer.show()
             } else {
                 recycler_view_1.hide()
                 tv_my_activities.hide()
+                spacer.hide()
             }
         }
 
