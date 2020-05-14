@@ -35,4 +35,5 @@
     <string name="title_fragment_profil">Profil</string>
     <string name="title_fragment_modify_profil">Modifier le profil</string>
     <string name="title_fragment_details">Détails</string>
+    <string name="uploaded_by">Mis en ligne par</string>
 </resources>

@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import fr.barfou.socialnetwork.data.model.Meeting
 import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
+import fr.barfou.socialnetwork.ui.listener.OnUserClickListener
 import fr.barfou.socialnetwork.ui.utils.dp
 import fr.barfou.socialnetwork.ui.widget.viewholder.MeetingViewHolder
 import fr.barfou.socialnetwork.ui.widget.viewholder.UserViewHolder
 
 class UserAdapter(
+        val fragment: OnUserClickListener
 ) : RecyclerView.Adapter<UserViewHolder>() {
 
     private var _data = emptyList<User>()
@@ -23,7 +25,7 @@ class UserAdapter(
     override fun getItemCount(): Int = _data.count()
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        holder.bind(_data[position])
+        holder.bind(_data[position], fragment)
     }
 
     /**

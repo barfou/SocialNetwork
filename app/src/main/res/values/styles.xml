@@ -79,5 +79,18 @@
     <style name="ProgressBarStyle">
         <item name="android:translationZ">2dp</item>
     </style>
+    <style name="TransparentTextView">
+        <item name="android:background">@color/color_button_grey</item>
+        <item name="android:fontFamily">@font/capriola_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/color_body1</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="HolderUser">
+        <item name="android:fontFamily">@font/paytone_regular</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/color_body1</item>
+        <item name="android:gravity">center</item>
+    </style>
 
 </resources>

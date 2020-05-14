@@ -10,7 +10,7 @@ import fr.barfou.socialnetwork.ui.utils.dp
 import fr.barfou.socialnetwork.ui.widget.viewholder.MeetingViewHolder
 
 class MeetingAdapter(
-    var fragment: OnMeetingClickListener
+    val fragment: OnMeetingClickListener
 ) : RecyclerView.Adapter<MeetingViewHolder>() {
 
     private var _data = emptyList<Meeting>()

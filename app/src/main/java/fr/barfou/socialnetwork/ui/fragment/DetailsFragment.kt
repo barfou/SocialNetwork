@@ -13,10 +13,13 @@ import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.UserAdapter
+import fr.barfou.socialnetwork.ui.listener.OnUserClickListener
+import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.details_fragment.*
+import kotlinx.android.synthetic.main.holder_filter_meeting.*
 
-class DetailsFragment : Fragment() {
+class DetailsFragment : Fragment(), OnUserClickListener {
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var userAdapter: UserAdapter
@@ -77,10 +80,9 @@ class DetailsFragment : Fragment() {
             this.setDisplayHomeAsUpEnabled(true)
         }
 
-        loadData()
         customizeImageView()
         setupAdapter()
-        loadAdapter()
+        loadData()
         customizeButton()
 
         btn_join.setOnClickListener {
@@ -97,6 +99,7 @@ class DetailsFragment : Fragment() {
             Toast.makeText(requireContext(), "Changement enregistré.", Toast.LENGTH_LONG).show()
             joined = !joined
             customizeButton()
+            showUsers()
         } else {
             Toast.makeText(requireContext(), "Un problème a empêché le traitement des données.", Toast.LENGTH_SHORT).show()
         }
@@ -106,15 +109,24 @@ class DetailsFragment : Fragment() {
     private fun loadData() {
         try {
             mainViewModel.getUserById(userId)?.run {
-                tv_username.text = this.pseudo
+                card_creator.show()
+                tv_user_pseudo.text = this.getInitials()
+                tv_date_upload.text = " le $datePost"
             }
-            tv_date_post.text = datePost
             tv_meeting_name.text = name
             tv_location.text = "$latitude $longitude"
-            tv_date_meeting.text = dateEvent
+            tv_date_meeting.text = "Aura lieu le $dateEvent"
             tv_details_meeting.text = details
+            showUsers()
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    private fun showUsers() {
+        mainViewModel.getSubscribedUsers(meetingId).run {
+            tv_nb_person.text = this.size.toString() + " participants"
+            userAdapter.submitList(this)
         }
     }
 
@@ -131,7 +143,7 @@ class DetailsFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-        userAdapter = UserAdapter()
+        userAdapter = UserAdapter(this)
         recycler_view.apply {
             adapter = userAdapter
             if (itemDecorationCount == 0) addItemDecoration(UserAdapter.OffsetDecoration())
@@ -157,11 +169,8 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun loadAdapter() {
-        var list = mutableListOf<User>()
-        list.add(User("", "", "Jack The Ripper", "", "12/05/2020", "Je m'appelle Jack", "0.0", "0.0"))
-        list.add(User("", "", "John Doe", "", "12/05/2020", "Je m'appelle John", "0.0", "0.0"))
-        list.add(User("", "", "Kurt Cobain", "", "12/05/2020", "Je m'appelle Kurt", "0.0", "0.0"))
-        userAdapter.submitList(list)
+    // OnUserClickListener Implementation
+    override fun invoke(view: View, user: User) {
+        TODO("Not yet implemented")
     }
 }

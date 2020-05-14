@@ -67,6 +67,33 @@
             app:layout_constraintTop_toBottomOf="@id/tv_date_post"
             tools:src="@drawable/bowling" />
 
+        <com.google.android.material.card.MaterialCardView
+            card_view:cardBackgroundColor="@color/color_transparent_surface"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toTopOf="@id/image_view_filter"
+            card_view:cardCornerRadius="6dp"
+            card_view:cardElevation="4dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:translationZ="2dp"
+                android:id="@+id/tv_type_filter"
+                style="@style/OnSurface"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="10dp"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/sport"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_name"
             style="@style/OnSurface"
