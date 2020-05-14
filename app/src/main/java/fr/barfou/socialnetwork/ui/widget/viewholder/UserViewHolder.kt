@@ -6,12 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.User
+import fr.barfou.socialnetwork.ui.listener.OnUserClickListener
 import kotlinx.android.synthetic.main.holder_user.view.*
 
 class UserViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(model: User) {
+    fun bind(model: User, onClick: OnUserClickListener) {
         itemView.apply {
+            this.setOnClickListener { onClick(it, model) }
             tv_user_pseudo.text = model.getInitials()
         }
     }

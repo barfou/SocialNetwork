@@ -13,12 +13,13 @@ import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.UserAdapter
+import fr.barfou.socialnetwork.ui.listener.OnUserClickListener
 import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.details_fragment.*
 import kotlinx.android.synthetic.main.holder_filter_meeting.*
 
-class DetailsFragment : Fragment() {
+class DetailsFragment : Fragment(), OnUserClickListener {
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var userAdapter: UserAdapter
@@ -142,7 +143,7 @@ class DetailsFragment : Fragment() {
     }
 
     private fun setupAdapter() {
-        userAdapter = UserAdapter()
+        userAdapter = UserAdapter(this)
         recycler_view.apply {
             adapter = userAdapter
             if (itemDecorationCount == 0) addItemDecoration(UserAdapter.OffsetDecoration())
@@ -166,5 +167,10 @@ class DetailsFragment : Fragment() {
             "Bowling" -> image_meeting.setImageResource(R.drawable.bowling)
             "Escalade" -> image_meeting.setImageResource(R.drawable.escalade)
         }
+    }
+
+    // OnUserClickListener Implementation
+    override fun invoke(view: View, user: User) {
+        TODO("Not yet implemented")
     }
 }
