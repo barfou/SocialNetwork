@@ -106,6 +106,7 @@ class DetailsFragment : Fragment() {
     private fun loadData() {
         try {
             mainViewModel.getUserById(userId)?.run {
+                var test = this.getInitials()
                 tv_username.text = this.pseudo
             }
             tv_date_post.text = "Evènement créé le $datePost"
