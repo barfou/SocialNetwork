@@ -13,8 +13,10 @@ import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.UserAdapter
+import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.details_fragment.*
+import kotlinx.android.synthetic.main.holder_filter_meeting.*
 
 class DetailsFragment : Fragment() {
 
@@ -106,10 +108,10 @@ class DetailsFragment : Fragment() {
     private fun loadData() {
         try {
             mainViewModel.getUserById(userId)?.run {
-                var test = this.getInitials()
-                tv_username.text = this.pseudo
+                card_creator.show()
+                tv_user_pseudo.text = this.getInitials()
+                tv_date_upload.text = " le $datePost"
             }
-            tv_date_post.text = "Evènement créé le $datePost"
             tv_meeting_name.text = name
             tv_location.text = "$latitude $longitude"
             tv_date_meeting.text = "Aura lieu le $dateEvent"

@@ -6,6 +6,81 @@
     android:layout_height="match_parent"
     android:background="@color/color_surface">
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_creator"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/color_surface"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="7dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_uploaded_by"
+                style="@style/OnSurface"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:translationZ="2dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/uploaded_by"
+                tools:text="@string/uploaded_by" />
+
+            <androidx.cardview.widget.CardView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_uploaded_by"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/card1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="@color/color_background"
+                app:cardElevation="4dp"
+                app:cardCornerRadius="20dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_user_pseudo"
+                    style="@style/HolderUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    tools:text="JF" />
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_date_upload"
+                style="@style/OnSurface"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:translationZ="2dp"
+                android:layout_marginBottom="10dp"
+                android:paddingHorizontal="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/card1"
+                app:layout_constraintTop_toTopOf="@id/card1"
+                tools:text="03/05/2020" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_1"
         android:layout_width="match_parent"
@@ -15,51 +90,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image_creator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:scaleType="center"
-            android:src="@drawable/user"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_username"
-            style="@style/OnSurface"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="Username"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/tv_date_post"
-            app:layout_constraintStart_toEndOf="@id/image_creator"
-            app:layout_constraintTop_toTopOf="@id/image_creator"
-            tools:text="Username" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_date_post"
-            style="@style/OnSurface"
-            android:layout_width="87dp"
-            android:layout_height="33dp"
-            android:layout_marginStart="10dp"
-            android:text="03/05/2020"
-            app:layout_constraintStart_toEndOf="@id/image_creator"
-            app:layout_constraintTop_toBottomOf="@id/tv_username"
-            tools:text="03/05/2020" />
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_meeting_name"
             style="@style/Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
             android:text="Activity Name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_creator"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Activity Name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -67,7 +106,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/image_meeting"
         android:layout_width="0dp"
-        android:layout_height="180dp"
+        android:layout_height="200dp"
         android:scaleType="fitXY"
         android:src="@drawable/bowling"
         app:layout_constraintEnd_toEndOf="parent"
