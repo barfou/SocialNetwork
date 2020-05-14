@@ -20,6 +20,7 @@
             android:paddingVertical="16dp">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
                 android:id="@+id/tv_my_activities"
                 style="@style/Header"
                 android:layout_width="0dp"
@@ -47,6 +48,7 @@
                 tools:listitem="@layout/holder_meeting" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
                 android:id="@+id/tv_trending"
                 style="@style/Header"
                 android:layout_width="0dp"
@@ -75,6 +77,7 @@
                 tools:listitem="@layout/holder_meeting" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
                 android:id="@+id/tv_sport"
                 style="@style/Header"
                 android:layout_width="0dp"
@@ -103,6 +106,7 @@
                 tools:listitem="@layout/holder_meeting" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
                 android:id="@+id/tv_culture"
                 style="@style/Header"
                 android:layout_width="0dp"

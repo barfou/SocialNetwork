@@ -79,15 +79,15 @@ open class MainViewModel(
         }
     }
 
-    fun getMeetingsJoined(user: User): MutableList<Meeting> {
-        return listUserMeetingJoin.filter { it.userId == user.firebaseId }
+    fun getMeetingsJoined(userId: String): MutableList<Meeting> {
+        return listUserMeetingJoin.filter { it.userId == userId }
                 .map { it.meetingId }
                 .mapNotNull { getMeetingById(it) }
                 .toMutableList()
     }
 
-    fun getSubscribedUsers(meeting: Meeting): MutableList<User> {
-        return listUserMeetingJoin.filter { it.meetingId == meeting.firebaseId }
+    fun getSubscribedUsers(meetingId: String): MutableList<User> {
+        return listUserMeetingJoin.filter { it.meetingId == meetingId }
                 .map { it.userId }
                 .mapNotNull { getUserById(it) }
                 .toMutableList()

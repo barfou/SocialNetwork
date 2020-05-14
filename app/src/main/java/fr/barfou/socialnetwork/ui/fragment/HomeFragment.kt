@@ -17,6 +17,7 @@ import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.MeetingAdapter
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
 import fr.barfou.socialnetwork.ui.utils.hide
+import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.home_fragment.*
 
@@ -56,7 +57,7 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
         mainViewModel.retrieveData {
             if (it) {
                 mainViewModel.updateCurrentUser(MainActivity.userId)
-                loadAdapters()
+                loadAdaptersByTheme()
                 progress_bar.hide()
             } else {
                 progress_bar.hide()
@@ -88,13 +89,31 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
         }
     }
 
-    private fun loadAdapters() {
-        meetingAdapter.submitList(mainViewModel.listMeetings)
+    private fun loadAdaptersByTheme() {
+        // Recycler View 1
+        mainViewModel.getMeetingsJoined(MainActivity.userId).run {
+            if (this.size > 0) {
+                tv_my_activities.show()
+                meetingAdapter.submitList(this)
+            } else {
+                recycler_view_1.hide()
+                tv_my_activities.hide()
+            }
+        }
+
+        // Recycler View 2
+        tv_trending.show()
         meetingAdapter2.submitList(mainViewModel.listMeetings)
+
+        // Recycler View 3
         mainViewModel.filterMeetingByTheme(Theme.SPORT) {
+            tv_sport.show()
             meetingAdapter3.submitList(it)
         }
+
+        // Recycler View 4
         mainViewModel.filterMeetingByTheme(Theme.CULTURE) {
+            tv_culture.show()
             meetingAdapter4.submitList(it)
         }
     }

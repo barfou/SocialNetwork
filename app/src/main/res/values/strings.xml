@@ -5,7 +5,7 @@
     <string name="sport">Sport</string>
     <string name="culture">Culture</string>
     <string name="join">Rejoindre</string>
-    <string name="quit">Quitter</string>
+    <string name="quit">Se Désinscrire</string>
     <string name="nb_subscribers">Nombre de participants</string>
     <string name="text_chk_cgu">En cochant, vous acceptez les CGU</string>
     <string name="text_btn_login">Se connecter</string>
@@ -29,7 +29,6 @@
     <string name="text_password">Mot de passe</string>
     <string name="text_birthday">Date de naissance</string>
     <string name="edit_profil_menu_text">Modifier le profile</string>
-
     <string name="title_fragment_profil">Profil</string>
     <string name="title_fragment_modify_profil">Modifier le profil</string>
 </resources>
