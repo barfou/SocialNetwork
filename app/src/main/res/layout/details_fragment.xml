@@ -46,7 +46,6 @@
             android:layout_height="33dp"
             android:layout_marginStart="10dp"
             android:text="03/05/2020"
-            app:layout_constraintBottom_toBottomOf="@id/image_creator"
             app:layout_constraintStart_toEndOf="@id/image_creator"
             app:layout_constraintTop_toBottomOf="@id/tv_username"
             tools:text="03/05/2020" />
