@@ -46,9 +46,9 @@
                 android:id="@+id/imgBackgroud"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:scaleType="fitXY"
+                app:layout_constraintTop_toTopOf="parent"
                 android:src="@drawable/bowling"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:scaleType="fitXY"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvImgProfil"
@@ -91,7 +91,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Clément BAR"
                         android:textColor="#000000"
                         android:textSize="18sp"
                         android:textStyle="bold"
@@ -100,48 +99,68 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="Clément BAR" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvLevelUser"
-                        style="@style/OnSurface"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clLevelUser"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
                         android:layout_marginTop="8dp"
-                        android:text="Niveau 10"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvLoginUser"
-                        tools:text="Niveau 10" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvLevelUser"
+                            style="@style/OnSurface"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="@string/text_level"
+                            tools:text="Niveau" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvNumberLevelUser"
+                            style="@style/OnSurface"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            app:layout_constraintTop_toTopOf="@id/tvLevelUser"
+                            app:layout_constraintBottom_toBottomOf="@id/tvLevelUser"
+                            app:layout_constraintStart_toEndOf="@id/tvLevelUser"
+                            tools:text="10"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imgLocalisation"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="10dp"
+                        android:layout_marginTop="20dp"
                         android:src="@drawable/location_on"
                         app:layout_constraintBottom_toBottomOf="@+id/tvTown"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvLevelUser" />
+                        app:layout_constraintTop_toBottomOf="@id/clLevelUser" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/OnSurface"
+                        android:id="@+id/tvTown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        app:layout_constraintStart_toEndOf="@id/imgLocalisation"
+                        app:layout_constraintTop_toTopOf="@id/imgLocalisation"
+                        tools:text="Bourg-en-Bresse"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvCountry"
                         style="@style/OnSurface"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="50dp"
+                        android:layout_height="28dp"
                         android:layout_marginStart="10dp"
-                        android:text="France"
                         app:layout_constraintStart_toEndOf="@id/imgLocalisation"
-                        app:layout_constraintTop_toTopOf="@id/imgLocalisation" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvTown"
-                        style="@style/OnSurface"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="Bourg-en-Bresse"
-                        app:layout_constraintStart_toEndOf="@id/imgLocalisation"
-                        app:layout_constraintTop_toBottomOf="@+id/tvCountry" />
+                        app:layout_constraintTop_toBottomOf="@+id/tvTown"
+                        tools:text="France" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imgBio"
@@ -152,7 +171,7 @@
                         android:layout_marginTop="8dp"
                         android:src="@drawable/ic_info"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvTown" />
+                        app:layout_constraintTop_toBottomOf="@id/tvCountry" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvBio"
@@ -160,9 +179,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Bonjour blabla \nb blabla \nb blabla"
                         app:layout_constraintStart_toEndOf="@id/imgLocalisation"
-                        app:layout_constraintTop_toTopOf="@+id/imgBio" />
+                        app:layout_constraintTop_toTopOf="@+id/imgBio"
+                        tools:text="Bonjour blabla \nb blabla \nb blabla"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -264,9 +283,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="20 activités"
                         app:layout_constraintStart_toEndOf="@id/imgMeetingSuggest"
-                        app:layout_constraintTop_toBottomOf="@+id/tvMeetingSuggest" />
+                        app:layout_constraintTop_toBottomOf="@+id/tvMeetingSuggest"
+                        tools:text="20" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTextMeetingSuggest"
+                        style="@style/OnSurface"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@id/tvNumberMeetingSuggest"
+                        app:layout_constraintTop_toTopOf="@id/tvNumberMeetingSuggest"
+                        app:layout_constraintBottom_toBottomOf="@id/tvNumberMeetingSuggest"
+                        android:text="@string/text_activity" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
@@ -302,9 +332,21 @@
                         style="@style/OnSurface"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="10 activités"
-                        app:layout_constraintStart_toStartOf="@id/tvMeetingJoin"
-                        app:layout_constraintTop_toBottomOf="@id/tvMeetingJoin"/>
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintTop_toBottomOf="@+id/tvMeetingJoin"
+                        app:layout_constraintStart_toEndOf="@id/imgMeetingJoin"
+                        tools:text="10"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTextMeetingJoin"
+                        style="@style/OnSurface"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        app:layout_constraintStart_toEndOf="@id/tvNumberMeetingJoin"
+                        app:layout_constraintTop_toTopOf="@id/tvNumberMeetingJoin"
+                        app:layout_constraintBottom_toBottomOf="@id/tvNumberMeetingJoin"
+                        android:text="@string/text_activity" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/OnSurface"

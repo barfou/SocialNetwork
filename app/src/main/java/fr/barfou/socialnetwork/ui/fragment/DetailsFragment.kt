@@ -73,8 +73,8 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         (activity as? MainActivity)?.supportActionBar?.apply {
-            this.setTitle(R.string.app_name)
-            this.setDisplayHomeAsUpEnabled(false)
+            this.setTitle(R.string.title_fragment_details)
+            this.setDisplayHomeAsUpEnabled(true)
         }
 
         loadData()
