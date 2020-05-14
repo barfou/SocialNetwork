@@ -40,22 +40,10 @@ open class MainViewModel(
         updatePopularityMap()
         return popularityMap.toList().sortedByDescending { (_, value) -> value }
                 .map { it.first }
-                .filter { it !in getMeetingsJoined(MainActivity.userId).map { it.firebaseId } }
+                .filter { it !in getMeetingsJoined(MainActivity.userId).map { item -> item.firebaseId } }
                 .take(5)
                 .mapNotNull { getMeetingById(it) }
                 .toMutableList()
-    }
-
-    private fun updatePopularityMap() {
-        popularityMap = mutableMapOf()
-        listUserMeetingJoin.forEach { userMeetingJoin ->
-            if (popularityMap.containsKey(userMeetingJoin.meetingId)) {
-                var current: Int = popularityMap[userMeetingJoin.meetingId] as Int
-                current++
-                popularityMap[userMeetingJoin.meetingId] = current
-            } else
-                popularityMap[userMeetingJoin.meetingId] = 1
-        }
     }
 
     fun isJoined(meetingId: String): Boolean {
@@ -112,42 +100,13 @@ open class MainViewModel(
                 .toMutableList()
     }
 
+    fun getMeetingsSuggested(userId: String) = listMeetings.filter { it.userId == userId }.toMutableList()
+
     fun getSubscribedUsers(meetingId: String): MutableList<User> {
         return listUserMeetingJoin.filter { it.meetingId == meetingId }
                 .map { it.userId }
                 .mapNotNull { getUserById(it) }
                 .toMutableList()
-    }
-
-    // Return Element & Position
-    private fun getUserMeetingJoin(userId: String, meetingId: String): Pair<UserMeetingJoin, Int>? {
-        var found = false
-        var i = 0
-        while (!found && i < listUserMeetingJoin.size) {
-            if (listUserMeetingJoin[i].userId == currentUser!!.firebaseId && listUserMeetingJoin[i].meetingId == meetingId)
-                found = true
-            else
-                i++
-        }
-        return if (found)
-            Pair(listUserMeetingJoin[i], i)
-        else
-            null
-    }
-
-    private fun getMeetingById(meetingId: String): Meeting? {
-        var found = false
-        var i = 0
-        while (!found && i < listMeetings.size) {
-            if (listMeetings[i].firebaseId == meetingId)
-                found = true
-            else
-                i++
-        }
-        return if (found)
-            listMeetings[i]
-        else
-            null
     }
 
     fun updateCurrentUser(userId: String) {
@@ -239,6 +198,48 @@ open class MainViewModel(
                 onSuccess(true)
             }
         }
+    }
+
+    private fun updatePopularityMap() {
+        popularityMap = mutableMapOf()
+        listUserMeetingJoin.forEach { userMeetingJoin ->
+            if (popularityMap.containsKey(userMeetingJoin.meetingId)) {
+                var current: Int = popularityMap[userMeetingJoin.meetingId] as Int
+                current++
+                popularityMap[userMeetingJoin.meetingId] = current
+            } else
+                popularityMap[userMeetingJoin.meetingId] = 1
+        }
+    }
+    // Return Element & Position
+    private fun getUserMeetingJoin(userId: String, meetingId: String): Pair<UserMeetingJoin, Int>? {
+        var found = false
+        var i = 0
+        while (!found && i < listUserMeetingJoin.size) {
+            if (listUserMeetingJoin[i].userId == currentUser!!.firebaseId && listUserMeetingJoin[i].meetingId == meetingId)
+                found = true
+            else
+                i++
+        }
+        return if (found)
+            Pair(listUserMeetingJoin[i], i)
+        else
+            null
+    }
+
+    private fun getMeetingById(meetingId: String): Meeting? {
+        var found = false
+        var i = 0
+        while (!found && i < listMeetings.size) {
+            if (listMeetings[i].firebaseId == meetingId)
+                found = true
+            else
+                i++
+        }
+        return if (found)
+            listMeetings[i]
+        else
+            null
     }
 
     private fun initData(): Boolean {
