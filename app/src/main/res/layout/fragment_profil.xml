@@ -144,23 +144,13 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/OnSurface"
-                        android:id="@+id/tvTown"
+                        android:id="@+id/tv_location_profile"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         app:layout_constraintStart_toEndOf="@id/imgLocalisation"
                         app:layout_constraintTop_toTopOf="@id/imgLocalisation"
                         tools:text="Bourg-en-Bresse"/>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvCountry"
-                        style="@style/OnSurface"
-                        android:layout_width="50dp"
-                        android:layout_height="28dp"
-                        android:layout_marginStart="10dp"
-                        app:layout_constraintStart_toEndOf="@id/imgLocalisation"
-                        app:layout_constraintTop_toBottomOf="@+id/tvTown"
-                        tools:text="France" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imgBio"
@@ -171,7 +161,7 @@
                         android:layout_marginTop="8dp"
                         android:src="@drawable/ic_info"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvCountry" />
+                        app:layout_constraintTop_toBottomOf="@id/tv_location_profile" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvBio"

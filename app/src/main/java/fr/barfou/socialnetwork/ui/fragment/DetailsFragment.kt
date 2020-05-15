@@ -24,6 +24,7 @@ import fr.barfou.socialnetwork.ui.utils.toCapital
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_location.*
 import kotlinx.android.synthetic.main.details_fragment.*
+import java.util.*
 
 class DetailsFragment : Fragment(), OnUserClickListener {
 
@@ -130,10 +131,19 @@ class DetailsFragment : Fragment(), OnUserClickListener {
             tv_date_meeting.text = "Aura lieu le $dateEvent"
             tv_details_meeting.text = details
             showUsers()
-            var location = convertLatLongToLocation(this.requireContext(), latitude.toDouble(), longitude.toDouble())
+            showLocation()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showLocation() {
+        try {
+            val location = convertLatLongToLocation(this.requireContext(), latitude.toDouble(), longitude.toDouble())
             val town = location.town
             val country = location.country
-            tv_location_details.text = town.toCapital() + ", " + country.toUpperCase()
+            tv_location_details.text = "$town, $country"
         } catch (e: Exception) {
             e.printStackTrace()
         }
