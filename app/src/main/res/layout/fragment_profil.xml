@@ -260,33 +260,11 @@
                         app:layout_constraintStart_toEndOf="@id/imgMeetingSuggest"
                         app:layout_constraintTop_toTopOf="@id/imgMeetingSuggest" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvNumberMeetingSuggest"
-                        style="@style/OnSurface"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        app:layout_constraintStart_toEndOf="@id/imgMeetingSuggest"
-                        app:layout_constraintTop_toBottomOf="@+id/tvMeetingSuggest"
-                        tools:text="20" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvTextMeetingSuggest"
-                        style="@style/OnSurface"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/text_activity"
-                        app:layout_constraintBottom_toBottomOf="@id/tvNumberMeetingSuggest"
-                        app:layout_constraintStart_toEndOf="@id/tvNumberMeetingSuggest"
-                        app:layout_constraintTop_toTopOf="@id/tvNumberMeetingSuggest" />
-
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:alpha="0.5"
                         android:src="@drawable/ic_arrow_right_black_24dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvNumberMeetingSuggest"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/tvMeetingSuggest" />
 
@@ -296,9 +274,10 @@
                         android:layout_height="24dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:src="@drawable/ic_redo_black_24dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvNumberMeetingSuggest" />
+                        app:layout_constraintTop_toBottomOf="@id/imgMeetingSuggest" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvMeetingJoin"
@@ -310,34 +289,13 @@
                         app:layout_constraintStart_toEndOf="@id/imgMeetingJoin"
                         app:layout_constraintTop_toTopOf="@id/imgMeetingJoin" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvNumberMeetingJoin"
-                        style="@style/OnSurface"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toEndOf="@id/imgMeetingJoin"
-                        app:layout_constraintTop_toBottomOf="@+id/tvMeetingJoin"
-                        tools:text="10" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvTextMeetingJoin"
-                        style="@style/OnSurface"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/text_activity"
-                        app:layout_constraintBottom_toBottomOf="@id/tvNumberMeetingJoin"
-                        app:layout_constraintStart_toEndOf="@id/tvNumberMeetingJoin"
-                        app:layout_constraintTop_toTopOf="@id/tvNumberMeetingJoin" />
-
                     <androidx.appcompat.widget.AppCompatImageView
                         style="@style/OnSurface"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:alpha="0.5"
                         android:src="@drawable/ic_arrow_right_black_24dp"
-                        app:layout_constraintBottom_toBottomOf="@id/tvNumberMeetingJoin"
+                        app:layout_constraintBottom_toBottomOf="@id/imgMeetingJoin"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/tvMeetingJoin" />
 

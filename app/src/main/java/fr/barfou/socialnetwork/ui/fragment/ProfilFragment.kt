@@ -47,6 +47,7 @@ class ProfilFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_profil, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -66,8 +67,8 @@ class ProfilFragment : Fragment() {
             showLocation(this.latitude, this.longitude)
             tvBio.text = this.about
 
-            //tvNumberMeetingSuggest.text = this.countMeetingSuggest
-            //tvNumberMeetingJoin.text = this.countMeetingJoin
+            tvMeetingSuggest.text = resources.getText(R.string.text_suggest).toString() + " " + mainViewModel.getMeetingsSuggestedCount(userId).toString() + " " + resources.getText(R.string.text_activity).toString()
+            tvMeetingJoin.text = resources.getText(R.string.text_join).toString() + " " + mainViewModel.getMeetingsJoinedCount(userId).toString() + " " + resources.getText(R.string.text_activity).toString()
 
             trophyAdapter = TrophyAdapter()
             rvTrophys.apply {

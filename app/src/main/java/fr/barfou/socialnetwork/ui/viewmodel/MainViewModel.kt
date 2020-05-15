@@ -15,7 +15,6 @@ import fr.barfou.socialnetwork.ui.utils.toDateTime
 import fr.barfou.socialnetwork.ui.utils.unAccent
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 open class MainViewModel(
 ) : ViewModel() {
@@ -111,7 +110,11 @@ open class MainViewModel(
                 .toMutableList()
     }
 
+    fun getMeetingsJoinedCount(userId: String) = getMeetingsJoined(userId).size
+
     fun getMeetingsSuggested(userId: String) = listMeetings.filter { it.userId == userId }.toMutableList()
+
+    fun getMeetingsSuggestedCount(userId: String) = getMeetingsSuggested(userId).size
 
     fun getSubscribedUsers(meetingId: String): MutableList<User> {
         return listUserMeetingJoin.filter { it.meetingId == meetingId }

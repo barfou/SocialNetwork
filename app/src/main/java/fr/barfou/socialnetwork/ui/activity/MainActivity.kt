@@ -160,8 +160,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun showDialog(){
 
-        // android:buttonTint="@color/color_body1"
-
         lateinit var dialog: AlertDialog
         val arrayColors = arrayOf(resources.getString(R.string.date_event), resources.getString(R.string.proximity))
         val arrayChecked = booleanArrayOf(false,false)

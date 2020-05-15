@@ -12,7 +12,7 @@ fun convertLatLongToLocation(context: Context, lat : Double, long: Double) : Con
     val addresses = geocoder.getFromLocation(lat, long, 1)
     val address = addresses[0]
 
-    val city = address.locality.toString().toCapital()
+    val city = address.locality.toString()
     val country = address.countryName.toString().toUpperCase(Locale.ROOT)
 
     myLocation = ConvertedLocation(lat, long, city, country)

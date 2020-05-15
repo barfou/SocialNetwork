@@ -18,8 +18,8 @@
     <string name="profil_menu_text">Profile</string>
     <string name="more_menu_text">More</string>
     <string name="text_show_all_trophys">Voir tous les trophées</string>
-    <string name="text_suggest">Propose à :</string>
-    <string name="text_join">Participe  à :</string>
+    <string name="text_suggest">Propose </string>
+    <string name="text_join">Participe à </string>
     <string name="text_login">Login</string>
     <string name="text_town">Ville</string>
     <string name="text_country">Pays</string>
