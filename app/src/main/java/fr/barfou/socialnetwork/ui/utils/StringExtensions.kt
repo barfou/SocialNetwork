@@ -12,6 +12,5 @@ fun String.unAccent(): String {
 fun String.toCapital(): String {
     return split(" ")
             .toMutableList()
-            .fold("") { acc, str -> acc + str.capitalize() }
-            .trim()
+            .fold("") { acc, str -> acc + " " + str.capitalize() }
 }

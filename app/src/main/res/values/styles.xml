@@ -92,6 +92,12 @@
         <item name="android:textColor">@color/color_body1</item>
         <item name="android:gravity">center</item>
     </style>
+    <style name="CardUser">
+        <item name="android:fontFamily">@font/paytone_regular</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/color_body1</item>
+        <item name="android:gravity">center</item>
+    </style>
     <style name="MyAlertDialogTheme" parent="@android:style/Theme.Material.Light.Dialog">
         <item name="colorAccent">@color/color_button</item>
         <item name="android:colorAccent">@color/color_button</item>
