@@ -68,6 +68,12 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
                 Toast.makeText(requireContext(), "Problem while loading data.", Toast.LENGTH_SHORT).show()
             }
         }
+
+        fabAddMetting.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_to_create_meeting_fragment
+            )
+        }
     }
 
     private fun setupRecyclerviews() {

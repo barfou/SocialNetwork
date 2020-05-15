@@ -24,6 +24,7 @@ class PreferencesFragment: Fragment() {
             this.setTitle(R.string.title_fragment_preferences)
             this.setDisplayHomeAsUpEnabled(true)
         }
+
     }
 
 }
