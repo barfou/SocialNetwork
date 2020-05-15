@@ -53,6 +53,10 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
             this.setDisplayHomeAsUpEnabled(false)
         }
 
+        (activity as? MainActivity)?.run {
+            this.mode = MainActivity.Mode.HOMEPAGE
+        }
+
         setupRecyclerviews()
         mainViewModel.retrieveData {
             if (it) {

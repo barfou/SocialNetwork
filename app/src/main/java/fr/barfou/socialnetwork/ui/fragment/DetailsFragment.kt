@@ -81,6 +81,10 @@ class DetailsFragment : Fragment(), OnUserClickListener {
             this.setDisplayHomeAsUpEnabled(true)
         }
 
+        (activity as? MainActivity)?.run {
+            this.mode = MainActivity.Mode.DETAILS
+        }
+
         customizeImageView()
         setupAdapter()
         loadData()

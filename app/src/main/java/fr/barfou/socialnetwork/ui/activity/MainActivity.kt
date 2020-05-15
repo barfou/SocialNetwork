@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.findNavController
 import fr.barfou.socialnetwork.R
-import fr.barfou.socialnetwork.ui.fragment.DetailsFragment
 import fr.barfou.socialnetwork.ui.fragment.FilterFragment
 import fr.barfou.socialnetwork.ui.fragment.ProfilFragment
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
@@ -21,15 +20,21 @@ import fr.barfou.socialnetwork.ui.utils.changeToolbarFont
 import fr.barfou.socialnetwork.ui.utils.hideKeyboard
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.properties.Delegates
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var mainViewModel: MainViewModel
-    enum class Mode { HOMEPAGE, FILTER }
+    enum class Mode { HOMEPAGE, FILTER, PROFILE, DETAILS, MODIFY_PROFILE, CREATE_MEETING, PREFERENCES }
+    lateinit var searchItem: MenuItem
+    lateinit var sortItem: MenuItem
+
+    var mode: Mode by Delegates.observable(Mode.HOMEPAGE) { _, _, new ->
+        notifyFragmentChange(new)
+    }
 
     companion object {
-        var mode: Mode = Mode.HOMEPAGE
         var userId = ""
     }
 
@@ -57,7 +62,8 @@ class MainActivity : AppCompatActivity() {
 
         val manager = this.getSystemService(Context.SEARCH_SERVICE) as SearchManager
 
-        val searchItem = menu.findItem(R.id.search_item)
+        searchItem = menu.findItem(R.id.search_item)
+        sortItem = menu.findItem(R.id.sort_item)
         val searchView = searchItem.actionView as SearchView
 
         searchView.setSearchableInfo(manager.getSearchableInfo(this.componentName))
@@ -118,6 +124,35 @@ class MainActivity : AppCompatActivity() {
                     e.printStackTrace()
                 }
             }
+        }
+    }
+
+    private fun notifyFragmentChange(newValue: Mode) {
+        when (newValue) {
+            Mode.HOMEPAGE, Mode.FILTER -> showSearch()
+            Mode.PROFILE, Mode.DETAILS, Mode.MODIFY_PROFILE, Mode.CREATE_MEETING, Mode.PREFERENCES -> hideSearch()
+        }
+    }
+
+    private fun hideSearch() {
+        try {
+            searchItem.isVisible = false
+            searchItem.isEnabled = false
+            sortItem.isVisible = false
+            sortItem.isEnabled = false
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun showSearch() {
+        try {
+            searchItem.isVisible = true
+            searchItem.isEnabled = true
+            sortItem.isVisible = true
+            sortItem.isEnabled = true
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }

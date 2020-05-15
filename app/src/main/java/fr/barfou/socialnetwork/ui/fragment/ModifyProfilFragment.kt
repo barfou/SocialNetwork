@@ -35,9 +35,14 @@ class ModifyProfilFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         (activity as? MainActivity)?.supportActionBar?.apply {
             this.setTitle(R.string.title_fragment_modify_profil)
-            this.setDisplayHomeAsUpEnabled(false)
+            this.setDisplayHomeAsUpEnabled(true)
+        }
+
+        (activity as? MainActivity)?.run {
+            this.mode = MainActivity.Mode.MODIFY_PROFILE
         }
 
         btnCancelEditProfil.setOnClickListener {

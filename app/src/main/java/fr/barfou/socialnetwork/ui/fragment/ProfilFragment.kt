@@ -48,9 +48,14 @@ class ProfilFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         (activity as? MainActivity)?.supportActionBar?.apply {
             this.setTitle(R.string.title_fragment_profil)
             this.setDisplayHomeAsUpEnabled(true)
+        }
+
+        (activity as? MainActivity)?.run {
+            this.mode = MainActivity.Mode.PROFILE
         }
 
         loadUserData()?.run {
