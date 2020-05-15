@@ -174,15 +174,17 @@ class MainActivity : AppCompatActivity() {
             arrayChecked[which] = isChecked
         }
 
-        builder.setPositiveButton("OK") { _, _ ->
+        builder.setPositiveButton("Ok") { _, _ ->
             sortWith(arrayChecked)
-
         }
+
+        //builder.setNegativeButton("Annuler") { _, _ -> }
+
         dialog = builder.create()
         dialog.show()
     }
 
     private fun sortWith(checked: BooleanArray) {
-
+        var test = mainViewModel.filterMeetingsByDate()
     }
 }

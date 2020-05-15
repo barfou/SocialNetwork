@@ -11,9 +11,11 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import fr.barfou.socialnetwork.data.model.*
 import fr.barfou.socialnetwork.ui.activity.MainActivity
+import fr.barfou.socialnetwork.ui.utils.toDateTime
 import fr.barfou.socialnetwork.ui.utils.unAccent
 import kotlinx.coroutines.launch
-import java.lang.IllegalStateException
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 open class MainViewModel(
 ) : ViewModel() {
@@ -150,6 +152,14 @@ open class MainViewModel(
             listUsers[i]
         else
             null
+    }
+
+    fun filterMeetingsByDate(): MutableList<Meeting> {
+        return listMeetings.map { meeting -> meeting to meeting.dateEvent.toDateTime() }
+                .filter { it.second.isAfter(LocalDate.now()) }
+                .sortedBy { it.second }
+                .map { it.first }
+                .toMutableList()
     }
 
     fun filterMeetingByName(name: String, onSuccess: OnSuccess<List<Meeting>>) {
@@ -382,6 +392,7 @@ open class MainViewModel(
     }
 
     private fun initMeetings() {
+
         listMeetings.add(Meeting("", listUsers[0].firebaseId, listTypeMeeting[12].firebaseId, listTypeMeeting[12].name, Theme.SPORT, "Ludo Club", "05/05/2020", "20/05/2020", "0.0", "0.0", ""))
         listMeetings.add(Meeting("", listUsers[1].firebaseId, listTypeMeeting[2].firebaseId, listTypeMeeting[2].name, Theme.CULTURE, "Expo Impressionniste", "01/05/2020", "25/05/2020", "0.0", "0.0", ""))
         listMeetings.add(Meeting("", listUsers[0].firebaseId, listTypeMeeting[7].firebaseId, listTypeMeeting[7].name, Theme.SPORT, "Speed Karting", "26/04/2020", "22/05/2020", "0.0", "0.0", ""))
@@ -392,6 +403,19 @@ open class MainViewModel(
         listMeetings.add(Meeting("", listUsers[2].firebaseId, listTypeMeeting[1].firebaseId, listTypeMeeting[1].name, Theme.CULTURE, "Le misanthrope", "17/04/2020", "25/05/2020", "0.0", "0.0", ""))
         listMeetings.add(Meeting("", listUsers[1].firebaseId, listTypeMeeting[3].firebaseId, listTypeMeeting[3].name, Theme.CULTURE, "Le Vieux Lyon", "04/05/2020", "07/06/2020", "0.0", "0.0", ""))
         listMeetings.add(Meeting("", listUsers[2].firebaseId, listTypeMeeting[5].firebaseId, listTypeMeeting[5].name, Theme.CULTURE, "La fête du paradis", "02/03/2020", "26/05/2020", "0.0", "0.0", ""))
+
+
+        /*listMeetings.add(Meeting("", listUsers[0].firebaseId, listTypeMeeting[12].firebaseId, listTypeMeeting[12].name, Theme.SPORT, "Ludo Club", "05/05/2020", "20/02/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[1].firebaseId, listTypeMeeting[2].firebaseId, listTypeMeeting[2].name, Theme.CULTURE, "Expo Impressionniste", "01/05/2020", "25/02/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[0].firebaseId, listTypeMeeting[7].firebaseId, listTypeMeeting[7].name, Theme.SPORT, "Speed Karting", "26/04/2020", "22/02/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[3].firebaseId, listTypeMeeting[13].firebaseId, listTypeMeeting[13].name, Theme.SPORT, "Escalade", "07/03/2020", "29/02/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[3].firebaseId, listTypeMeeting[9].firebaseId, listTypeMeeting[9].name, Theme.SPORT, "UTMB", "08/04/2020", "09/02/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[0].firebaseId, listTypeMeeting[8].firebaseId, listTypeMeeting[8].name, Theme.SPORT, "The Sky Divers", "02/05/2020", "30/02/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[2].firebaseId, listTypeMeeting[4].firebaseId, listTypeMeeting[4].name, Theme.CULTURE, "Concert U2", "01/02/2020", "08/02/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[2].firebaseId, listTypeMeeting[1].firebaseId, listTypeMeeting[1].name, Theme.CULTURE, "Le misanthrope", "17/04/2020", "25/05/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[1].firebaseId, listTypeMeeting[3].firebaseId, listTypeMeeting[3].name, Theme.CULTURE, "Le Vieux Lyon", "04/05/2020", "07/06/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[2].firebaseId, listTypeMeeting[5].firebaseId, listTypeMeeting[5].name, Theme.CULTURE, "La fête du paradis", "02/03/2020", "26/05/2020", "0.0", "0.0", ""))*/
+
         listMeetings.forEach {
             pushMeetingToFirebase(it)
         }
