@@ -131,7 +131,8 @@
             android:paddingVertical="10dp">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_location"
+                style="@style/OnSurface"
+                android:id="@+id/tv_location_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -142,6 +143,7 @@
                 tools:text="ici" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                style="@style/OnSurface"
                 android:id="@+id/tv_date_meeting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -150,9 +152,10 @@
                 android:drawableStart="@drawable/ic_time"
                 android:drawablePadding="5dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_location" />
+                app:layout_constraintTop_toBottomOf="@id/tv_location_details" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                style="@style/OnSurface"
                 android:id="@+id/tv_details_meeting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
