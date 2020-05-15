@@ -44,6 +44,14 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/preferences_fragment"
+        android:name="fr.barfou.socialnetwork.ui.fragment.PreferencesFragment"
+        android:label="preferences_fragment"
+        tools:layout="@layout/fragment_preferences">
+
+    </fragment>
+
     <action
         android:id="@+id/action_to_profil_fragment"
         app:destination="@id/profil_fragment"
@@ -79,6 +87,14 @@
     <action
         android:id="@+id/action_to_home_fragment"
         app:destination="@id/home_fragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+
+    <action
+        android:id="@+id/action_to_preferences_fragment"
+        app:destination="@id/preferences_fragment"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_left"

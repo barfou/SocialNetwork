@@ -55,8 +55,6 @@ class ProfilFragment: Fragment() {
 
         loadUserData()?.run {
 
-
-
             tvLoginUser.text = this.pseudo
             //tvNumberLevelUser.text = this.level
 
@@ -85,15 +83,19 @@ class ProfilFragment: Fragment() {
             listTrophy.add("11 Mai 2020")
 
             trophyAdapter.submitList(listTrophy)
-
-            btnNavEditProfil.setOnClickListener {
-                findNavController().navigate(
-                    R.id.action_to_modify_profil_fragment
-                )
-            }
         }
 
+        btnNavEditProfil.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_to_modify_profil_fragment
+            )
+        }
 
+        btnNavPreferences.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_to_preferences_fragment
+            )
+        }
 
         /*tvShowAllTrophys.setOnClickListener {
             findNavController().navigate(
