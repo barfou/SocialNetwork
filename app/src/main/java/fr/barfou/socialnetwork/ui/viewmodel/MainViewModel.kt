@@ -11,6 +11,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import fr.barfou.socialnetwork.data.model.*
 import fr.barfou.socialnetwork.ui.activity.MainActivity
+import fr.barfou.socialnetwork.ui.utils.getDistanceFromLatLongInM
 import fr.barfou.socialnetwork.ui.utils.toDateTime
 import fr.barfou.socialnetwork.ui.utils.unAccent
 import kotlinx.coroutines.launch
@@ -466,6 +467,12 @@ open class MainViewModel(
         val firebaseId = userMeetingJoinRef.push().key!!
         userMeetingJoin.firebaseId = firebaseId
         userMeetingJoinRef.child(firebaseId).setValue(userMeetingJoin)
+    }
+
+    private fun test() {
+        var test = getDistanceFromLatLongInM(belleville.lat, villefranche.lat, belleville.long, villefranche.long)
+        var test2 = getDistanceFromLatLongInM(bourgEnBresse.lat, lyon.lat, bourgEnBresse.long, lyon.long)
+        var test3 = getDistanceFromLatLongInM(quincie.lat, macon.lat, quincie.long, macon.long)
     }
 
     companion object Factory : ViewModelProvider.Factory {

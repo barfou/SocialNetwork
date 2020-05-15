@@ -18,6 +18,7 @@ import fr.barfou.socialnetwork.ui.fragment.FilterFragment
 import fr.barfou.socialnetwork.ui.fragment.ProfilFragment
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import fr.barfou.socialnetwork.ui.utils.changeToolbarFont
+import fr.barfou.socialnetwork.ui.utils.getDistanceFromLatLongInM
 import fr.barfou.socialnetwork.ui.utils.hideKeyboard
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -183,6 +184,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sortWith(checked: BooleanArray) {
-        var test = mainViewModel.filterMeetingsByDate()
+
     }
 }
