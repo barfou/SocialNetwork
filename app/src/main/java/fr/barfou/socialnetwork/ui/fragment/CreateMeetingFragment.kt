@@ -5,11 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import kotlinx.android.synthetic.main.fragment_create_meeting.*
 
-class CreateMeetingFragment: Fragment() {
+class CreateMeetingFragment: Fragment(), OnMapReadyCallback {
+
+    lateinit var googleMap: GoogleMap
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +37,13 @@ class CreateMeetingFragment: Fragment() {
             this.mode = MainActivity.Mode.PROFILE
         }
 
+        //Affichage de la carte
+        mapMeeting.onCreate(savedInstanceState)
+        mapMeeting.onResume()
+
+        mapMeeting.getMapAsync(this)
+        //
+
         btnCancelCreateMeeting.setOnClickListener {
             requireActivity().onBackPressed()
         }
@@ -40,5 +53,15 @@ class CreateMeetingFragment: Fragment() {
             requireActivity().onBackPressed()
         }
 
+    }
+
+    override fun onMapReady(map: GoogleMap?) {
+        map?.let {
+            googleMap = it
+
+            val location = LatLng(46.1333, 5.1667)
+
+            googleMap.addMarker(MarkerOptions().position(location).title("Your current location"))
+        }
     }
 }

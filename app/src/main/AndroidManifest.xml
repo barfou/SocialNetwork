@@ -25,6 +25,13 @@
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.LocationActivity"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDMG4nKdfQpO5IytUVUE4BHlzmeEFQscBs"/>
+
     </application>
+
+
 
 </manifest>
