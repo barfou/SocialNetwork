@@ -28,7 +28,9 @@ import kotlin.properties.Delegates
 class MainActivity : AppCompatActivity() {
 
     lateinit var mainViewModel: MainViewModel
+
     enum class Mode { HOMEPAGE, FILTER, PROFILE, DETAILS, MODIFY_PROFILE, CREATE_MEETING, PREFERENCES }
+
     lateinit var searchItem: MenuItem
     lateinit var sortItem: MenuItem
 
@@ -104,8 +106,8 @@ class MainActivity : AppCompatActivity() {
              */
             R.id.profil_item -> {
                 findNavController(R.id.main_fragment_container).navigate(
-                    R.id.action_to_profil_fragment,
-                    bundleOf(ProfilFragment.USER_ID_KEY to userId)
+                        R.id.action_to_profil_fragment,
+                        bundleOf(ProfilFragment.USER_ID_KEY to userId)
                 )
             }
             R.id.sort_item -> showDialog()
@@ -159,17 +161,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showDialog(){
+    private fun showDialog() {
 
         lateinit var dialog: AlertDialog
         val arrayColors = arrayOf(resources.getString(R.string.date_event), resources.getString(R.string.proximity))
-        val arrayChecked = booleanArrayOf(false,false)
+        val arrayChecked = booleanArrayOf(false, false)
 
         var builder = AlertDialog.Builder(this, R.style.MyAlertDialogTheme)
 
         builder.setTitle(R.string.sort_by)
 
-        builder.setMultiChoiceItems(arrayColors, arrayChecked) { _, which, isChecked->
+        builder.setMultiChoiceItems(arrayColors, arrayChecked) { _, which, isChecked ->
             arrayChecked[which] = isChecked
         }
 
@@ -177,13 +179,18 @@ class MainActivity : AppCompatActivity() {
             sortWith(arrayChecked)
         }
 
-        //builder.setNegativeButton("Annuler") { _, _ -> }
-
         dialog = builder.create()
         dialog.show()
     }
 
     private fun sortWith(checked: BooleanArray) {
-
+        mainViewModel.currentUser?.run {
+            try {
+                var test = mainViewModel.filterMeetingsByProximity(mainViewModel.currentUser!!.latitude.toDouble(), mainViewModel.currentUser!!.longitude.toDouble())
+                var str = "test"
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 }

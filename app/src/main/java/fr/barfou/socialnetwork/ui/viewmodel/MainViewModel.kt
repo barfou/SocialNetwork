@@ -169,15 +169,26 @@ open class MainViewModel(
     }
 
     fun filterMeetingsByDate(): MutableList<Meeting> {
-        return listMeetings.asSequence().map { meeting -> meeting to meeting.dateEvent.toDateTime() }
+        return listMeetings.asSequence()
+                .map { meeting -> meeting to meeting.dateEvent.toDateTime() }
                 .filter { it.second.isAfter(LocalDate.now()) }
                 .sortedBy { it.second }
                 .map { it.first }
                 .toMutableList()
     }
 
-    fun filterMeetingsByProximity(): MutableList<Meeting> {
-        TODO()
+    fun filterMeetingsByProximity(userLat: Double, userLong: Double): Map<Meeting, Double> {
+        return try {
+            listMeetings.asSequence()
+                    .map { meeting -> meeting to getDistanceFromLatLongInM(userLat, meeting.latitude.toDouble(), userLong, meeting.longitude.toDouble()) }
+                    .sortedBy { it.second }
+                    .toMap()
+                    /*.map { it.first }
+                    .toMutableList()*/
+        } catch (e: Exception) {
+            e.printStackTrace()
+            mapOf()
+        }
     }
 
     fun filterMeetingByName(name: String, onSuccess: OnSuccess<List<Meeting>>) {
