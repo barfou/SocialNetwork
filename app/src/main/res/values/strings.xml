@@ -36,4 +36,7 @@
     <string name="title_fragment_modify_profil">Modifier le profil</string>
     <string name="title_fragment_details">Détails</string>
     <string name="uploaded_by">Mis en ligne par</string>
+    <string name="sort_by">Trier par</string>
+    <string name="date_event"> Date de l\'évènement</string>
+    <string name="proximity">Proximité</string>
 </resources>

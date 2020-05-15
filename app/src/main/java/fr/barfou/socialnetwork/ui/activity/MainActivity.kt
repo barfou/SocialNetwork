@@ -1,5 +1,6 @@
 package fr.barfou.socialnetwork.ui.activity
 
+import android.app.AlertDialog
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
@@ -106,6 +107,7 @@ class MainActivity : AppCompatActivity() {
                     bundleOf(ProfilFragment.USER_ID_KEY to userId)
                 )
             }
+            R.id.sort_item -> showDialog()
         }
         return super.onOptionsItemSelected(item)
     }
@@ -154,5 +156,33 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun showDialog(){
+
+        // android:buttonTint="@color/color_body1"
+
+        lateinit var dialog: AlertDialog
+        val arrayColors = arrayOf(resources.getString(R.string.date_event), resources.getString(R.string.proximity))
+        val arrayChecked = booleanArrayOf(false,false)
+
+        var builder = AlertDialog.Builder(this, R.style.MyAlertDialogTheme)
+
+        builder.setTitle(R.string.sort_by)
+
+        builder.setMultiChoiceItems(arrayColors, arrayChecked) { _, which, isChecked->
+            arrayChecked[which] = isChecked
+        }
+
+        builder.setPositiveButton("OK") { _, _ ->
+            sortWith(arrayChecked)
+
+        }
+        dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun sortWith(checked: BooleanArray) {
+
     }
 }
