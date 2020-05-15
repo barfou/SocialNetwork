@@ -47,7 +47,11 @@ class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeLi
 
         (activity as? MainActivity)?.supportActionBar?.apply {
             this.setTitle(R.string.app_name)
-            this.setDisplayHomeAsUpEnabled(false)
+            this.setDisplayHomeAsUpEnabled(true)
+        }
+
+        (activity as? MainActivity)?.run {
+            this.mode = MainActivity.Mode.FILTER
         }
 
         meetingAdapterFilter = MeetingAdapterFilter(this)

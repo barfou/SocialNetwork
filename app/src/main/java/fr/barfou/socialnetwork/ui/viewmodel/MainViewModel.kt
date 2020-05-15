@@ -40,22 +40,10 @@ open class MainViewModel(
         updatePopularityMap()
         return popularityMap.toList().sortedByDescending { (_, value) -> value }
                 .map { it.first }
-                .filter { it !in getMeetingsJoined(MainActivity.userId).map { it.firebaseId } }
+                .filter { it !in getMeetingsJoined(MainActivity.userId).map { item -> item.firebaseId } }
                 .take(5)
                 .mapNotNull { getMeetingById(it) }
                 .toMutableList()
-    }
-
-    private fun updatePopularityMap() {
-        popularityMap = mutableMapOf()
-        listUserMeetingJoin.forEach { userMeetingJoin ->
-            if (popularityMap.containsKey(userMeetingJoin.meetingId)) {
-                var current: Int = popularityMap[userMeetingJoin.meetingId] as Int
-                current++
-                popularityMap[userMeetingJoin.meetingId] = current
-            } else
-                popularityMap[userMeetingJoin.meetingId] = 1
-        }
     }
 
     fun isJoined(meetingId: String): Boolean {
@@ -112,42 +100,13 @@ open class MainViewModel(
                 .toMutableList()
     }
 
+    fun getMeetingsSuggested(userId: String) = listMeetings.filter { it.userId == userId }.toMutableList()
+
     fun getSubscribedUsers(meetingId: String): MutableList<User> {
         return listUserMeetingJoin.filter { it.meetingId == meetingId }
                 .map { it.userId }
                 .mapNotNull { getUserById(it) }
                 .toMutableList()
-    }
-
-    // Return Element & Position
-    private fun getUserMeetingJoin(userId: String, meetingId: String): Pair<UserMeetingJoin, Int>? {
-        var found = false
-        var i = 0
-        while (!found && i < listUserMeetingJoin.size) {
-            if (listUserMeetingJoin[i].userId == currentUser!!.firebaseId && listUserMeetingJoin[i].meetingId == meetingId)
-                found = true
-            else
-                i++
-        }
-        return if (found)
-            Pair(listUserMeetingJoin[i], i)
-        else
-            null
-    }
-
-    private fun getMeetingById(meetingId: String): Meeting? {
-        var found = false
-        var i = 0
-        while (!found && i < listMeetings.size) {
-            if (listMeetings[i].firebaseId == meetingId)
-                found = true
-            else
-                i++
-        }
-        return if (found)
-            listMeetings[i]
-        else
-            null
     }
 
     fun updateCurrentUser(userId: String) {
@@ -239,6 +198,48 @@ open class MainViewModel(
                 onSuccess(true)
             }
         }
+    }
+
+    private fun updatePopularityMap() {
+        popularityMap = mutableMapOf()
+        listUserMeetingJoin.forEach { userMeetingJoin ->
+            if (popularityMap.containsKey(userMeetingJoin.meetingId)) {
+                var current: Int = popularityMap[userMeetingJoin.meetingId] as Int
+                current++
+                popularityMap[userMeetingJoin.meetingId] = current
+            } else
+                popularityMap[userMeetingJoin.meetingId] = 1
+        }
+    }
+    // Return Element & Position
+    private fun getUserMeetingJoin(userId: String, meetingId: String): Pair<UserMeetingJoin, Int>? {
+        var found = false
+        var i = 0
+        while (!found && i < listUserMeetingJoin.size) {
+            if (listUserMeetingJoin[i].userId == currentUser!!.firebaseId && listUserMeetingJoin[i].meetingId == meetingId)
+                found = true
+            else
+                i++
+        }
+        return if (found)
+            Pair(listUserMeetingJoin[i], i)
+        else
+            null
+    }
+
+    private fun getMeetingById(meetingId: String): Meeting? {
+        var found = false
+        var i = 0
+        while (!found && i < listMeetings.size) {
+            if (listMeetings[i].firebaseId == meetingId)
+                found = true
+            else
+                i++
+        }
+        return if (found)
+            listMeetings[i]
+        else
+            null
     }
 
     private fun initData(): Boolean {
@@ -381,16 +382,16 @@ open class MainViewModel(
     }
 
     private fun initMeetings() {
-        listMeetings.add(Meeting("", listUsers[0].pseudo, listTypeMeeting[12].firebaseId, listTypeMeeting[12].name, Theme.SPORT, "Ludo Club", "05/05/2020", "20/05/2020", "0.0", "0.0", ""))
-        listMeetings.add(Meeting("", listUsers[1].pseudo, listTypeMeeting[2].firebaseId, listTypeMeeting[2].name, Theme.CULTURE, "Expo Impressionniste", "01/05/2020", "25/05/2020", "0.0", "0.0", ""))
-        listMeetings.add(Meeting("", listUsers[0].pseudo, listTypeMeeting[7].firebaseId, listTypeMeeting[7].name, Theme.SPORT, "Speed Karting", "26/04/2020", "22/05/2020", "0.0", "0.0", ""))
-        listMeetings.add(Meeting("", listUsers[3].pseudo, listTypeMeeting[13].firebaseId, listTypeMeeting[13].name, Theme.SPORT, "Escalade", "07/03/2020", "29/05/2020", "0.0", "0.0", ""))
-        listMeetings.add(Meeting("", listUsers[3].pseudo, listTypeMeeting[9].firebaseId, listTypeMeeting[9].name, Theme.SPORT, "UTMB", "08/04/2020", "09/06/2020", "0.0", "0.0", ""))
-        listMeetings.add(Meeting("", listUsers[0].pseudo, listTypeMeeting[8].firebaseId, listTypeMeeting[8].name, Theme.SPORT, "The Sky Divers", "02/05/2020", "30/05/2020", "0.0", "0.0", ""))
-        listMeetings.add(Meeting("", listUsers[2].pseudo, listTypeMeeting[4].firebaseId, listTypeMeeting[4].name, Theme.CULTURE, "Concert U2", "01/02/2020", "08/07/2020", "0.0", "0.0", ""))
-        listMeetings.add(Meeting("", listUsers[2].pseudo, listTypeMeeting[1].firebaseId, listTypeMeeting[1].name, Theme.CULTURE, "Le misanthrope", "17/04/2020", "25/05/2020", "0.0", "0.0", ""))
-        listMeetings.add(Meeting("", listUsers[1].pseudo, listTypeMeeting[3].firebaseId, listTypeMeeting[3].name, Theme.CULTURE, "Le Vieux Lyon", "04/05/2020", "07/06/2020", "0.0", "0.0", ""))
-        listMeetings.add(Meeting("", listUsers[2].pseudo, listTypeMeeting[5].firebaseId, listTypeMeeting[5].name, Theme.CULTURE, "La fête du paradis", "02/03/2020", "26/05/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[0].firebaseId, listTypeMeeting[12].firebaseId, listTypeMeeting[12].name, Theme.SPORT, "Ludo Club", "05/05/2020", "20/05/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[1].firebaseId, listTypeMeeting[2].firebaseId, listTypeMeeting[2].name, Theme.CULTURE, "Expo Impressionniste", "01/05/2020", "25/05/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[0].firebaseId, listTypeMeeting[7].firebaseId, listTypeMeeting[7].name, Theme.SPORT, "Speed Karting", "26/04/2020", "22/05/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[3].firebaseId, listTypeMeeting[13].firebaseId, listTypeMeeting[13].name, Theme.SPORT, "Escalade", "07/03/2020", "29/05/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[3].firebaseId, listTypeMeeting[9].firebaseId, listTypeMeeting[9].name, Theme.SPORT, "UTMB", "08/04/2020", "09/06/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[0].firebaseId, listTypeMeeting[8].firebaseId, listTypeMeeting[8].name, Theme.SPORT, "The Sky Divers", "02/05/2020", "30/05/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[2].firebaseId, listTypeMeeting[4].firebaseId, listTypeMeeting[4].name, Theme.CULTURE, "Concert U2", "01/02/2020", "08/07/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[2].firebaseId, listTypeMeeting[1].firebaseId, listTypeMeeting[1].name, Theme.CULTURE, "Le misanthrope", "17/04/2020", "25/05/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[1].firebaseId, listTypeMeeting[3].firebaseId, listTypeMeeting[3].name, Theme.CULTURE, "Le Vieux Lyon", "04/05/2020", "07/06/2020", "0.0", "0.0", ""))
+        listMeetings.add(Meeting("", listUsers[2].firebaseId, listTypeMeeting[5].firebaseId, listTypeMeeting[5].name, Theme.CULTURE, "La fête du paradis", "02/03/2020", "26/05/2020", "0.0", "0.0", ""))
         listMeetings.forEach {
             pushMeetingToFirebase(it)
         }

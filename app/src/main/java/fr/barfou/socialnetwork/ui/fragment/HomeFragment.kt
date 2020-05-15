@@ -53,6 +53,10 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
             this.setDisplayHomeAsUpEnabled(false)
         }
 
+        (activity as? MainActivity)?.run {
+            this.mode = MainActivity.Mode.HOMEPAGE
+        }
+
         setupRecyclerviews()
         mainViewModel.retrieveData {
             if (it) {
@@ -96,9 +100,11 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
                 tv_my_activities.show()
                 recycler_view_1.show()
                 meetingAdapter.submitList(this)
+                spacer.show()
             } else {
                 recycler_view_1.hide()
                 tv_my_activities.hide()
+                spacer.hide()
             }
         }
 

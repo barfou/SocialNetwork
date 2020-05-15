@@ -6,17 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.navigation.fragment.findNavController
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.UserAdapter
+import fr.barfou.socialnetwork.ui.listener.OnUserClickListener
+import fr.barfou.socialnetwork.ui.utils.hide
+import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.details_fragment.*
 
-class DetailsFragment : Fragment() {
+class DetailsFragment : Fragment(), OnUserClickListener {
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var userAdapter: UserAdapter
@@ -77,10 +82,13 @@ class DetailsFragment : Fragment() {
             this.setDisplayHomeAsUpEnabled(true)
         }
 
-        loadData()
+        (activity as? MainActivity)?.run {
+            this.mode = MainActivity.Mode.DETAILS
+        }
+
         customizeImageView()
         setupAdapter()
-        loadAdapter()
+        loadData()
         customizeButton()
 
         btn_join.setOnClickListener {
@@ -97,6 +105,7 @@ class DetailsFragment : Fragment() {
             Toast.makeText(requireContext(), "Changement enregistré.", Toast.LENGTH_LONG).show()
             joined = !joined
             customizeButton()
+            showUsers()
         } else {
             Toast.makeText(requireContext(), "Un problème a empêché le traitement des données.", Toast.LENGTH_SHORT).show()
         }
@@ -106,32 +115,48 @@ class DetailsFragment : Fragment() {
     private fun loadData() {
         try {
             mainViewModel.getUserById(userId)?.run {
-                tv_username.text = this.pseudo
+                card_creator.show()
+                tv_user_pseudo.text = this.getInitials()
+                tv_date_upload.text = " le $datePost"
+                tv_user_pseudo.setOnClickListener {
+                    navigateToProfileFragment(userId)
+                }
             }
-            tv_date_post.text = datePost
             tv_meeting_name.text = name
             tv_location.text = "$latitude $longitude"
-            tv_date_meeting.text = dateEvent
+            tv_date_meeting.text = "Aura lieu le $dateEvent"
             tv_details_meeting.text = details
+            showUsers()
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
+    private fun showUsers() {
+        mainViewModel.getSubscribedUsers(meetingId).run {
+            tv_nb_person.text = this.size.toString() + " participants"
+            userAdapter.submitList(this)
+        }
+    }
+
     private fun customizeButton() {
-        if (joined) {
-            btn_join.setBackgroundResource(R.drawable.rounded_button_quit)
-            btn_join.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_exit, 0, 0, 0)
-            btn_join.text = resources.getString(R.string.quit)
+        if (userId != MainActivity.userId) { // Si l'utilisateur courant n'est pas le créateur du meeting
+            if (joined) {
+                btn_join.setBackgroundResource(R.drawable.rounded_button_quit)
+                btn_join.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_exit, 0, 0, 0)
+                btn_join.text = resources.getString(R.string.quit)
+            } else {
+                btn_join.setBackgroundResource(R.drawable.rounded_button)
+                btn_join.setCompoundDrawablesWithIntrinsicBounds(R.drawable.join, 0, 0, 0)
+                btn_join.text = resources.getString(R.string.join)
+            }
         } else {
-            btn_join.setBackgroundResource(R.drawable.rounded_button)
-            btn_join.setCompoundDrawablesWithIntrinsicBounds(R.drawable.join, 0, 0, 0)
-            btn_join.text = resources.getString(R.string.join)
+            btn_join.hide()
         }
     }
 
     private fun setupAdapter() {
-        userAdapter = UserAdapter()
+        userAdapter = UserAdapter(this)
         recycler_view.apply {
             adapter = userAdapter
             if (itemDecorationCount == 0) addItemDecoration(UserAdapter.OffsetDecoration())
@@ -157,11 +182,15 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun loadAdapter() {
-        var list = mutableListOf<User>()
-        list.add(User("", "", "Jack The Ripper", "", "12/05/2020", "Je m'appelle Jack", "0.0", "0.0"))
-        list.add(User("", "", "John Doe", "", "12/05/2020", "Je m'appelle John", "0.0", "0.0"))
-        list.add(User("", "", "Kurt Cobain", "", "12/05/2020", "Je m'appelle Kurt", "0.0", "0.0"))
-        userAdapter.submitList(list)
+    private fun navigateToProfileFragment(userId: String) {
+        findNavController().navigate(
+                R.id.action_to_profil_fragment,
+                bundleOf(ProfilFragment.USER_ID_KEY to userId)
+        )
+    }
+
+    // OnUserClickListener Implementation
+    override fun invoke(view: View, user: User) {
+        navigateToProfileFragment(user.firebaseId)
     }
 }

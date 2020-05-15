@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.details_fragment.*
 import kotlinx.android.synthetic.main.fragment_profil.*
 
 
-class ProfilFragment: Fragment() {
+class ProfilFragment : Fragment() {
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var trophyAdapter: TrophyAdapter
@@ -39,30 +39,35 @@ class ProfilFragment: Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_profil, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         (activity as? MainActivity)?.supportActionBar?.apply {
             this.setTitle(R.string.title_fragment_profil)
             this.setDisplayHomeAsUpEnabled(true)
         }
 
-        loadUserData()?.run {
+        (activity as? MainActivity)?.run {
+            this.mode = MainActivity.Mode.PROFILE
+        }
 
+        loadUserData()?.run {
             tvLoginUser.text = this.pseudo
             //tvNumberLevelUser.text = this.level
-
-            val location: ConvertedLocation = convertLatLongToLocation(requireContext(), this.latitude.toDouble(), this.longitude.toDouble())
-
-            tvTown.text = location.town
-            tvCountry.text = location.country
-
+            try {
+                val location: ConvertedLocation = convertLatLongToLocation(requireContext(), this.latitude.toDouble(), this.longitude.toDouble())
+                tvTown.text = location.town
+                tvCountry.text = location.country
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             tvBio.text = this.about
 
             //tvNumberMeetingSuggest.text = this.countMeetingSuggest
@@ -83,6 +88,7 @@ class ProfilFragment: Fragment() {
             listTrophy.add("11 Mai 2020")
 
             trophyAdapter.submitList(listTrophy)
+
         }
 
         btnNavEditProfil.setOnClickListener {
@@ -113,7 +119,6 @@ class ProfilFragment: Fragment() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
         return user
     }
 }

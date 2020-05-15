@@ -9,4 +9,6 @@ data class User(
         var about: String,
         var latitude: String,
         var longitude: String
-)
+) {
+    fun getInitials() = pseudo.split(" ").map { it.first() }.take(2).joinToString("").toUpperCase()
+}
