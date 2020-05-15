@@ -16,6 +16,7 @@ import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.UserAdapter
 import fr.barfou.socialnetwork.ui.listener.OnUserClickListener
+import fr.barfou.socialnetwork.ui.utils.hide
 import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.details_fragment.*
@@ -139,14 +140,18 @@ class DetailsFragment : Fragment(), OnUserClickListener {
     }
 
     private fun customizeButton() {
-        if (joined) {
-            btn_join.setBackgroundResource(R.drawable.rounded_button_quit)
-            btn_join.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_exit, 0, 0, 0)
-            btn_join.text = resources.getString(R.string.quit)
+        if (userId != MainActivity.userId) { // Si l'utilisateur courant n'est pas le créateur du meeting
+            if (joined) {
+                btn_join.setBackgroundResource(R.drawable.rounded_button_quit)
+                btn_join.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_exit, 0, 0, 0)
+                btn_join.text = resources.getString(R.string.quit)
+            } else {
+                btn_join.setBackgroundResource(R.drawable.rounded_button)
+                btn_join.setCompoundDrawablesWithIntrinsicBounds(R.drawable.join, 0, 0, 0)
+                btn_join.text = resources.getString(R.string.join)
+            }
         } else {
-            btn_join.setBackgroundResource(R.drawable.rounded_button)
-            btn_join.setCompoundDrawablesWithIntrinsicBounds(R.drawable.join, 0, 0, 0)
-            btn_join.text = resources.getString(R.string.join)
+            btn_join.hide()
         }
     }
 
