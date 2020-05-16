@@ -11,6 +11,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import fr.barfou.socialnetwork.data.model.*
 import fr.barfou.socialnetwork.ui.activity.MainActivity
+import fr.barfou.socialnetwork.ui.fragment.FilterFragment
 import fr.barfou.socialnetwork.ui.utils.getDistanceFromLatLongInM
 import fr.barfou.socialnetwork.ui.utils.toDateTime
 import fr.barfou.socialnetwork.ui.utils.unAccent
@@ -168,7 +169,7 @@ open class MainViewModel(
             null
     }
 
-    fun filterMeetingsByDate(): MutableList<Meeting> {
+    private fun filterMeetingsByDate(): MutableList<Meeting> {
         return listMeetings.asSequence()
                 .map { meeting -> meeting to meeting.dateEvent.toDateTime() }
                 .filter { it.second.isAfter(LocalDate.now()) }
@@ -177,24 +178,41 @@ open class MainViewModel(
                 .toMutableList()
     }
 
-    fun filterMeetingsByProximity(userLat: Double, userLong: Double): Map<Meeting, Double> {
+    private fun filterMeetingsByProximity(): MutableList<Meeting> {
         return try {
             listMeetings.asSequence()
-                    .map { meeting -> meeting to getDistanceFromLatLongInM(userLat, meeting.latitude.toDouble(), userLong, meeting.longitude.toDouble()) }
+                    .map { meeting -> meeting to getDistanceFromLatLongInM(currentUser!!.latitude.toDouble(), meeting.latitude.toDouble(), currentUser!!.longitude.toDouble(), meeting.longitude.toDouble()) }
                     .sortedBy { it.second }
-                    .toMap()
-                    /*.map { it.first }
-                    .toMutableList()*/
+                    .map { it.first }
+                    .toMutableList()
         } catch (e: Exception) {
             e.printStackTrace()
-            mapOf()
+            mutableListOf()
         }
+    }
+
+    fun filterMeetingsWithNameAndFilter(name: String, filter: FilterFragment.FilterMode, onSuccess: OnSuccess<MutableList<Meeting>>) {
+        return when (filter) {
+            FilterFragment.FilterMode.BY_PROXIMITY -> {
+                filterMeetingsByProximity().byName(name).run(onSuccess)
+            }
+            FilterFragment.FilterMode.BY_DATE -> {
+                filterMeetingsByDate().byName(name).run(onSuccess)
+            }
+            FilterFragment.FilterMode.NONE -> {
+                listMeetings.byName(name).run(onSuccess)
+            }
+        }
+    }
+
+    private fun MutableList<Meeting>.byName(name: String): MutableList<Meeting> {
+        return this.filter { it.name.unAccent().contains(name.unAccent(), ignoreCase = true) }
+                .toMutableList()
     }
 
     fun filterMeetingByName(name: String, onSuccess: OnSuccess<List<Meeting>>) {
         viewModelScope.launch {
-            listMeetings.filter { it.name.unAccent().contains(name.unAccent(), ignoreCase = true) }
-                    .toMutableList()
+            listMeetings.byName(name)
                     .run(onSuccess)
         }
     }

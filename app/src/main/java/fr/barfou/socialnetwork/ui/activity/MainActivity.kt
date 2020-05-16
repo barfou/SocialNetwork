@@ -16,6 +16,7 @@ import androidx.navigation.findNavController
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.ui.fragment.FilterFragment
 import fr.barfou.socialnetwork.ui.fragment.ProfilFragment
+import fr.barfou.socialnetwork.ui.listener.OnFilterChangeListener
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import fr.barfou.socialnetwork.ui.utils.changeToolbarFont
 import fr.barfou.socialnetwork.ui.utils.getDistanceFromLatLongInM
@@ -80,20 +81,16 @@ class MainActivity : AppCompatActivity() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 main_root_layout.hideKeyboard()
                 if (mode == Mode.HOMEPAGE) {
-                    findNavController(R.id.main_fragment_container).navigate(
-                            R.id.action_to_filter_fragment,
-                            bundleOf(FilterFragment.SEARCH_VALUE_KEY to query)
-                    )
-                    mode = Mode.FILTER
+                    navigateToFilterFragment(query = query)
                 }
                 return true
             }
         })
         searchView.setOnCloseListener {
-            if (mode == Mode.FILTER) {
+            /*if (mode == Mode.FILTER) {
                 onBackPressed()
                 mode = Mode.HOMEPAGE
-            }
+            }*/
             return@setOnCloseListener false
         }
         return true
@@ -113,6 +110,17 @@ class MainActivity : AppCompatActivity() {
             R.id.sort_item -> showDialog()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun navigateToFilterFragment(filter: FilterFragment.FilterMode = FilterFragment.FilterMode.NONE, query: String = "") {
+        findNavController(R.id.main_fragment_container).navigate(
+                R.id.action_to_filter_fragment,
+                bundleOf(
+                        FilterFragment.SEARCH_VALUE_KEY to query,
+                        FilterFragment.FILTER_VALUE_KEY to filter.toString()
+                )
+        )
+        mode = Mode.FILTER
     }
 
     private fun getForegroundFragment(): Fragment? {
@@ -164,33 +172,40 @@ class MainActivity : AppCompatActivity() {
     private fun showDialog() {
 
         lateinit var dialog: AlertDialog
-        val arrayColors = arrayOf(resources.getString(R.string.date_event), resources.getString(R.string.proximity))
-        val arrayChecked = booleanArrayOf(false, false)
+        val listFilter = mutableListOf(resources.getString(R.string.date_event), resources.getString(R.string.proximity))
+        if (mode == Mode.FILTER)
+            listFilter.add(resources.getText(R.string.none).toString())
 
         var builder = AlertDialog.Builder(this, R.style.MyAlertDialogTheme)
 
         builder.setTitle(R.string.sort_by)
 
-        builder.setMultiChoiceItems(arrayColors, arrayChecked) { _, which, isChecked ->
-            arrayChecked[which] = isChecked
-        }
-
-        builder.setPositiveButton("Ok") { _, _ ->
-            sortWith(arrayChecked)
+        builder.setSingleChoiceItems(listFilter.toTypedArray(), -1) { _, position ->
+            when (position) {
+                0 -> sortWith(FilterFragment.FilterMode.BY_DATE)
+                1 -> sortWith(FilterFragment.FilterMode.BY_PROXIMITY)
+                2 -> sortWith(FilterFragment.FilterMode.NONE)
+            }
+            dialog.cancel()
         }
 
         dialog = builder.create()
         dialog.show()
     }
 
-    private fun sortWith(checked: BooleanArray) {
-        mainViewModel.currentUser?.run {
-            try {
-                var test = mainViewModel.filterMeetingsByProximity(mainViewModel.currentUser!!.latitude.toDouble(), mainViewModel.currentUser!!.longitude.toDouble())
-                var str = "test"
-            } catch (e: Exception) {
-                e.printStackTrace()
+    private fun sortWith(filter: FilterFragment.FilterMode) {
+        when (mode) {
+            Mode.HOMEPAGE -> navigateToFilterFragment(filter = filter)
+            Mode.FILTER -> {
+                getForegroundFragment()?.run {
+                    try {
+                        (this as OnFilterChangeListener).onFilterChange(filter)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
             }
+            else -> {}
         }
     }
 }

@@ -31,7 +31,6 @@
     <string name="edit_profil_menu_text">Modifier le profile</string>
     <string name="text_level">Niveau</string>
     <string name="text_activity">activités</string>
-
     <string name="title_fragment_profil">Profil</string>
     <string name="title_fragment_modify_profil">Modifier le profil</string>
     <string name="title_fragment_details">Détails</string>
@@ -39,4 +38,5 @@
     <string name="sort_by">Trier par</string>
     <string name="date_event">Date de l\'évènement</string>
     <string name="proximity">Proximité</string>
+    <string name="none">Aucun</string>
 </resources>
