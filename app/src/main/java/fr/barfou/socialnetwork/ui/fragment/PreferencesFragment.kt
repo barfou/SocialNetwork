@@ -25,6 +25,9 @@ class PreferencesFragment: Fragment() {
             this.setDisplayHomeAsUpEnabled(true)
         }
 
+        (activity as? MainActivity)?.run {
+            this.mode = MainActivity.Mode.PREFERENCES
+        }
     }
 
 }

@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var searchItem: MenuItem
     lateinit var sortItem: MenuItem
+    lateinit var profileItem: MenuItem
 
     var mode: Mode by Delegates.observable(Mode.HOMEPAGE) { _, _, new ->
         notifyFragmentChange(new)
@@ -69,6 +70,7 @@ class MainActivity : AppCompatActivity() {
 
         searchItem = menu.findItem(R.id.search_item)
         sortItem = menu.findItem(R.id.sort_item)
+        profileItem = menu.findItem(R.id.profil_item)
         val searchView = searchItem.actionView as SearchView
 
         searchView.setSearchableInfo(manager.getSearchableInfo(this.componentName))
@@ -142,8 +144,36 @@ class MainActivity : AppCompatActivity() {
 
     private fun notifyFragmentChange(newValue: Mode) {
         when (newValue) {
-            Mode.HOMEPAGE, Mode.FILTER -> showSearch()
-            Mode.PROFILE, Mode.DETAILS, Mode.MODIFY_PROFILE, Mode.CREATE_MEETING, Mode.PREFERENCES -> hideSearch()
+            Mode.HOMEPAGE, Mode.FILTER -> {
+                showSearch()
+                showProfileIcon()
+            }
+            Mode.DETAILS, Mode.CREATE_MEETING -> {
+                hideSearch()
+                showProfileIcon()
+            }
+            Mode.PROFILE, Mode.MODIFY_PROFILE, Mode.PREFERENCES -> {
+                hideSearch()
+                hideProfileIcon()
+            }
+        }
+    }
+
+    private fun hideProfileIcon() {
+        try {
+            profileItem.isVisible = false
+            profileItem.isEnabled = false
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun showProfileIcon() {
+        try {
+            profileItem.isVisible = true
+            profileItem.isEnabled = true
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -205,7 +235,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
-            else -> {}
+            else -> {
+            }
         }
     }
 }
