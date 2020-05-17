@@ -1,12 +1,15 @@
 package fr.barfou.socialnetwork.ui.widget.viewholder
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.Meeting
+import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
+import fr.barfou.socialnetwork.ui.utils.toCapital
 import kotlinx.android.synthetic.main.holder_filter_meeting.view.*
 import kotlinx.android.synthetic.main.holder_meeting.view.*
 import kotlinx.android.synthetic.main.holder_meeting.view.tv_date
@@ -14,16 +17,23 @@ import kotlinx.android.synthetic.main.holder_meeting.view.tv_name
 
 class FilterMeetingViewHolder private constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(model: Meeting, onClick: OnMeetingClickListener) {
+    @SuppressLint("SetTextI18n")
+    fun bind(model: Pair<Meeting, User?>, onClick: OnMeetingClickListener) {
         itemView.apply {
-            this.setOnClickListener { onClick(it, model) }
+            this.setOnClickListener { onClick(it, model.first) }
             tv_username.text = "username_test"
             tv_date_post.text = "date_poste_test"
-            tv_name.text = model.name
-            tv_date.text = model.dateEvent
-            tv_type_filter.text = model.type
+            tv_name.text = model.first.name
+            tv_date.text = "Aura lieu le " + model.first.dateEvent
+            tv_type_filter.text = model.first.type
+            model.second?.run {
+                tv_user_pseudo.text = this.getInitials()
+                tv_username.text = "Créé par" + this.pseudo.toCapital()
+            }
 
-            when (model.type) {
+            tv_date_post.text = "le " + model.first.dateCreation
+
+            when (model.first.type) {
                 "Karaoké" -> image_view_filter.setImageResource(R.drawable.karaoke)
                 "Pièce de Théâtre" -> image_view_filter.setImageResource(R.drawable.theatre)
                 "Exposition" -> image_view_filter.setImageResource(R.drawable.exposition)

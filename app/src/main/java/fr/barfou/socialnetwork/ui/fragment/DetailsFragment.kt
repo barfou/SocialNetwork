@@ -12,14 +12,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import fr.barfou.socialnetwork.R
+import fr.barfou.socialnetwork.data.model.ConvertedLocation
 import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.UserAdapter
 import fr.barfou.socialnetwork.ui.listener.OnUserClickListener
+import fr.barfou.socialnetwork.ui.utils.convertLatLongToLocation
 import fr.barfou.socialnetwork.ui.utils.hide
 import fr.barfou.socialnetwork.ui.utils.show
+import fr.barfou.socialnetwork.ui.utils.toCapital
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
+import kotlinx.android.synthetic.main.activity_location.*
 import kotlinx.android.synthetic.main.details_fragment.*
+import java.util.*
 
 class DetailsFragment : Fragment(), OnUserClickListener {
 
@@ -33,8 +38,8 @@ class DetailsFragment : Fragment(), OnUserClickListener {
     private lateinit var dateEvent: String
     private lateinit var name: String
     private lateinit var type: String
-    private var latitude: Double = 0.0
-    private var longitude: Double = 0.0
+    private lateinit var latitude:String
+    private lateinit var longitude: String
     private lateinit var details: String
 
     companion object {
@@ -61,8 +66,8 @@ class DetailsFragment : Fragment(), OnUserClickListener {
         dateEvent = arguments?.getString(DATE_EVENT_KEY) ?: throw IllegalStateException("No Date found")
         name = arguments?.getString(NAME_KEY) ?: throw IllegalStateException("No Name found")
         type = arguments?.getString(TYPE_KEY) ?: throw IllegalStateException("No Type found")
-        latitude = arguments?.getDouble(LATITUDE_KEY) ?: throw IllegalStateException("No Latitude found")
-        longitude = arguments?.getDouble(LONGITUDE_KEY) ?: throw IllegalStateException("No Longitude found")
+        latitude = arguments?.getString(LATITUDE_KEY) ?: throw IllegalStateException("No Latitude found")
+        longitude = arguments?.getString(LONGITUDE_KEY) ?: throw IllegalStateException("No Longitude found")
         details = arguments?.getString(DETAILS_KEY) ?: throw IllegalStateException("No Details found")
     }
 
@@ -123,10 +128,22 @@ class DetailsFragment : Fragment(), OnUserClickListener {
                 }
             }
             tv_meeting_name.text = name
-            tv_location.text = "$latitude $longitude"
             tv_date_meeting.text = "Aura lieu le $dateEvent"
             tv_details_meeting.text = details
             showUsers()
+            showLocation()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showLocation() {
+        try {
+            val location = convertLatLongToLocation(this.requireContext(), latitude.toDouble(), longitude.toDouble())
+            val town = location.town
+            val country = location.country
+            tv_location_details.text = "$town, $country"
         } catch (e: Exception) {
             e.printStackTrace()
         }

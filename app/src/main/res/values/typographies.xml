@@ -1,12 +1,14 @@
 <resources>
 
     <style name="Header">
+        <item name="android:gravity">center_vertical</item>
         <item name="android:fontFamily">@font/russo_one_regular</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/color_body1</item>
     </style>
 
     <style name="OnSurface">
+        <item name="android:gravity">center_vertical</item>
         <item name="android:fontFamily">@font/capriola_regular</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/color_body1</item>

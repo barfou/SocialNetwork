@@ -19,16 +19,29 @@
         android:paddingBottom="5dp"
         tools:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/image_creator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/user"
-            android:scaleType="center"
+        <androidx.cardview.widget.CardView
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/image_creator"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/color_background"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="20dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_user_pseudo"
+                style="@style/HolderUser"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                tools:text="JF" />
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_username"
@@ -37,8 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:textStyle="bold"
+            android:singleLine="true"
             tools:text="Username"
-            android:text="Username"
             app:layout_constraintStart_toEndOf="@id/image_creator"
             app:layout_constraintBottom_toTopOf="@id/tv_date_post"
             app:layout_constraintTop_toTopOf="@id/image_creator" />
@@ -49,8 +62,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:singleLine="true"
             tools:text="03/05/2020"
-            android:text="03/05/2020"
             app:layout_constraintStart_toEndOf="@id/image_creator"
             app:layout_constraintTop_toBottomOf="@id/tv_username"
             app:layout_constraintBottom_toBottomOf="@id/image_creator"/>
@@ -96,13 +109,14 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_name"
-            style="@style/OnSurface"
+            style="@style/Header"
             android:textStyle="bold"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:layout_marginVertical="5dp"
             android:paddingHorizontal="10dp"
             android:gravity="center_vertical"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image_view_filter"
             tools:text="Name" />
@@ -110,13 +124,14 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_date"
             style="@style/OnSurface"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="24dp"
             android:paddingHorizontal="10dp"
             android:gravity="center_vertical"
             android:layout_marginBottom="5dp"
             android:drawableLeft="@drawable/ic_time"
             android:drawablePadding="5dp"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_name"
             tools:text="Date" />

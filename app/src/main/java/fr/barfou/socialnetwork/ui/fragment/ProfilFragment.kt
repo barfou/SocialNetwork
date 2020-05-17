@@ -14,6 +14,7 @@ import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.TrophyAdapter
 import fr.barfou.socialnetwork.ui.utils.convertLatLongToLocation
+import fr.barfou.socialnetwork.ui.utils.toCapital
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.details_fragment.*
 import kotlinx.android.synthetic.main.fragment_profil.*
@@ -46,6 +47,7 @@ class ProfilFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_profil, container, false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -59,19 +61,14 @@ class ProfilFragment : Fragment() {
         }
 
         loadUserData()?.run {
-            tvLoginUser.text = this.pseudo
+            tvProfil.text = this.getInitials()
+            tvLoginUser.text = this.pseudo.toCapital()
             //tvNumberLevelUser.text = this.level
-            try {
-                val location: ConvertedLocation = convertLatLongToLocation(requireContext(), this.latitude.toDouble(), this.longitude.toDouble())
-                tvTown.text = location.town
-                tvCountry.text = location.country
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            showLocation(this.latitude, this.longitude)
             tvBio.text = this.about
 
-            //tvNumberMeetingSuggest.text = this.countMeetingSuggest
-            //tvNumberMeetingJoin.text = this.countMeetingJoin
+            tvMeetingSuggest.text = resources.getText(R.string.text_suggest).toString() + " " + mainViewModel.getMeetingsSuggestedCount(userId).toString() + " " + resources.getText(R.string.text_activity).toString()
+            tvMeetingJoin.text = resources.getText(R.string.text_join).toString() + " " + mainViewModel.getMeetingsJoinedCount(userId).toString() + " " + resources.getText(R.string.text_activity).toString()
 
             trophyAdapter = TrophyAdapter()
             rvTrophys.apply {
@@ -108,6 +105,18 @@ class ProfilFragment : Fragment() {
                 R.id.action_login_fragment_to_register_fragment
             )
         }*/
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showLocation(latitude: String, longitude: String) {
+        try {
+            val location = convertLatLongToLocation(this.requireContext(), latitude.toDouble(), longitude.toDouble())
+            val town = location.town
+            val country = location.country
+            tv_location_profile.text = "$town, $country"
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun loadUserData(): User? {
