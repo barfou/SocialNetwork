@@ -40,14 +40,14 @@ open class MainViewModel(
     var popularityMap = mutableMapOf<String, Int>()
 
     // Locations
-    val villefranche = ConvertedLocation(45.988800048828125, 4.715638160705566, "Villefranche sur Saône", "France")
-    val bourgEnBresse = ConvertedLocation(46.199424743652344, 5.21480131149292, "Bourg en Bresse", "France")
-    val chatillon = ConvertedLocation(46.11964416503906, 4.957491874694824, "Châtillon sur Chalaronne", "France")
-    val macon = ConvertedLocation(46.3036683, 4.8322266, "Mâcon", "France")
-    val belleville = ConvertedLocation(46.11201477050781, 4.728860855102539, "Belleville sur Saône", "France")
-    val quincie = ConvertedLocation(46.1172922, 4.6139836, "Quincié-en-Beaujolais", "France")
-    val gleize = ConvertedLocation(45.9888277, 4.6971455, "Villefranche", "France")
-    val lyon = ConvertedLocation(45.7578137, 4.8320114, "Lyon", "France")
+    private val villefranche = ConvertedLocation(45.988800048828125, 4.715638160705566, "Villefranche sur Saône", "France")
+    private val bourgEnBresse = ConvertedLocation(46.199424743652344, 5.21480131149292, "Bourg en Bresse", "France")
+    private val chatillon = ConvertedLocation(46.11964416503906, 4.957491874694824, "Châtillon sur Chalaronne", "France")
+    private val macon = ConvertedLocation(46.3036683, 4.8322266, "Mâcon", "France")
+    private val belleville = ConvertedLocation(46.11201477050781, 4.728860855102539, "Belleville sur Saône", "France")
+    private val quincie = ConvertedLocation(46.1172922, 4.6139836, "Quincié-en-Beaujolais", "France")
+    private val gleize = ConvertedLocation(45.9888277, 4.6971455, "Villefranche", "France")
+    private val lyon = ConvertedLocation(45.7578137, 4.8320114, "Lyon", "France")
 
     fun getMostPopularMeetings(): MutableList<Meeting> {
         updatePopularityMap()
@@ -191,22 +191,27 @@ open class MainViewModel(
         }
     }
 
-    fun filterMeetingsWithNameAndFilter(name: String, filter: FilterFragment.FilterMode, onSuccess: OnSuccess<MutableList<Meeting>>) {
+    fun filterMeetingsWithNameAndFilter(name: String, filter: FilterFragment.FilterMode, onSuccess: OnSuccess<MutableList<Pair<Meeting, User?>>>) {
         return when (filter) {
             FilterFragment.FilterMode.BY_PROXIMITY -> {
-                filterMeetingsByProximity().byName(name).run(onSuccess)
+                filterMeetingsByProximity().byName(name).pairWithUser().run(onSuccess)
             }
             FilterFragment.FilterMode.BY_DATE -> {
-                filterMeetingsByDate().byName(name).run(onSuccess)
+                filterMeetingsByDate().byName(name).pairWithUser().run(onSuccess)
             }
             FilterFragment.FilterMode.NONE -> {
-                listMeetings.byName(name).run(onSuccess)
+                listMeetings.byName(name).pairWithUser().run(onSuccess)
             }
         }
     }
 
     private fun MutableList<Meeting>.byName(name: String): MutableList<Meeting> {
         return this.filter { it.name.unAccent().contains(name.unAccent(), ignoreCase = true) }
+                .toMutableList()
+    }
+
+    private fun MutableList<Meeting>.pairWithUser(): MutableList<Pair<Meeting, User?>> {
+        return this.map { meeting -> meeting to getUserById(meeting.userId) }
                 .toMutableList()
     }
 
