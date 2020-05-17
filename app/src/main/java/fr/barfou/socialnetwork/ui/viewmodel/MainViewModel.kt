@@ -49,6 +49,20 @@ open class MainViewModel(
     private val gleize = ConvertedLocation(45.9888277, 4.6971455, "Villefranche", "France")
     private val lyon = ConvertedLocation(45.7578137, 4.8320114, "Lyon", "France")
 
+    fun addNewMeeting(meeting: Meeting) {
+        val firebaseId = pushMeetingToFirebase(meeting)
+        meeting.firebaseId = firebaseId
+        listMeetings.add(meeting)
+    }
+
+    fun updateUser(user: User) {
+        val position = getUserPosition(user.firebaseId)
+        if (position > -1) {
+            listUsers[position] = user
+            usersRef.child(user.firebaseId).setValue(user)
+        }
+    }
+
     fun getMostPopularMeetings(): MutableList<Meeting> {
         updatePopularityMap()
         return popularityMap.toList().sortedByDescending { (_, value) -> value }
@@ -169,52 +183,6 @@ open class MainViewModel(
             null
     }
 
-    private fun filterMeetingsByDate(): MutableList<Meeting> {
-        return listMeetings.asSequence()
-                .map { meeting -> meeting to meeting.dateEvent.toDateTime() }
-                .filter { it.second.isAfter(LocalDate.now()) }
-                .sortedBy { it.second }
-                .map { it.first }
-                .toMutableList()
-    }
-
-    private fun filterMeetingsByProximity(): MutableList<Meeting> {
-        return try {
-            listMeetings.asSequence()
-                    .map { meeting -> meeting to getDistanceFromLatLongInM(currentUser!!.latitude.toDouble(), meeting.latitude.toDouble(), currentUser!!.longitude.toDouble(), meeting.longitude.toDouble()) }
-                    .sortedBy { it.second }
-                    .map { it.first }
-                    .toMutableList()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            mutableListOf()
-        }
-    }
-
-    fun filterMeetingsWithNameAndFilter(name: String, filter: FilterFragment.FilterMode, onSuccess: OnSuccess<MutableList<Pair<Meeting, User?>>>) {
-        return when (filter) {
-            FilterFragment.FilterMode.BY_PROXIMITY -> {
-                filterMeetingsByProximity().byName(name).pairWithUser().run(onSuccess)
-            }
-            FilterFragment.FilterMode.BY_DATE -> {
-                filterMeetingsByDate().byName(name).pairWithUser().run(onSuccess)
-            }
-            FilterFragment.FilterMode.NONE -> {
-                listMeetings.byName(name).pairWithUser().run(onSuccess)
-            }
-        }
-    }
-
-    private fun MutableList<Meeting>.byName(name: String): MutableList<Meeting> {
-        return this.filter { it.name.unAccent().contains(name.unAccent(), ignoreCase = true) }
-                .toMutableList()
-    }
-
-    private fun MutableList<Meeting>.pairWithUser(): MutableList<Pair<Meeting, User?>> {
-        return this.map { meeting -> meeting to getUserById(meeting.userId) }
-                .toMutableList()
-    }
-
     fun filterMeetingByName(name: String, onSuccess: OnSuccess<List<Meeting>>) {
         viewModelScope.launch {
             listMeetings.byName(name)
@@ -228,6 +196,20 @@ open class MainViewModel(
                 Theme.CULTURE -> listMeetings.filter { it.theme == Theme.CULTURE }.toMutableList().run(onSuccess)
                 Theme.SPORT -> listMeetings.filter { it.theme == Theme.SPORT }.toMutableList().run(onSuccess)
                 Theme.AUTRE -> mutableListOf<Meeting>().run(onSuccess)
+            }
+        }
+    }
+
+    fun filterMeetingsWithNameAndFilter(name: String, filter: FilterFragment.FilterMode, onSuccess: OnSuccess<MutableList<Pair<Meeting, User?>>>) {
+        return when (filter) {
+            FilterFragment.FilterMode.BY_PROXIMITY -> {
+                filterMeetingsByProximity().byName(name).pairWithUser().run(onSuccess)
+            }
+            FilterFragment.FilterMode.BY_DATE -> {
+                filterMeetingsByDate().byName(name).pairWithUser().run(onSuccess)
+            }
+            FilterFragment.FilterMode.NONE -> {
+                listMeetings.byName(name).pairWithUser().run(onSuccess)
             }
         }
     }
@@ -260,6 +242,38 @@ open class MainViewModel(
                 onSuccess(true)
             }
         }
+    }
+
+    private fun filterMeetingsByDate(): MutableList<Meeting> {
+        return listMeetings.asSequence()
+                .map { meeting -> meeting to meeting.dateEvent.toDateTime() }
+                .filter { it.second.isAfter(LocalDate.now()) }
+                .sortedBy { it.second }
+                .map { it.first }
+                .toMutableList()
+    }
+
+    private fun filterMeetingsByProximity(): MutableList<Meeting> {
+        return try {
+            listMeetings.asSequence()
+                    .map { meeting -> meeting to getDistanceFromLatLongInM(currentUser!!.latitude.toDouble(), meeting.latitude.toDouble(), currentUser!!.longitude.toDouble(), meeting.longitude.toDouble()) }
+                    .sortedBy { it.second }
+                    .map { it.first }
+                    .toMutableList()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            mutableListOf()
+        }
+    }
+
+    private fun MutableList<Meeting>.byName(name: String): MutableList<Meeting> {
+        return this.filter { it.name.unAccent().contains(name.unAccent(), ignoreCase = true) }
+                .toMutableList()
+    }
+
+    private fun MutableList<Meeting>.pairWithUser(): MutableList<Pair<Meeting, User?>> {
+        return this.map { meeting -> meeting to getUserById(meeting.userId) }
+                .toMutableList()
     }
 
     private fun updatePopularityMap() {
@@ -303,6 +317,21 @@ open class MainViewModel(
             listMeetings[i]
         else
             null
+    }
+
+    private fun getUserPosition(userId: String): Int {
+        var found = false
+        var i = 0
+        while (!found && i < listUsers.size) {
+            if (listUsers[i].firebaseId == userId)
+                found = true
+            else
+                i++
+        }
+        return if (found)
+            i
+        else
+            -1
     }
 
     private fun initData(): Boolean {
@@ -491,10 +520,11 @@ open class MainViewModel(
         typeMeetingsRef.child(firebaseId).setValue(typeMeeting)
     }
 
-    private fun pushMeetingToFirebase(meeting: Meeting) {
+    private fun pushMeetingToFirebase(meeting: Meeting): String {
         val firebaseId = usersRef.push().key!!
         meeting.firebaseId = firebaseId
         meetingsRef.child(firebaseId).setValue(meeting)
+        return firebaseId
     }
 
     private fun pushUserMeetingJoin(userMeetingJoin: UserMeetingJoin) {
