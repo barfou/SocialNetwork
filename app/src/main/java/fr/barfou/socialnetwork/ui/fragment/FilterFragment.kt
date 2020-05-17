@@ -17,6 +17,7 @@ import fr.barfou.socialnetwork.ui.listener.OnFilterChangeListener
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import fr.barfou.socialnetwork.ui.utils.hide
+import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_filter.*
 
@@ -100,10 +101,27 @@ class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeLi
     }
 
     private fun loadAdapter() {
+        progress_bar.show()
         mainViewModel.filterMeetingsWithNameAndFilter(searchValue, filterMode) { list ->
-            progress_bar.hide()
-            meetingAdapterFilter.submitList(list)
+            if (list.size > 0) {
+                showRecycler()
+                meetingAdapterFilter.submitList(list)
+            } else {
+                showNoResult()
+            }
         }
+    }
+
+    private fun showNoResult() {
+        progress_bar.hide()
+        recycler_view_filter.hide()
+        tv_no_result.show()
+    }
+
+    private fun showRecycler() {
+        progress_bar.hide()
+        tv_no_result.hide()
+        recycler_view_filter.show()
     }
 
     companion object {
