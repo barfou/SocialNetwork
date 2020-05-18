@@ -26,6 +26,11 @@ open class LoginViewModel(
         usersRef.child(user.firebaseId).setValue(user)
     }
 
+    fun updateUserLocation(userId: String, newLatitude: Double, newLongitude: Double) {
+        usersRef.child(userId).child("latitude").setValue(newLatitude.toString())
+        usersRef.child(userId).child("longitude").setValue(newLongitude.toString())
+    }
+
     companion object Factory : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

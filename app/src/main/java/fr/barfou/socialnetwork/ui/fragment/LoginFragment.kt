@@ -52,26 +52,10 @@ class LoginFragment : Fragment(), OnLocationResult {
         }
 
         btnLogin.setOnClickListener {
-            progress_bar.show()
-            if (!etPseudo.text.isNullOrBlank() && !etPassword.text.isNullOrBlank()) {
-                auth.signInWithEmailAndPassword(etPseudo.text.toString(), etPassword.text.toString())
-                        .addOnCompleteListener(this.requireActivity()) { task ->
-                            if (task.isSuccessful) {
-                                val user = auth.currentUser
-                                user?.run {
-                                    progress_bar.hide()
-                                    val intent = Intent(requireContext(), MainActivity::class.java)
-                                    intent.putExtra("userId", user.uid)
-                                    startActivity(intent)
-                                }
-                            } else {
-                                progress_bar.hide()
-                                Toast.makeText(requireContext(), "Authentication failed.", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-            } else {
-                progress_bar.hide()
-                Toast.makeText(requireContext(), "Saisie incorrecte.", Toast.LENGTH_SHORT).show()
+            (activity as? LoginActivity)?.run {
+                this.getLastLocation { result -> // Callback invoked if permissions not needed
+                    signInUser(location = result)
+                }
             }
         }
 
@@ -82,8 +66,33 @@ class LoginFragment : Fragment(), OnLocationResult {
         }
     }
 
+    private fun signInUser(location: Location) {
+        progress_bar.show()
+        if (!etPseudo.text.isNullOrBlank() && !etPassword.text.isNullOrBlank()) {
+            auth.signInWithEmailAndPassword(etPseudo.text.toString(), etPassword.text.toString())
+                    .addOnCompleteListener(this.requireActivity()) { task ->
+                        if (task.isSuccessful) {
+                            val user = auth.currentUser
+                            user?.run {
+                                loginViewModel.updateUserLocation(user.uid, location.latitude, location.longitude)
+                                progress_bar.hide()
+                                val intent = Intent(requireContext(), MainActivity::class.java)
+                                intent.putExtra("userId", user.uid)
+                                startActivity(intent)
+                            }
+                        } else {
+                            progress_bar.hide()
+                            Toast.makeText(requireContext(), "Authentication failed.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+        } else {
+            progress_bar.hide()
+            Toast.makeText(requireContext(), "Saisie incorrecte.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     // On Location Result Listener
-    override fun invoke(p1: Location) {
-        TODO("Not yet implemented")
+    override fun invoke(result: Location) {
+        signInUser(location = result)
     }
 }
