@@ -17,7 +17,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -26,15 +25,13 @@ import com.google.android.gms.location.*
 import com.google.firebase.auth.FirebaseAuth
 import fr.barfou.socialnetwork.ui.activity.LoginActivity
 import fr.barfou.socialnetwork.R
-import fr.barfou.socialnetwork.data.model.ConvertedLocation
 import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
-import fr.barfou.socialnetwork.ui.utils.convertLatLongToLocation
+import fr.barfou.socialnetwork.ui.listener.OnLocationResult
 import fr.barfou.socialnetwork.ui.utils.getCurrentDate
 import fr.barfou.socialnetwork.ui.utils.hide
 import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.LoginViewModel
-import kotlinx.android.synthetic.main.activity_location.*
 import kotlinx.android.synthetic.main.fragment_login.btnLogin
 import kotlinx.android.synthetic.main.fragment_login.btnRegister
 import kotlinx.android.synthetic.main.fragment_login.etPassword
@@ -44,7 +41,8 @@ class RegisterFragment : Fragment() {
 
     val PERMISSION_ID = 42
     lateinit var mFusedLocationClient: FusedLocationProviderClient
-    lateinit var addresses : List<Address>
+    lateinit var addresses: List<Address>
+    var currentLocation: Location? = null
 
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var auth: FirebaseAuth
@@ -83,26 +81,13 @@ class RegisterFragment : Fragment() {
         }
 
         btnRegister.setOnClickListener {
-            progress_bar.show()
             if (!etPseudoRegister.text.isNullOrBlank() && !etMail.text.isNullOrBlank() && !etPassword.text.isNullOrBlank()) {
                 if (chkCGU.isChecked) {
-                    auth.createUserWithEmailAndPassword(etMail.text.toString(), etPassword.text.toString())
-                            .addOnCompleteListener(this.requireActivity()) { task ->
-                                if (task.isSuccessful) {
-                                    val user = auth.currentUser
-                                    user?.run {
-                                        progress_bar.hide()
-                                        loginViewModel.insertUserDetails(User(user!!.uid, etMail.text.toString(), etPseudoRegister.text.toString(), "", getCurrentDate(), "", "", ""))
-                                        val intent = Intent(requireContext(), MainActivity::class.java)
-                                        intent.putExtra("userId", user.uid)
-                                        startActivity(intent)
-                                    }
-
-                                } else {
-                                    progress_bar.hide()
-                                    Toast.makeText(requireContext(), "Creation failed." + task.exception, Toast.LENGTH_LONG).show()
-                                }
-                            }
+                    getLastLocation { result ->
+                        result?.run {
+                            registerUser(location = result)
+                        }
+                    }
                 } else {
                     progress_bar.hide()
                     Toast.makeText(requireContext(), "Veuillez acceptez les CGU.", Toast.LENGTH_LONG).show()
@@ -114,32 +99,46 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    private fun registerUser(location: Location) {
+        progress_bar.show()
+        auth.createUserWithEmailAndPassword(etMail.text.toString(), etPassword.text.toString())
+                .addOnCompleteListener(this.requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        val user = auth.currentUser
+                        user?.run {
+                            try {
+                                progress_bar.hide()
+                                var tempLat = location.latitude
+                                var tempLong = location.longitude
+                                loginViewModel.insertUserDetails(User(user.uid, etMail.text.toString(), etPseudoRegister.text.toString(), "", getCurrentDate(), "", location.latitude.toString(), location.longitude.toString()))
+                                val intent = Intent(requireContext(), MainActivity::class.java)
+                                intent.putExtra("userId", user.uid)
+                                startActivity(intent)
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                Toast.makeText(requireContext(), "Creation failed." + task.exception, Toast.LENGTH_LONG).show()
+                            }
+                        }
+
+                    } else {
+                        progress_bar.hide()
+                        Toast.makeText(requireContext(), "Creation failed." + task.exception, Toast.LENGTH_LONG).show()
+                    }
+                }
+    }
+
     @SuppressLint("MissingPermission")
-    private fun getLastLocation() {
+    private fun getLastLocation(onLocationResult: OnLocationResult) {
         if (checkPermissions()) {
             if (isLocationEnabled()) {
 
                 mFusedLocationClient.lastLocation.addOnCompleteListener(this.requireActivity()) { task ->
-                    var location: Location? = task.result
+                    val location: Location? = task.result
                     if (location == null) {
                         requestNewLocationData()
                     } else {
                         try {
-
-                            /*geocoder = Geocoder(this)
-
-                            addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-
-                            val city = addresses[0].locality
-                            val country = addresses[0].countryName*/
-
-                            val myLocation : ConvertedLocation = convertLatLongToLocation(this.requireActivity(), location.latitude, location.longitude)
-
-                            val town = myLocation.town
-                            val country = myLocation.country
-
-                            tvLatLong.text = location.latitude.toString() + " / " + location.longitude.toString()
-                            tvLocation.text = town + " / " + country
+                            onLocationResult(location)
                         } catch (e: Exception) {
                             println(e.toString())
                         }
@@ -211,7 +210,11 @@ class RegisterFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_ID) {
             if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                getLastLocation()
+                getLastLocation { result ->
+                    result?.run {
+                        registerUser(location = result)
+                    }
+                }
             }
         }
     }
