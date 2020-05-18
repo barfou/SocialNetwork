@@ -91,9 +91,7 @@ class RegisterFragment : Fragment(), OnLocationResult {
                         user?.run {
                             try {
                                 progress_bar.hide()
-                                var tempLat = location.latitude
-                                var tempLong = location.longitude
-                                loginViewModel.insertUserDetails(User(user.uid, etMail.text.toString(), etPseudoRegister.text.toString(), "", getCurrentDate(), "", location.latitude.toString(), location.longitude.toString()))
+                                loginViewModel.insertUserDetails(User(user.uid, etMail.text.toString(), etPseudoRegister.text.toString(), "", getCurrentDate(), "Bonjour, bienvenu sur mon profil !", location.latitude.toString(), location.longitude.toString()))
                                 val intent = Intent(requireContext(), MainActivity::class.java)
                                 intent.putExtra("userId", user.uid)
                                 startActivity(intent)

@@ -142,14 +142,13 @@ open class MainViewModel(
                 .toMutableList()
     }
 
-    fun updateCurrentUser(userId: String) {
+    fun initCurrentUser(userId: String) {
 
         if (currentUser == null) {
             usersRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                     Log.d("FirebaseError", error.message)
                 }
-
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     try {
                         var user = dataSnapshot.value as HashMap<*, *>
@@ -674,11 +673,11 @@ open class MainViewModel(
     }
 
     private fun initUsers() {
-        listUsers.add(User("", "john.lennon@gmail.com", "John Lennon", "", "22/05/2019", "Bonjour, bienvenue sur mon profil !", villefranche.lat.toString(), villefranche.long.toString()))
-        listUsers.add(User("", "marie.curie@gmail.com", "Marie Currie", "", "20/04/2020", "Bonjour, bienvenue sur mon profil !", gleize.lat.toString(), gleize.long.toString()))
-        listUsers.add(User("", "je.dlv@gmail.com", "Jean Edmond De la Villardière", "", "17/03/2010", "Bonjour, bienvenue sur mon profil !", quincie.lat.toString(), quincie.long.toString()))
-        listUsers.add(User("", "samuel.urbanowicz@gmail.com", "Samuel Urbanowicz", "", "03/01/2017", "Bonjour, bienvenue sur mon profil !", macon.lat.toString(), macon.long.toString()))
-        listUsers.add(User("", "angela.merkel@gmail.com", "Angela Merkel", "", "04/04/2018", "Bonjour, bienvenue sur mon profil !", bourgEnBresse.lat.toString(), bourgEnBresse.long.toString()))
+        listUsers.add(User("", "john.lennon@gmail.com", "John Lennon", "", "22/05/2019", "Bonjour, bienvenu sur mon profil !", villefranche.lat.toString(), villefranche.long.toString()))
+        listUsers.add(User("", "marie.curie@gmail.com", "Marie Currie", "", "20/04/2020", "Bonjour, bienvenu sur mon profil !", gleize.lat.toString(), gleize.long.toString()))
+        listUsers.add(User("", "je.dlv@gmail.com", "Jean Edmond De la Villardière", "", "17/03/2010", "Bonjour, bienvenu sur mon profil !", quincie.lat.toString(), quincie.long.toString()))
+        listUsers.add(User("", "samuel.urbanowicz@gmail.com", "Samuel Urbanowicz", "", "03/01/2017", "Bonjour, bienvenu sur mon profil !", macon.lat.toString(), macon.long.toString()))
+        listUsers.add(User("", "angela.merkel@gmail.com", "Angela Merkel", "", "04/04/2018", "Bonjour, bienvenu sur mon profil !", bourgEnBresse.lat.toString(), bourgEnBresse.long.toString()))
         listUsers.forEach {
             pushUserToFirebase(it)
         }
@@ -707,7 +706,7 @@ open class MainViewModel(
     private fun initMeetings() {
 
         listMeetings.add(Meeting("", listUsers[0].firebaseId, listTypeMeeting[12].firebaseId, listTypeMeeting[12].name, Theme.SPORT, "Ludo Club", "05/05/2020", "20/05/2020", villefranche.lat.toString(), villefranche.long.toString(), "", "Pour amateurs de strikes et autres spares."))
-        listMeetings.add(Meeting("", listUsers[1].firebaseId, listTypeMeeting[2].firebaseId, listTypeMeeting[2].name, Theme.CULTURE, "Expo Impressionniste", "01/05/2020", "25/05/2020", macon.lat.toString(), macon.long.toString(), "", "Sur les traces de Claude Monet..."))
+        listMeetings.add(Meeting("", listUsers[1].firebaseId, listTypeMeeting[2].firebaseId, listTypeMeeting[2].name, Theme.CULTURE, "Expo Cézanne", "01/05/2020", "25/05/2020", macon.lat.toString(), macon.long.toString(), "", "Sur les traces de Cézanne..."))
         listMeetings.add(Meeting("", listUsers[0].firebaseId, listTypeMeeting[7].firebaseId, listTypeMeeting[7].name, Theme.SPORT, "Speed Karting", "26/04/2020", "22/05/2020", chatillon.lat.toString(), chatillon.long.toString(), "", "Gentleman drivers only."))
         listMeetings.add(Meeting("", listUsers[3].firebaseId, listTypeMeeting[13].firebaseId, listTypeMeeting[13].name, Theme.SPORT, "Escalade", "07/03/2020", "29/05/2020", gleize.lat.toString(), gleize.long.toString(), "", "Petite session grimpe au mur de Gleizé."))
         listMeetings.add(Meeting("", listUsers[3].firebaseId, listTypeMeeting[9].firebaseId, listTypeMeeting[9].name, Theme.SPORT, "UTMB", "08/04/2020", "09/06/2020", belleville.lat.toString(), belleville.long.toString(), "", "Remake de l'UTMB dans les monts du Beaujolais."))
@@ -716,6 +715,9 @@ open class MainViewModel(
         listMeetings.add(Meeting("", listUsers[2].firebaseId, listTypeMeeting[1].firebaseId, listTypeMeeting[1].name, Theme.CULTURE, "Le misanthrope", "17/04/2020", "25/05/2020", gleize.lat.toString(), gleize.long.toString(), "", "Excellente pièce de Molière. Venez nombreux."))
         listMeetings.add(Meeting("", listUsers[1].firebaseId, listTypeMeeting[3].firebaseId, listTypeMeeting[3].name, Theme.CULTURE, "Le Vieux Lyon", "04/05/2020", "07/06/2020", lyon.lat.toString(), lyon.long.toString(), "", "A la découverte du Vieux Lyon et de Fourvière."))
         listMeetings.add(Meeting("", listUsers[2].firebaseId, listTypeMeeting[5].firebaseId, listTypeMeeting[5].name, Theme.CULTURE, "La fête du paradis", "02/03/2020", "26/05/2020", chatillon.lat.toString(), chatillon.long.toString(), "", "Toujours avec modération."))
+        listMeetings.add(Meeting("", listUsers[1].firebaseId, listTypeMeeting[6].firebaseId, listTypeMeeting[6].name, Theme.SPORT, "Squash it", "02/04/2020", "02/06/2020", villefranche.lat.toString(), villefranche.long.toString(), "", "Et si on tapait dans la baballe ?!"))
+        listMeetings.add(Meeting("", listUsers[4].firebaseId, listTypeMeeting[10].firebaseId, listTypeMeeting[10].name, Theme.SPORT, "Alliance Paintball", "18/04/2020", "18/06/2020", bourgEnBresse.lat.toString(), bourgEnBresse.long.toString(), "", "Si vous aimez la peinture.."))
+        listMeetings.add(Meeting("", listUsers[1].firebaseId, listTypeMeeting[11].firebaseId, listTypeMeeting[11].name, Theme.SPORT, "Au fil des arbres", "08/04/2020", "20/06/2020", quincie.lat.toString(), quincie.long.toString(), "", "Tyrolienne et saut de Tarzan au menu !"))
         listMeetings.forEach {
             pushMeetingToFirebase(it)
         }
@@ -734,6 +736,13 @@ open class MainViewModel(
         listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[3].firebaseId))
         listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[5].firebaseId))
         listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[7].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[4].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[2].firebaseId, listMeetings[6].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[2].firebaseId, listMeetings[7].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[2].firebaseId, listMeetings[9].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[1].firebaseId, listMeetings[10].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[4].firebaseId, listMeetings[11].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[1].firebaseId, listMeetings[12].firebaseId))
         listUserMeetingJoin.forEach {
             pushUserMeetingJoin(it)
         }

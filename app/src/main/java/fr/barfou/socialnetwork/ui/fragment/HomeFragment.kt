@@ -60,7 +60,7 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
         setupRecyclerviews()
         mainViewModel.retrieveData {
             if (it) {
-                mainViewModel.updateCurrentUser(MainActivity.userId)
+                mainViewModel.initCurrentUser(MainActivity.userId)
                 loadAdaptersByTheme()
                 progress_bar.hide()
             } else {

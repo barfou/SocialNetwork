@@ -8,7 +8,8 @@ data class User(
         var dateInscription: String,
         var about: String,
         var latitude: String,
-        var longitude: String
+        var longitude: String,
+        var level: String = "1"
 ) {
     fun getInitials() = pseudo.split(" ").map { it.first() }.take(2).joinToString("").toUpperCase()
 }

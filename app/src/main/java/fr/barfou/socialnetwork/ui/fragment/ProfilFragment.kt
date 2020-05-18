@@ -62,7 +62,7 @@ class ProfilFragment: Fragment() {
         loadUserData()?.run {
             tvProfil.text = this.getInitials()
             tvLoginUser.text = this.pseudo.toCapital()
-            //tvNumberLevelUser.text = this.level
+            tvNumberLevelUser.text = this.level
             showLocation(this.latitude, this.longitude)
             tvBio.text = this.about
 
