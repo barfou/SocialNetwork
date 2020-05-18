@@ -23,4 +23,5 @@
     <color name="color_button_quit">#CCFF4C4C</color>
     <color name="color_button_grey">#CCB0BEC5</color>
     <color name="color_transparent_surface">#94ECEFF1</color>
+    <color name="color_fab">#4FC3F7</color>
 </resources>
