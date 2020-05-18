@@ -3,6 +3,7 @@ package fr.barfou.socialnetwork.ui.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.*
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.details_fragment.*
 import kotlinx.android.synthetic.main.fragment_profil.*
 
 
-class ProfilFragment: Fragment() {
+class ProfilFragment : Fragment() {
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var trophyAdapter: TrophyAdapter
@@ -40,9 +41,9 @@ class ProfilFragment: Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_profil, container, false)
     }
@@ -89,13 +90,33 @@ class ProfilFragment: Fragment() {
 
         btnNavEditProfil.setOnClickListener {
             findNavController().navigate(
-                R.id.action_to_modify_profil_fragment
+                    R.id.action_to_modify_profil_fragment
             )
         }
 
         btnNavPreferences.setOnClickListener {
             findNavController().navigate(
-                R.id.action_to_preferences_fragment
+                    R.id.action_to_preferences_fragment
+            )
+        }
+
+        btnDetailSuggested.setOnClickListener {
+            findNavController().navigate(
+                    R.id.action_to_display_list_fragment,
+                    bundleOf(
+                            DisplayListFragment.USER_ID_KEY to userId,
+                            DisplayListFragment.MODE_KEY to DisplayListFragment.Mode.CREATED.toString()
+                    )
+            )
+        }
+
+        btnDetailSubscribed.setOnClickListener {
+            findNavController().navigate(
+                    R.id.action_to_display_list_fragment,
+                    bundleOf(
+                            DisplayListFragment.USER_ID_KEY to userId,
+                            DisplayListFragment.MODE_KEY to DisplayListFragment.Mode.SUBSCRIBED.toString()
+                    )
             )
         }
 

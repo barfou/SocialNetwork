@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var mainViewModel: MainViewModel
 
-    enum class Mode { HOMEPAGE, FILTER, PROFILE, DETAILS, MODIFY_PROFILE, CREATE_MEETING, PREFERENCES }
+    enum class Mode { HOMEPAGE, FILTER, PROFILE, DETAILS, MODIFY_PROFILE, CREATE_MEETING, PREFERENCES, DISPLAY_LIST }
 
     lateinit var searchItem: MenuItem
     lateinit var sortItem: MenuItem
@@ -169,7 +169,7 @@ class MainActivity : AppCompatActivity() {
                 hideSearch()
                 showProfileIcon()
             }
-            Mode.PROFILE, Mode.MODIFY_PROFILE, Mode.PREFERENCES -> {
+            Mode.PROFILE, Mode.MODIFY_PROFILE, Mode.PREFERENCES, Mode.DISPLAY_LIST -> {
                 hideSearch()
                 hideProfileIcon()
             }

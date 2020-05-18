@@ -63,7 +63,7 @@ class DisplayListFragment : Fragment(), OnMeetingClickListener {
         }
 
         (activity as? MainActivity)?.run {
-            this.mode = MainActivity.Mode.FILTER
+            this.mode = MainActivity.Mode.DISPLAY_LIST
         }
 
         meetingAdapterFilter = MeetingAdapterFilter(this)
