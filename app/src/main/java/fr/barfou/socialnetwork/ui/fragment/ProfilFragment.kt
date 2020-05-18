@@ -91,6 +91,12 @@ class ProfilFragment: Fragment() {
                     R.id.action_to_modify_profil_fragment
                 )
             }
+
+            btnNavPreferences.setOnClickListener{
+                findNavController().navigate(
+                    R.id.action_to_preferences_fragment
+                )
+            }
         }
 
 
