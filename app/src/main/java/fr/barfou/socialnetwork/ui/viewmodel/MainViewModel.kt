@@ -736,6 +736,13 @@ open class MainViewModel(
         listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[3].firebaseId))
         listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[5].firebaseId))
         listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[7].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[3].firebaseId, listMeetings[4].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[2].firebaseId, listMeetings[6].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[2].firebaseId, listMeetings[7].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[2].firebaseId, listMeetings[9].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[1].firebaseId, listMeetings[10].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[4].firebaseId, listMeetings[11].firebaseId))
+        listUserMeetingJoin.add(UserMeetingJoin("", listUsers[1].firebaseId, listMeetings[12].firebaseId))
         listUserMeetingJoin.forEach {
             pushUserMeetingJoin(it)
         }
