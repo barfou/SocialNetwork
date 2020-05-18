@@ -60,6 +60,7 @@ open class MainViewModel(
         if (position > -1) {
             listUsers[position] = user
             usersRef.child(user.firebaseId).setValue(user)
+            currentUser = user
         }
     }
 
