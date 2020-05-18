@@ -26,5 +26,4 @@ class PreferencesFragment: Fragment() {
         }
 
     }
-
 }

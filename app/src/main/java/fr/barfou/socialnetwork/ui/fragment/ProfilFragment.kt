@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.details_fragment.*
 import kotlinx.android.synthetic.main.fragment_profil.*
 
 
-class ProfilFragment : Fragment() {
+class ProfilFragment: Fragment() {
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var trophyAdapter: TrophyAdapter
@@ -39,9 +39,9 @@ class ProfilFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_profil, container, false)
     }
@@ -59,15 +59,17 @@ class ProfilFragment : Fragment() {
         }
 
         loadUserData()?.run {
+
+
+
             tvLoginUser.text = this.pseudo
             //tvNumberLevelUser.text = this.level
-            try {
-                val location: ConvertedLocation = convertLatLongToLocation(requireContext(), this.latitude.toDouble(), this.longitude.toDouble())
-                tvTown.text = location.town
-                tvCountry.text = location.country
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+
+            val location: ConvertedLocation = convertLatLongToLocation(requireContext(), this.latitude.toDouble(), this.longitude.toDouble())
+
+            tvTown.text = location.town
+            tvCountry.text = location.country
+
             tvBio.text = this.about
 
             //tvNumberMeetingSuggest.text = this.countMeetingSuggest
@@ -119,6 +121,7 @@ class ProfilFragment : Fragment() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
         return user
     }
 }

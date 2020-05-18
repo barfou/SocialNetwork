@@ -1,6 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvModulateHomeScreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/text_modulate_home_screen"
+        style="@style/TitlePreferences"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clSeparator1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@id/tvModulateHomeScreen"
+        style="@style/SeparatorPreferences"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTrend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/clSeparator1"
+        android:text="@string/text_trend"
+        style="@style/SubTitlePreferences"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMoreTrend"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvTrend"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/swTrend"
+        android:layout_marginEnd="8dp"
+        android:text="@string/text_more_trend"
+        style="@style/MoreSubTitlePreferences"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/swTrend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/tvMoreTrend"
+        app:layout_constraintBottom_toBottomOf="@+id/tvMoreTrend"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clSeparator1_1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@id/tvMoreTrend"
+        style="@style/SeparatorPreferences"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPromote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/clSeparator1_1"
+        android:text="@string/text_promote"
+        style="@style/SubTitlePreferences"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMorePromote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvPromote"
+        android:text="@string/text_more_promote"
+        style="@style/MoreSubTitlePreferences"/>
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/spPromote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvMorePromote"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clSeparator2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@id/spPromote"
+        style="@style/SeparatorPreferences"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/clSeparator2"
+        android:text="@string/text_theme_app"
+        style="@style/TitlePreferences"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clSeparator3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTheme"
+        style="@style/SeparatorPreferences"/>
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/rbLightTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/clSeparator3"
+        android:text="@string/text_light_theme"/>
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/rbDarkTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/rbLightTheme"
+        android:text="@string/text_dark_theme"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clSeparator4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@id/rbDarkTheme"
+        style="@style/SeparatorPreferences"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/clSeparator4"
+        android:text="@string/text_notification"
+        style="@style/TitlePreferences"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clSeparator5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@id/tvNotification"
+        style="@style/SeparatorPreferences"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAllowNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/clSeparator5"
+        android:text="@string/text_allow_notification"
+        style="@style/SubTitlePreferences"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMoreAllowNotification"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvAllowNotification"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/swNotification"
+        android:layout_marginEnd="8dp"
+        android:text="@string/text_more_allow_notification"
+        style="@style/MoreSubTitlePreferences"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/swNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/tvMoreAllowNotification"
+        app:layout_constraintBottom_toBottomOf="@+id/tvMoreAllowNotification"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clSeparator6"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@id/tvMoreAllowNotification"
+        style="@style/SeparatorPreferences"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/clSeparator6"
+        android:text="@string/text_location"
+        style="@style/TitlePreferences"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clSeparator7"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@id/tvLocation"
+        style="@style/SeparatorPreferences"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAllowLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/clSeparator7"
+        android:text="@string/text_allow_location"
+        style="@style/SubTitlePreferences"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMoreAllowLocation"
+        style="@style/MoreSubTitlePreferences"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:text="@string/text_more_allow_location"
+        app:layout_constraintEnd_toStartOf="@+id/swLocation"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tvAllowLocation"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/swLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/tvMoreAllowLocation"
+        app:layout_constraintBottom_toBottomOf="@+id/tvMoreAllowLocation"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clSeparator8"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintTop_toBottomOf="@id/tvMoreAllowLocation"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,6 +42,21 @@
     <string name="text_more_infos_meeting">Informations complémentaire sur le meeting</string>
     <string name="text_add_meeting">Créer un meeting</string>
 
+    <string name="text_modulate_home_screen">Moduler l\'écran d\'acceuil</string>
+    <string name="text_trend">Tendance</string>
+    <string name="text_more_trend">Afficher ou non la liste des activités tendance</string>
+    <string name="text_promote">Mise en avant</string>
+    <string name="text_more_promote">Permet de choisir le thème de prédilection</string>
+    <string name="text_theme_app">Thème de l\'application</string>
+    <string name="text_light_theme">Thème clair</string>
+    <string name="text_dark_theme">Thème Sombre</string>
+    <string name="text_notification">Notifications</string>
+    <string name="text_allow_notification">Autoriser les notifications</string>
+    <string name="text_more_allow_notification">Permetttre à l\'application d\'envyer des notifications</string>
+    <string name="text_location">Localisation</string>
+    <string name="text_allow_location">Autoriser la localisation</string>
+    <string name="text_more_allow_location">Permettre à l\'application de mettre à jour votre localisation</string>
+
     <string name="title_fragment_profil">Profil</string>
     <string name="title_fragment_modify_profil">Modifier le profil</string>
     <string name="title_fragment_details">Détails</string>
