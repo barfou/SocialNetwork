@@ -1,6 +1,7 @@
 package fr.barfou.socialnetwork.ui.fragment
 
 import android.content.Intent
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,12 +15,13 @@ import com.google.firebase.auth.FirebaseAuth
 import fr.barfou.socialnetwork.ui.activity.LoginActivity
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.ui.activity.MainActivity
+import fr.barfou.socialnetwork.ui.listener.OnLocationResult
 import fr.barfou.socialnetwork.ui.utils.hide
 import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(), OnLocationResult {
 
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var auth: FirebaseAuth
@@ -78,5 +80,10 @@ class LoginFragment : Fragment() {
                     R.id.action_login_fragment_to_register_fragment
             )
         }
+    }
+
+    // On Location Result Listener
+    override fun invoke(p1: Location) {
+        TODO("Not yet implemented")
     }
 }
