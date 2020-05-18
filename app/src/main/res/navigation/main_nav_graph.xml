@@ -60,6 +60,22 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/display_list_fragment"
+        android:name="fr.barfou.socialnetwork.ui.fragment.DisplayListFragment"
+        android:label="display_list_fragment"
+        tools:layout="@layout/fragment_filter">
+
+    </fragment>
+
+    <action
+        android:id="@+id/action_to_display_list_fragment"
+        app:destination="@id/display_list_fragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
+
     <action
         android:id="@+id/action_to_profil_fragment"
         app:destination="@id/profil_fragment"

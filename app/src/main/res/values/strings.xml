@@ -41,13 +41,11 @@
     <string name="text_my_location_on_map">Me localiser sur la carte</string>
     <string name="text_more_infos_meeting">Informations complémentaire sur le meeting</string>
     <string name="text_add_meeting">Créer un meeting</string>
-
     <string name="sort_by">Trier par</string>
     <string name="date_event">Date de l\'évènement</string>
     <string name="proximity">Proximité</string>
     <string name="none">Aucun</string>
     <string name="no_result">Aucun Résultat</string>
-
     <string name="text_modulate_home_screen">Moduler l\'écran d\'acceuil</string>
     <string name="text_trend">Tendance</string>
     <string name="text_more_trend">Afficher ou non la liste des activités tendance</string>
@@ -62,12 +60,11 @@
     <string name="text_location">Localisation</string>
     <string name="text_allow_location">Autoriser la localisation</string>
     <string name="text_more_allow_location">Permettre à l\'application de mettre à jour votre localisation</string>
-
     <string name="title_fragment_profil">Profil</string>
     <string name="title_fragment_modify_profil">Modifier le profil</string>
     <string name="title_fragment_details">Détails</string>
     <string name="title_fragment_preferences">Préferences</string>
     <string name="title_fragment_create_meeting">Créer un meeting</string>
-
+    <string name="details">Détails</string>
 
 </resources>

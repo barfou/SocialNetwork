@@ -251,10 +251,10 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
                         android:src="@drawable/ic_timeline_black_24dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="@id/btnDetailSuggested"
+                        app:layout_constraintBottom_toBottomOf="@id/btnDetailSuggested"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvMeetingSuggest"
@@ -266,24 +266,32 @@
                         app:layout_constraintStart_toEndOf="@id/imgMeetingSuggest"
                         app:layout_constraintTop_toTopOf="@id/imgMeetingSuggest" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/ButtonStyle"
+                        android:id="@+id/btnDetailSuggested"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:alpha="0.5"
-                        android:src="@drawable/ic_arrow_right_black_24dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:drawablePadding="10dp"
+                        android:text="@string/details"
+                        android:drawableEnd="@drawable/ic_arrow_right_black_24dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/tvMeetingSuggest" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imgMeetingJoin"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:layout_marginBottom="10dp"
                         android:src="@drawable/ic_redo_black_24dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/imgMeetingSuggest" />
+                        app:layout_constraintTop_toTopOf="@id/btnDetailSubscribed"
+                        app:layout_constraintBottom_toBottomOf="@id/btnDetailSubscribed"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvMeetingJoin"
@@ -295,15 +303,21 @@
                         app:layout_constraintStart_toEndOf="@id/imgMeetingJoin"
                         app:layout_constraintTop_toTopOf="@id/imgMeetingJoin" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        style="@style/OnSurface"
+                    <androidx.appcompat.widget.AppCompatButton
+                        style="@style/ButtonStyle"
+                        android:id="@+id/btnDetailSubscribed"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:alpha="0.5"
-                        android:src="@drawable/ic_arrow_right_black_24dp"
-                        app:layout_constraintBottom_toBottomOf="@id/imgMeetingJoin"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/details"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:drawablePadding="10dp"
+                        android:drawableEnd="@drawable/ic_arrow_right_black_24dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tvMeetingJoin" />
+                        app:layout_constraintTop_toBottomOf="@id/btnDetailSuggested" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

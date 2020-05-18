@@ -129,9 +129,16 @@ open class MainViewModel(
                 .toMutableList()
     }
 
+    fun getMeetingsJoinedWithUsers(userId: String): MutableList<Pair<Meeting, User?>> {
+        return getMeetingsJoined(userId)
+                .pairWithUser()
+    }
+
     fun getMeetingsJoinedCount(userId: String) = getMeetingsJoined(userId).size
 
     fun getMeetingsSuggested(userId: String) = listMeetings.filter { it.userId == userId }.toMutableList()
+
+    fun getMeetingsSuggestedWithUsers(userId: String) = getMeetingsSuggested(userId).pairWithUser()
 
     fun getMeetingsSuggestedCount(userId: String) = getMeetingsSuggested(userId).size
 
