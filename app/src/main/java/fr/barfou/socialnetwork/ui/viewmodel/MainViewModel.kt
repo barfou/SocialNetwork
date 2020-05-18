@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -221,19 +222,24 @@ open class MainViewModel(
                     override fun onCancelled(error: DatabaseError) {
                         Log.d("FirebaseError", error.message)
                     }
-
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         try {
                             val isInit = dataSnapshot.value as Boolean
                             if (!isInit)
-                                initData().run(onSuccess)
+                                initData() {
+                                    onSuccess(it)
+                                    observeChanges()
+                                }
                             else {
                                 loadData {
                                     onSuccess(it)
+                                    observeChanges()
                                 }
                             }
                         } catch (e: Exception) {
                             e.printStackTrace()
+                            onSuccess(false)
+                            observeChanges()
                         }
                     }
                 })
@@ -242,6 +248,18 @@ open class MainViewModel(
                 onSuccess(true)
             }
         }
+    }
+
+    private fun userExists(user: User): Boolean {
+        return listUsers.any { item -> item.firebaseId == user.firebaseId }
+    }
+
+    private fun meetingExists(meeting: Meeting): Boolean {
+        return listMeetings.any { item -> item.firebaseId == meeting.firebaseId }
+    }
+
+    private fun userMeetingJoinExist(userMeetingJoin: UserMeetingJoin): Boolean {
+        return listUserMeetingJoin.any { item -> item.firebaseId == userMeetingJoin.firebaseId }
     }
 
     private fun filterMeetingsByDate(): MutableList<Meeting> {
@@ -334,7 +352,7 @@ open class MainViewModel(
             -1
     }
 
-    private fun initData(): Boolean {
+    private fun initData(onSuccess: OnSuccess<Boolean>) {
         return try {
             initUsers()
             initTypeMeetings()
@@ -343,10 +361,10 @@ open class MainViewModel(
             updatePopularityMap()
             firebaseRef.child("isInit").setValue(true)
             storedData = true
-            true
+            onSuccess(true)
         } catch (e: Exception) {
             e.printStackTrace()
-            false
+            onSuccess(false)
         }
     }
 
@@ -425,6 +443,73 @@ open class MainViewModel(
                 }
             }
         })
+    }
+
+    private fun observeChanges() {
+        observeUsersChanges()
+        observeMeetingsChanges()
+        observeUserMeetingJoinChanges()
+    }
+
+    private fun getUserWithSnapShot(dataSnapshot: DataSnapshot): User {
+        val user = dataSnapshot.value as HashMap<*, *>
+        val firebaseId = dataSnapshot.key as String
+        val mail = user["mail"] as String
+        val pseudo = user["pseudo"] as String
+        val imageUrl = user["imageUrl"] as String
+        val dateInscription = user["dateInscription"] as String
+        val about = user["about"] as String
+        val latitude = user["latitude"] as String
+        val longitude = user["longitude"] as String
+        return User(firebaseId, mail, pseudo, imageUrl, dateInscription, about, latitude, longitude)
+    }
+
+    private fun observeUsersChanges() {
+
+        usersRef.addChildEventListener(object : ChildEventListener {
+
+            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
+                try {
+                    val user = getUserWithSnapShot(dataSnapshot)
+                    if (!userExists(user)) {
+                        listUsers.add(user)
+                    } else {
+                        val position = getUserPosition(user.firebaseId)
+                        listUsers[position] = user
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
+                try {
+                    TODO()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+                try {
+                    TODO()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
+    }
+
+    private fun observeMeetingsChanges() {
+
+    }
+
+    private fun observeUserMeetingJoinChanges() {
+
     }
 
     private fun getTypeWithId(typeId: String): String {
