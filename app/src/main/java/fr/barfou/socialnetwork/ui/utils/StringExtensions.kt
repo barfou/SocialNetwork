@@ -8,3 +8,9 @@ fun String.unAccent(): String {
     val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
     return REGEX_UNACCENT.replace(temp, "")
 }
+
+fun String.toCapital(): String {
+    return split(" ")
+            .toMutableList()
+            .fold("") { acc, str -> acc + " " + str.capitalize() }
+}

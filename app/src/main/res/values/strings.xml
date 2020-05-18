@@ -18,8 +18,8 @@
     <string name="profil_menu_text">Profile</string>
     <string name="more_menu_text">More</string>
     <string name="text_show_all_trophys">Voir tous les trophées</string>
-    <string name="text_suggest">Propose à :</string>
-    <string name="text_join">Participe  à :</string>
+    <string name="text_suggest">Propose </string>
+    <string name="text_join">Participe à </string>
     <string name="text_login">Login</string>
     <string name="text_town">Ville</string>
     <string name="text_country">Pays</string>
@@ -42,6 +42,12 @@
     <string name="text_more_infos_meeting">Informations complémentaire sur le meeting</string>
     <string name="text_add_meeting">Créer un meeting</string>
 
+    <string name="sort_by">Trier par</string>
+    <string name="date_event">Date de l\'évènement</string>
+    <string name="proximity">Proximité</string>
+    <string name="none">Aucun</string>
+    <string name="no_result">Aucun Résultat</string>
+
     <string name="text_modulate_home_screen">Moduler l\'écran d\'acceuil</string>
     <string name="text_trend">Tendance</string>
     <string name="text_more_trend">Afficher ou non la liste des activités tendance</string>
@@ -62,5 +68,6 @@
     <string name="title_fragment_details">Détails</string>
     <string name="title_fragment_preferences">Préferences</string>
     <string name="title_fragment_create_meeting">Créer un meeting</string>
+
 
 </resources>

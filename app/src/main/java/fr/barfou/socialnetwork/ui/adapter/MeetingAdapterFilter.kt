@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import fr.barfou.socialnetwork.data.model.Meeting
+import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
 import fr.barfou.socialnetwork.ui.utils.dp
 import fr.barfou.socialnetwork.ui.widget.viewholder.FilterMeetingViewHolder
@@ -14,7 +15,7 @@ class MeetingAdapterFilter(
         var fragment: OnMeetingClickListener
 ) : RecyclerView.Adapter<FilterMeetingViewHolder>() {
 
-    private var _data = emptyList<Meeting>()
+    private var _data = emptyList<Pair<Meeting, User?>>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterMeetingViewHolder {
         return FilterMeetingViewHolder.create(parent)
@@ -29,7 +30,7 @@ class MeetingAdapterFilter(
     /**
      * Set new data in the list and refresh it
      */
-    fun submitList(data: List<Meeting>) {
+    fun submitList(data: List<Pair<Meeting, User?>>) {
         _data = data
         notifyDataSetChanged()
     }

@@ -13,17 +13,22 @@ import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.Meeting
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.MeetingAdapterFilter
+import fr.barfou.socialnetwork.ui.listener.OnFilterChangeListener
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import fr.barfou.socialnetwork.ui.utils.hide
+import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_filter.*
 
-class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeListener {
+class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeListener, OnFilterChangeListener {
 
     private lateinit var meetingAdapterFilter: MeetingAdapterFilter
-    private lateinit var initialSearchValue: String
+    private var searchValue: String = ""
     private lateinit var mainViewModel: MainViewModel
+    private var filterMode: FilterMode = FilterMode.NONE
+
+    enum class FilterMode { NONE, BY_DATE, BY_PROXIMITY }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,13 +36,21 @@ class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeLi
             mainViewModel = ViewModelProvider(this, MainViewModel).get()
         } ?: throw IllegalStateException("Invalid Activity")
 
-        initialSearchValue = arguments?.getString(SEARCH_VALUE_KEY) ?: throw IllegalStateException("No Value found")
+        searchValue = arguments?.getString(SEARCH_VALUE_KEY)
+                ?: throw IllegalStateException("No Value found")
+        val temp = arguments?.getString(FILTER_VALUE_KEY)
+                ?: throw IllegalStateException("No Value found")
+        when (temp) {
+            "BY_PROXIMITY" -> filterMode = FilterMode.BY_PROXIMITY
+            "BY_DATE" -> filterMode = FilterMode.BY_DATE
+            "NONE" -> filterMode = FilterMode.NONE
+        }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_filter, container, false)
     }
@@ -78,20 +91,41 @@ class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeLi
     }
 
     override fun onSearchValueChange(newText: String) {
-        mainViewModel.filterMeetingByName(newText) {
-            meetingAdapterFilter.submitList(it)
-        }
+        searchValue = newText
+        loadAdapter()
+    }
+
+    override fun onFilterChange(filter: FilterMode) {
+        filterMode = filter
+        loadAdapter()
     }
 
     private fun loadAdapter() {
-
-        mainViewModel.filterMeetingByName(initialSearchValue) {
-            progress_bar.hide()
-            meetingAdapterFilter.submitList(it)
+        progress_bar.show()
+        mainViewModel.filterMeetingsWithNameAndFilter(searchValue, filterMode) { list ->
+            if (list.size > 0) {
+                showRecycler()
+                meetingAdapterFilter.submitList(list)
+            } else {
+                showNoResult()
+            }
         }
+    }
+
+    private fun showNoResult() {
+        progress_bar.hide()
+        recycler_view_filter.hide()
+        tv_no_result.show()
+    }
+
+    private fun showRecycler() {
+        progress_bar.hide()
+        tv_no_result.hide()
+        recycler_view_filter.show()
     }
 
     companion object {
         const val SEARCH_VALUE_KEY = "search_value_key"
+        const val FILTER_VALUE_KEY = "filter_value_key"
     }
 }
