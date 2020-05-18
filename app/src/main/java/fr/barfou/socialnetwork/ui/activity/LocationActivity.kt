@@ -36,7 +36,6 @@ class LocationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location)
-
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         btnLocation.setOnClickListener {
