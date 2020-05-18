@@ -322,6 +322,21 @@ open class MainViewModel(
             null
     }
 
+    private fun getUserMeetingJoinPosition(userMeetingJoinId: String): Int {
+        var found = false
+        var i = 0
+        while (!found && i < listUserMeetingJoin.size) {
+            if (listUserMeetingJoin[i].firebaseId == userMeetingJoinId)
+                found = true
+            else
+                i++
+        }
+        return if (found)
+            i
+        else
+            -1
+    }
+
     private fun getMeetingById(meetingId: String): Meeting? {
         var found = false
         var i = 0
@@ -496,6 +511,14 @@ open class MainViewModel(
         return Meeting(firebaseId, userId, typeId, type, theme, name, dateCreation, dateEvent, latitude, longitude, imageUrl, details)
     }
 
+    private fun getUserMeetingJoinWithSnapShot(dataSnapshot: DataSnapshot): UserMeetingJoin {
+        val userMeetingJoin = dataSnapshot.value as HashMap<*, *>
+        val firebaseId = dataSnapshot.key as String
+        val userId = userMeetingJoin["userId"] as String
+        val meetingId = userMeetingJoin["meetingId"] as String
+        return UserMeetingJoin(firebaseId, userId, meetingId)
+    }
+
     private fun observeUsersChanges() {
 
         usersRef.addChildEventListener(object : ChildEventListener {
@@ -590,6 +613,48 @@ open class MainViewModel(
 
     private fun observeUserMeetingJoinChanges() {
 
+        userMeetingJoinRef.addChildEventListener(object : ChildEventListener {
+
+            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
+                try {
+                    val userMeetingJoin = getUserMeetingJoinWithSnapShot(dataSnapshot)
+                    if (!userMeetingJoinExist(userMeetingJoin.firebaseId)) {
+                        listUserMeetingJoin.add(userMeetingJoin)
+                    } else {
+                        val position = getUserMeetingJoinPosition(userMeetingJoin.firebaseId)
+                        listUserMeetingJoin[position] = userMeetingJoin
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
+                try {
+                    val userMeetingJoin = getUserMeetingJoinWithSnapShot(dataSnapshot)
+                    val position = getUserMeetingJoinPosition(userMeetingJoin.firebaseId)
+                    listUserMeetingJoin[position] = userMeetingJoin
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+                try {
+                    val firebaseId = dataSnapshot.key as String
+                    if (userMeetingJoinExist(firebaseId)) {
+                        val position = getUserMeetingJoinPosition(firebaseId)
+                        listUserMeetingJoin.removeAt(position)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
     }
 
     private fun getTypeWithId(typeId: String): String {
