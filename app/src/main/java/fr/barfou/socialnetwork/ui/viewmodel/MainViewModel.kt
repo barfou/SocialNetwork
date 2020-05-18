@@ -250,16 +250,16 @@ open class MainViewModel(
         }
     }
 
-    private fun userExists(user: User): Boolean {
-        return listUsers.any { item -> item.firebaseId == user.firebaseId }
+    private fun userExists(userId: String): Boolean {
+        return listUsers.any { item -> item.firebaseId == userId }
     }
 
-    private fun meetingExists(meeting: Meeting): Boolean {
-        return listMeetings.any { item -> item.firebaseId == meeting.firebaseId }
+    private fun meetingExists(meetingId: String): Boolean {
+        return listMeetings.any { item -> item.firebaseId == meetingId }
     }
 
-    private fun userMeetingJoinExist(userMeetingJoin: UserMeetingJoin): Boolean {
-        return listUserMeetingJoin.any { item -> item.firebaseId == userMeetingJoin.firebaseId }
+    private fun userMeetingJoinExist(userMeetingJoinId: String): Boolean {
+        return listUserMeetingJoin.any { item -> item.firebaseId == userMeetingJoinId }
     }
 
     private fun filterMeetingsByDate(): MutableList<Meeting> {
@@ -335,6 +335,21 @@ open class MainViewModel(
             listMeetings[i]
         else
             null
+    }
+
+    private fun getMeetingPosition(meetingId: String): Int {
+        var found = false
+        var i = 0
+        while (!found && i < listMeetings.size) {
+            if (listMeetings[i].firebaseId == meetingId)
+                found = true
+            else
+                i++
+        }
+        return if (found)
+            i
+        else
+            -1
     }
 
     private fun getUserPosition(userId: String): Int {
@@ -464,6 +479,23 @@ open class MainViewModel(
         return User(firebaseId, mail, pseudo, imageUrl, dateInscription, about, latitude, longitude)
     }
 
+    private fun getMeetingWithSnapShot(dataSnapshot: DataSnapshot): Meeting {
+        val meeting = dataSnapshot.value as HashMap<*, *>
+        val firebaseId = dataSnapshot.key as String
+        val userId = meeting["userId"] as String
+        val typeId = meeting["typeId"] as String
+        val type = getTypeWithId(typeId)
+        val theme = getTheme(meeting["theme"] as String)
+        val name = meeting["name"] as String
+        val dateCreation = meeting["dateCreation"] as String
+        val dateEvent = meeting["dateEvent"] as String
+        val latitude = meeting["latitude"] as String
+        val longitude = meeting["longitude"] as String
+        val imageUrl = meeting["imageUrl"] as String
+        val details = meeting["details"] as String
+        return Meeting(firebaseId, userId, typeId, type, theme, name, dateCreation, dateEvent, latitude, longitude, imageUrl, details)
+    }
+
     private fun observeUsersChanges() {
 
         usersRef.addChildEventListener(object : ChildEventListener {
@@ -471,7 +503,7 @@ open class MainViewModel(
             override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
                 try {
                     val user = getUserWithSnapShot(dataSnapshot)
-                    if (!userExists(user)) {
+                    if (!userExists(user.firebaseId)) {
                         listUsers.add(user)
                     } else {
                         val position = getUserPosition(user.firebaseId)
@@ -484,7 +516,9 @@ open class MainViewModel(
 
             override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
                 try {
-                    TODO()
+                    val user = getUserWithSnapShot(dataSnapshot)
+                    val position = getUserPosition(user.firebaseId)
+                    listUsers[position] = user
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -492,7 +526,11 @@ open class MainViewModel(
 
             override fun onChildRemoved(dataSnapshot: DataSnapshot) {
                 try {
-                    TODO()
+                    val firebaseId = dataSnapshot.key as String
+                    if (userExists(firebaseId)) {
+                        val position = getUserPosition(firebaseId)
+                        listUsers.removeAt(position)
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -506,6 +544,48 @@ open class MainViewModel(
 
     private fun observeMeetingsChanges() {
 
+        meetingsRef.addChildEventListener(object : ChildEventListener {
+
+            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
+                try {
+                    val meeting = getMeetingWithSnapShot(dataSnapshot)
+                    if (!meetingExists(meeting.firebaseId)) {
+                        listMeetings.add(meeting)
+                    } else {
+                        val position = getMeetingPosition(meeting.firebaseId)
+                        listMeetings[position] = meeting
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
+                try {
+                    val meeting = getMeetingWithSnapShot(dataSnapshot)
+                    val position = getMeetingPosition(meeting.firebaseId)
+                    listMeetings[position] = meeting
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onChildRemoved(dataSnapshot: DataSnapshot) {
+                try {
+                    val firebaseId = dataSnapshot.key as String
+                    if (meetingExists(firebaseId)) {
+                        val position = getMeetingPosition(firebaseId)
+                        listMeetings.removeAt(position)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {}
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
     }
 
     private fun observeUserMeetingJoinChanges() {
