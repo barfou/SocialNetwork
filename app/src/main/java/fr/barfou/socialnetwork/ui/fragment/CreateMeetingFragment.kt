@@ -105,11 +105,11 @@ class CreateMeetingFragment: Fragment(), OnMapReadyCallback {
         var month = tblCurrentDate[1].toInt() - 1
         var year = tblCurrentDate[2].toInt()
 
-        etDateMeeting.setText(currentDate)
+        dtpDateMeeting.text = currentDate
 
         dtpDateMeeting.setOnClickListener {
-            if(etDateMeeting.text.toString() != "") {
-                val tblDate : List<String> = etDateMeeting.text.toString().split("/")
+            if(dtpDateMeeting.text.toString() != "") {
+                val tblDate : List<String> = dtpDateMeeting.text.toString().split("/")
 
                 day = tblDate[0].toInt()
                 month = tblDate[1].toInt() - 1
@@ -123,13 +123,13 @@ class CreateMeetingFragment: Fragment(), OnMapReadyCallback {
                     // Display Selected date in textbox
                     //currentDate = "$dayOfMonth/${monthOfYear + 1}/$year"
                     currentDate = IntToDateString(dayOfMonth, monthOfYear + 1, year)
-                    etDateMeeting.setText(currentDate)
+                    dtpDateMeeting.setText(currentDate)
                 }, year, month, day
             )
             dpd.show()
         }
 
-        clLocalisation.setOnClickListener {
+        btn_localiser.setOnClickListener {
             (activity as? MainActivity)?.run {
                 this.getLastLocation { result -> // Callback invoked if permissions not needed
                     val currentLocation = convertLatLongToLocation(requireContext(), result.latitude, result.longitude)
@@ -162,7 +162,7 @@ class CreateMeetingFragment: Fragment(), OnMapReadyCallback {
                 val theme: String = spTheme.selectedItem.toString()
                 val name: String = etNameMeeting.text.toString()
                 val date_creation: String = getCurrentDate()
-                val date_event: String = etDateMeeting.text.toString()
+                val date_event: String = dtpDateMeeting.text.toString()
                 val lat: String = location!!.latitude.toString()
                 val long: String = location!!.longitude.toString()
                 val imgUrl = ""
@@ -201,6 +201,4 @@ class CreateMeetingFragment: Fragment(), OnMapReadyCallback {
             googleMap.moveCamera(center)
         }
     }
-
-
 }
