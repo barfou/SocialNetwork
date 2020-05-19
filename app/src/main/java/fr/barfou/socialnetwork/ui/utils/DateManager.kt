@@ -15,6 +15,16 @@ fun getCurrentDate(): String {
     return formatter.format(date)
 }
 
+@SuppressLint("SimpleDateFormat")
+fun getDate(dateString: String): String {
+    return try {
+        LocalDate.parse(dateString, DateTimeFormatter.ofPattern("dd/MM/yyyy")).toString()
+    } catch (e: Exception) {
+        e.printStackTrace()
+        "Error"
+    }
+}
+
 fun String.toDateTime(): LocalDate {
     return try {
         LocalDate.parse(this, DateTimeFormatter.ofPattern("dd/MM/yyyy"))

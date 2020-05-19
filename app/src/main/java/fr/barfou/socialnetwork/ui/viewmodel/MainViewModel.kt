@@ -257,6 +257,21 @@ open class MainViewModel(
         }
     }
 
+    fun getIdTypeWithName(typeName: String): String {
+        var found = false
+        var i = 0
+        while (!found && i < listTypeMeeting.size) {
+            if (listTypeMeeting[i].name == typeName)
+                found = true
+            else
+                i++
+        }
+        return if (found)
+            listTypeMeeting[i].firebaseId
+        else
+            ""
+    }
+
     private fun userExists(userId: String): Boolean {
         return listUsers.any { item -> item.firebaseId == userId }
     }

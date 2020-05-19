@@ -27,11 +27,6 @@ import java.util.Calendar.*
 
 class ModifyProfilFragment: Fragment() {
 
-    val c = getInstance()
-    var year : Int? = null
-    var month : Int? = null
-    var day : Int? = null
-
     private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
