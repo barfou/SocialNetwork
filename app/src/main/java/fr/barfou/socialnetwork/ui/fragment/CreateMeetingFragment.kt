@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -17,8 +18,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.Meeting
+import fr.barfou.socialnetwork.data.model.Theme
 import fr.barfou.socialnetwork.data.model.getTheme
 import fr.barfou.socialnetwork.ui.activity.MainActivity
+import fr.barfou.socialnetwork.ui.utils.IntToDateString
 import fr.barfou.socialnetwork.ui.utils.convertLatLongToLocation
 import fr.barfou.socialnetwork.ui.utils.getCurrentDate
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
@@ -58,28 +61,43 @@ class CreateMeetingFragment: Fragment(), OnMapReadyCallback {
             this.mode = MainActivity.Mode.PROFILE
         }
 
-        val listTheme = mutableListOf<String>()
-        listTheme.add("SPORT")
-        listTheme.add("CULTURE")
-        val aaSpinnerTHeme = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listTheme)
-        aaSpinnerTHeme.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spTheme!!.adapter = aaSpinnerTHeme
-
-        val listType = mutableListOf<String>()
-        mainViewModel.listTypeMeeting.forEach {
-            listType.add(it.name)
-        }
-
-        val aaSpinnerType = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listType)
-        aaSpinnerType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spType!!.adapter = aaSpinnerType
-
         //Affichage de la carte
         mapMeeting.onCreate(savedInstanceState)
         mapMeeting.onResume()
 
         mapMeeting.getMapAsync(this)
         //
+
+        val listTheme = mutableListOf<String>()
+        listTheme.add("SPORT")
+        listTheme.add("CULTURE")
+        val aaSpinnerTheme = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listTheme)
+        aaSpinnerTheme.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spTheme!!.adapter = aaSpinnerTheme
+
+        val listType = mutableListOf<String>()
+
+        val aaSpinnerType = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listType)
+        aaSpinnerType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spType!!.adapter = aaSpinnerType
+
+        spTheme?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                listType.clear()
+                when (position) {
+                    0 -> mainViewModel.getTypeWithTheme(Theme.SPORT).forEach {
+                        listType.add(it.name)
+                    }
+
+                    1 -> mainViewModel.getTypeWithTheme(Theme.CULTURE).forEach {
+                        listType.add(it.name)
+                    }
+                }
+                aaSpinnerType.notifyDataSetChanged()
+            }
+        }
 
         var currentDate = getCurrentDate()
         val tblCurrentDate = currentDate.split("/")
@@ -103,7 +121,8 @@ class CreateMeetingFragment: Fragment(), OnMapReadyCallback {
                 DatePickerDialog.BUTTON_POSITIVE,
                 DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                     // Display Selected date in textbox
-                    currentDate = "$dayOfMonth/${monthOfYear + 1}/$year"
+                    //currentDate = "$dayOfMonth/${monthOfYear + 1}/$year"
+                    currentDate = IntToDateString(dayOfMonth, monthOfYear + 1, year)
                     etDateMeeting.setText(currentDate)
                 }, year, month, day
             )

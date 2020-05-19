@@ -156,6 +156,7 @@ open class MainViewModel(
                 override fun onCancelled(error: DatabaseError) {
                     Log.d("FirebaseError", error.message)
                 }
+
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     try {
                         var user = dataSnapshot.value as HashMap<*, *>
@@ -229,6 +230,7 @@ open class MainViewModel(
                     override fun onCancelled(error: DatabaseError) {
                         Log.d("FirebaseError", error.message)
                     }
+
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         try {
                             val isInit = dataSnapshot.value as Boolean
@@ -255,6 +257,10 @@ open class MainViewModel(
                 onSuccess(true)
             }
         }
+    }
+
+    fun getTypeWithTheme(theme: Theme): MutableList<TypeMeeting> {
+        return listTypeMeeting.filter { it.theme == theme }.toMutableList()
     }
 
     fun getIdTypeWithName(typeName: String): String {
