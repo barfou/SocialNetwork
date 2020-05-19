@@ -1,13 +1,12 @@
 package fr.barfou.socialnetwork.ui.utils
 
 import android.annotation.SuppressLint
-import android.os.Build
 import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.Month
 import java.time.format.DateTimeFormatter
+import java.time.temporal.TemporalQueries.localDate
 import java.util.*
+
 
 @SuppressLint("SimpleDateFormat")
 fun getCurrentDate(): String {
@@ -17,19 +16,22 @@ fun getCurrentDate(): String {
 }
 
 fun String.toDateTime(): LocalDate {
-    var value = this
     return try {
         LocalDate.parse(this, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
     } catch (e: Exception) {
         e.printStackTrace()
         LocalDate.now()
     }
-    /*catch (e: Exception) {
-    LocalDate.of(2016, Month.OCTOBER, 31)
-    e.printStackTrace()
-}*/
 }
 
+@SuppressLint("SimpleDateFormat")
 fun IntToDateString(day: Int, month: Int, year: Int): String {
-    return LocalDate.of(year, month, day).toString()
+    return try {
+        val date = LocalDate.of(year, month, day)
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+        return date.format(formatter)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        ""
+    }
 }

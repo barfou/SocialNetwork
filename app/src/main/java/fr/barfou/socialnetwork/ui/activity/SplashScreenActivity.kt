@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import fr.barfou.socialnetwork.R
+import fr.barfou.socialnetwork.ui.utils.IntToDateString
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -14,7 +15,6 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-
 
         Handler().postDelayed({
             // This method will be executed once the timer is over
