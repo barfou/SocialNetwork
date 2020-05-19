@@ -37,9 +37,10 @@
     <string name="text_theme">Thème</string>
     <string name="text_type">Type</string>
     <string name="text_date_meeting">Date du meeting</string>
+    <string name="text_date">Date</string>
     <string name="text_location_meeting">Localisation du meeting</string>
     <string name="text_my_location_on_map">Me localiser sur la carte</string>
-    <string name="text_more_infos_meeting">Informations complémentaire sur le meeting</string>
+    <string name="text_more_infos_meeting">Informations complémentaires</string>
     <string name="text_add_meeting">Créer un meeting</string>
     <string name="sort_by">Trier par</string>
     <string name="date_event">Date de l\'évènement</string>

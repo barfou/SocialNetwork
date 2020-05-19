@@ -1,168 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp">
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:translationZ="2dp"
-        style="@style/ButtonStyleQuit"
-        android:id="@+id/btnCancelCreateMeeting"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnConfirmCreateMeeting"
-        android:layout_marginEnd="10dp"
-        android:src="@drawable/ic_clear_black_24dp"/>
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:translationZ="2dp"
-        style="@style/ButtonStyle"
-        android:id="@+id/btnConfirmCreateMeeting"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        app:layout_constraintTop_toTopOf="parent"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_check_black_24dp"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvNameMeeting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_name_meeting"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnCancelCreateMeeting" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etNameMeeting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvNameMeeting" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clTheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etNameMeeting"
-        android:layout_marginTop="8dp">
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btnCancelCreateMeeting"
+                style="@style/ButtonStyleQuit"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_clear_black_24dp"
+                android:translationZ="2dp"
+                app:layout_constraintEnd_toStartOf="@id/btnConfirmCreateMeeting"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_theme"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btnConfirmCreateMeeting"
+                style="@style/ButtonStyle"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_check_black_24dp"
+                android:translationZ="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/spTheme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTheme" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNameMeeting"
+                style="@style/Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:text="@string/text_name_meeting"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etNameMeeting"
+                style="@style/EditTextMainActivity"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="30dp"
+                android:inputType="text"
+                android:singleLine="true"
+                app:layout_constraintEnd_toStartOf="@id/btnCancelCreateMeeting"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvNameMeeting" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        app:layout_constraintStart_toEndOf="@id/clTheme"
-        app:layout_constraintTop_toBottomOf="@id/etNameMeeting"
-        android:layout_marginTop="8dp">
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTheme"
+                style="@style/Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/text_theme"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etNameMeeting" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_type"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:spinnerMode="dropdown"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_constraintStart_toStartOf="@id/tvTheme"
+                app:layout_constraintTop_toBottomOf="@id/tvTheme" />
 
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/spType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvType" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvType"
+                style="@style/Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/text_type"
+                app:layout_constraintStart_toEndOf="@id/tvTheme"
+                app:layout_constraintTop_toBottomOf="@id/etNameMeeting" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spType"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_constraintStart_toStartOf="@id/tvType"
+                app:layout_constraintTop_toBottomOf="@id/tvType" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDateMeeting"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/clTheme"
-        android:text="@string/text_date_meeting"
-        android:layout_marginTop="8dp"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDateMeeting"
+                style="@style/Header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="8dp"
+                android:paddingStart="10dp"
+                android:text="@string/text_date"
+                app:layout_constraintStart_toEndOf="@id/tvType"
+                app:layout_constraintTop_toBottomOf="@id/etNameMeeting" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etDateMeeting"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvDateMeeting"
-        app:layout_constraintStart_toStartOf="parent"
-        android:inputType="datetime"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/etDateMeeting"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:inputType="datetime"
+                app:layout_constraintStart_toStartOf="@id/tvDateMeeting"
+                app:layout_constraintTop_toBottomOf="@id/tvDateMeeting" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/dtpDateMeeting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/etDateMeeting"
-        app:layout_constraintTop_toTopOf="@id/etDateMeeting"
-        app:layout_constraintBottom_toBottomOf="@id/etDateMeeting"
-        android:src="@drawable/ic_date_range_black_24dp"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/dtpDateMeeting"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:drawableEnd="@drawable/ic_date_range_black_24dp"
+                android:drawablePadding="10dp"
+                android:paddingHorizontal="10dp"
+                app:layout_constraintBottom_toBottomOf="@id/etDateMeeting"
+                app:layout_constraintStart_toEndOf="@id/etDateMeeting"
+                app:layout_constraintTop_toTopOf="@id/etDateMeeting" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/etDateMeeting"
-        android:layout_marginTop="8dp"
-        android:text="@string/text_location_meeting"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvLocation"
+                style="@style/Header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/text_location_meeting"
+                app:layout_constraintTop_toBottomOf="@id/spTheme" />
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapMeeting"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintTop_toBottomOf="@id/tvLocation"
-        android:layout_marginTop="8dp"/>
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapMeeting"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:layout_constraintTop_toBottomOf="@id/tvLocation" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgLocalisation"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mapMeeting"
-        android:src="@drawable/location_on"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_localiser"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/location_on"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:text="@string/text_my_location_on_map"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mapMeeting" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/imgLocalisation"
-        app:layout_constraintTop_toTopOf="@id/imgLocalisation"
-        app:layout_constraintBottom_toBottomOf="@id/imgLocalisation"
-        android:text="@string/text_my_location_on_map"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvMoreInformations"
+                style="@style/Header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/text_more_infos_meeting"
+                app:layout_constraintTop_toBottomOf="@id/btn_localiser" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvMoreInformations"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/imgLocalisation"
-        android:layout_marginTop="8dp"
-        android:text="@string/text_more_infos_meeting"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etMoreInformations"
+                style="@style/EditTextMainActivity"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:inputType="textMultiLine"
+                android:singleLine="false"
+                app:layout_constraintTop_toBottomOf="@id/tvMoreInformations" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etMoreInformations"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        app:layout_constraintTop_toBottomOf="@id/tvMoreInformations"
-        android:inputType="textMultiLine"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
