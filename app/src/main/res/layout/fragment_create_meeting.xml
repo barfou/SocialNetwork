@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvNameMeeting" />
+        app:layout_constraintTop_toBottomOf="@id/tvNameMeeting" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clTheme"
@@ -134,34 +134,41 @@
         app:layout_constraintTop_toBottomOf="@id/tvLocation"
         android:layout_marginTop="8dp"/>
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgLocalisation"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mapMeeting"
-        android:src="@drawable/location_on"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clLocalisation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/imgLocalisation"
-        app:layout_constraintTop_toTopOf="@id/imgLocalisation"
-        app:layout_constraintBottom_toBottomOf="@id/imgLocalisation"
-        android:text="@string/text_my_location_on_map"/>
+        app:layout_constraintTop_toBottomOf="@id/mapMeeting">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgLocalisation"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/location_on"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/imgLocalisation"
+            app:layout_constraintTop_toTopOf="@id/imgLocalisation"
+            app:layout_constraintBottom_toBottomOf="@id/imgLocalisation"
+            android:text="@string/text_my_location_on_map"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvMoreInformations"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/imgLocalisation"
+        app:layout_constraintTop_toBottomOf="@id/clLocalisation"
         android:layout_marginTop="8dp"
         android:text="@string/text_more_infos_meeting"/>
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etMoreInformations"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tvMoreInformations"
         android:inputType="textMultiLine"/>
 
