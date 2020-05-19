@@ -8,16 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
-import fr.barfou.socialnetwork.ui.activity.LoginActivity
 import fr.barfou.socialnetwork.R
-import fr.barfou.socialnetwork.data.model.ConvertedLocation
 import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.TrophyAdapter
 import fr.barfou.socialnetwork.ui.utils.convertLatLongToLocation
 import fr.barfou.socialnetwork.ui.utils.toCapital
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
-import kotlinx.android.synthetic.main.details_fragment.*
 import kotlinx.android.synthetic.main.fragment_profil.*
 
 
@@ -61,6 +58,11 @@ class ProfilFragment : Fragment() {
         }
 
         loadUserData()?.run {
+            if(userId != mainViewModel.currentUser!!.firebaseId){
+                btnNavPreferences.visibility = View.GONE
+                btnNavEditProfil.visibility = View.GONE
+            }
+
             tvProfil.text = this.getInitials()
             tvLoginUser.text = this.pseudo.toCapital()
             tvNumberLevelUser.text = this.level
