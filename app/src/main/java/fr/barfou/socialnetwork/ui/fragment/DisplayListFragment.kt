@@ -66,6 +66,16 @@ class DisplayListFragment : Fragment(), OnMeetingClickListener {
             this.mode = MainActivity.Mode.DISPLAY_LIST
         }
 
+        if(mode == Mode.CREATED && userId == mainViewModel.currentUser!!.firebaseId){
+            fabAddMetting.visibility = View.VISIBLE
+            fabAddMetting.setOnClickListener {
+                findNavController().navigate(
+                    R.id.action_to_create_meeting_fragment
+                )
+            }
+        }
+
+
         meetingAdapterFilter = MeetingAdapterFilter(this)
         recycler_view_filter.apply {
             adapter = meetingAdapterFilter
