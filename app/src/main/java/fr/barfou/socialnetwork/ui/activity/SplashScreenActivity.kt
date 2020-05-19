@@ -9,7 +9,7 @@ import fr.barfou.socialnetwork.R
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    private val SPLASH_TIME_OUT: Long = 500 //3000 3 sec
+    private val SPLASH_TIME_OUT: Long = 1000 //3000 3 sec
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

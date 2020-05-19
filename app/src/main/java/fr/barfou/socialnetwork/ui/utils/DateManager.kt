@@ -29,3 +29,7 @@ fun String.toDateTime(): LocalDate {
     e.printStackTrace()
 }*/
 }
+
+fun IntToDateString(day: Int, month: Int, year: Int): String {
+    return LocalDate.of(year, month, day).toString()
+}
