@@ -6,6 +6,27 @@
     android:layout_height="match_parent"
     android:padding="10dp">
 
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnCancelCreateMeeting"
+        style="@style/ButtonStyleQuit"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_clear_black_24dp"
+        android:translationZ="2dp"
+        app:layout_constraintEnd_toStartOf="@id/btnConfirmCreateMeeting"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnConfirmCreateMeeting"
+        style="@style/ButtonStyle"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_check_black_24dp"
+        android:translationZ="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -18,27 +39,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/btnCancelCreateMeeting"
-                style="@style/ButtonStyleQuit"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_clear_black_24dp"
-                android:translationZ="2dp"
-                app:layout_constraintEnd_toStartOf="@id/btnConfirmCreateMeeting"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/btnConfirmCreateMeeting"
-                style="@style/ButtonStyle"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_check_black_24dp"
-                android:translationZ="2dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvNameMeeting"
@@ -53,12 +53,11 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etNameMeeting"
                 style="@style/EditTextMainActivity"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
+                android:layout_width="250dp"
+                android:layout_height="31dp"
                 android:layout_marginEnd="30dp"
                 android:inputType="text"
                 android:singleLine="true"
-                app:layout_constraintEnd_toStartOf="@id/btnCancelCreateMeeting"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvNameMeeting" />
 
