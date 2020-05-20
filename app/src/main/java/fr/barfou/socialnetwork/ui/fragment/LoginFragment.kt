@@ -17,6 +17,7 @@ import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.listener.OnLocationResult
 import fr.barfou.socialnetwork.ui.utils.hide
+import fr.barfou.socialnetwork.ui.utils.isOnline
 import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -68,13 +69,21 @@ class LoginFragment : Fragment(), OnLocationResult {
 
     private fun signInUser(location: Location) {
         progress_bar.show()
-        if (!etPseudo.text.isNullOrBlank() && !etPassword.text.isNullOrBlank()) {
-            auth.signInWithEmailAndPassword(etPseudo.text.toString(), etPassword.text.toString())
+        if (isOnline(requireContext())) {
+            if (!etPseudo.text.isNullOrBlank() && !etPassword.text.isNullOrBlank()) {
+                auth.signInWithEmailAndPassword(
+                    etPseudo.text.toString(),
+                    etPassword.text.toString()
+                )
                     .addOnCompleteListener(this.requireActivity()) { task ->
                         if (task.isSuccessful) {
                             val user = auth.currentUser
                             user?.run {
-                                loginViewModel.updateUserLocation(user.uid, location.latitude, location.longitude)
+                                loginViewModel.updateUserLocation(
+                                    user.uid,
+                                    location.latitude,
+                                    location.longitude
+                                )
                                 progress_bar.hide()
                                 val intent = Intent(requireContext(), MainActivity::class.java)
                                 intent.putExtra("userId", user.uid)
@@ -82,12 +91,20 @@ class LoginFragment : Fragment(), OnLocationResult {
                             }
                         } else {
                             progress_bar.hide()
-                            Toast.makeText(requireContext(), "Authentication failed.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Authentication failed.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
+            } else {
+                progress_bar.hide()
+                Toast.makeText(requireContext(), "Saisie incorrecte.", Toast.LENGTH_SHORT).show()
+            }
         } else {
             progress_bar.hide()
-            Toast.makeText(requireContext(), "Saisie incorrecte.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Veuillez activer le Wifi ou les données mobiles", Toast.LENGTH_SHORT).show()
         }
     }
 
