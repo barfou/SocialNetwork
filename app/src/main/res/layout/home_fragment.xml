@@ -84,6 +84,14 @@
                 tools:itemCount="5"
                 tools:listitem="@layout/holder_meeting" />
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/spacer2"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                app:layout_constraintTop_toBottomOf="@id/recycler_view_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:visibility="gone"
                 android:id="@+id/tv_recycler_3"
@@ -91,11 +99,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="20dp"
                 android:text="@string/sport"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recycler_view_2"
+                app:layout_constraintTop_toBottomOf="@id/spacer2"
                 tools:text="@string/sport" />
 
             <androidx.recyclerview.widget.RecyclerView

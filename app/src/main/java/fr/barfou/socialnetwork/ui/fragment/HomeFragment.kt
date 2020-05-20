@@ -67,9 +67,9 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
                             loadAdaptersByTheme()
                         } else {
                             Toast.makeText(
-                                requireContext(),
-                                "Problem while loading data.",
-                                Toast.LENGTH_SHORT
+                                    requireContext(),
+                                    "Problem while loading data.",
+                                    Toast.LENGTH_SHORT
                             ).show()
                         }
                     }
@@ -84,7 +84,7 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
 
         fabAddMetting.setOnClickListener {
             findNavController().navigate(
-                R.id.action_to_create_meeting_fragment
+                    R.id.action_to_create_meeting_fragment
             )
         }
     }
@@ -132,10 +132,15 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
         // Recycler View 2
         when (user.boolTrend) {
             true -> mainViewModel.getMostPopularMeetings().run {
-                        tv_trending.show()
-                        meetingAdapter2.submitList(this)
-                    }
-            false -> recycler_view_2.hide()
+                tv_trending.show()
+                meetingAdapter2.submitList(this)
+                spacer2.show()
+            }
+            false -> {
+                tv_trending.hide()
+                recycler_view_2.hide()
+                spacer2.hide()
+            }
         }
 
 
