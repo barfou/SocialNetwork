@@ -71,6 +71,33 @@ open class MainViewModel(
         }
     }
 
+    fun updateBoolTrendUser(firebaseId: String, bool: Boolean) {
+        val position = getUserPosition(firebaseId)
+        if (position > -1) {
+            listUsers[position].boolTrend = bool
+            usersRef.child(firebaseId).child("boolTrend").setValue(bool)
+            currentUser!!.boolTrend = bool
+        }
+    }
+
+    fun updateBoolLocationUser(firebaseId: String, bool: Boolean) {
+        val position = getUserPosition(firebaseId)
+        if (position > -1) {
+            listUsers[position].boolLocation = bool
+            usersRef.child(firebaseId).child("boolLocation").setValue(bool)
+            currentUser!!.boolLocation = bool
+        }
+    }
+
+    fun updatePromoteUser(firebaseId: String, promote: String) {
+        val position = getUserPosition(firebaseId)
+        if (position > -1) {
+            listUsers[position].promote = promote
+            usersRef.child(firebaseId).child("promote").setValue(promote)
+            currentUser!!.promote = promote
+        }
+    }
+
     fun getMostPopularMeetings(): MutableList<Meeting> {
         updatePopularityMap()
         return popularityMap.toList().sortedByDescending { (_, value) -> value }
@@ -174,7 +201,11 @@ open class MainViewModel(
                         val about = user["about"] as String
                         val latitude = user["latitude"] as String
                         val longitude = user["longitude"] as String
-                        currentUser = User(firebaseId, mail, pseudo, imageUrl, dateInscription, about, latitude, longitude)
+                        val level = user["level"] as String
+                        val boolTrend = user["boolTrend"] as Boolean
+                        val boolLocation = user["boolLocation"] as Boolean
+                        val promote = user["promote"] as String
+                        currentUser = User(firebaseId, mail, pseudo, imageUrl, dateInscription, about, latitude, longitude, level, boolTrend, promote, boolLocation)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
