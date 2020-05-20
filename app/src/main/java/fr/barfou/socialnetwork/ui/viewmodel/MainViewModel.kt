@@ -54,6 +54,12 @@ open class MainViewModel(
         val firebaseId = pushMeetingToFirebase(meeting)
         meeting.firebaseId = firebaseId
         listMeetings.add(meeting)
+
+        // Associate creator with his meeting
+        val userMeetingJoin = UserMeetingJoin("", meeting.userId, meeting.firebaseId)
+        val userMeetingJoinId = pushUserMeetingJoin(userMeetingJoin)
+        userMeetingJoin.firebaseId = userMeetingJoinId
+        listUserMeetingJoin.add(userMeetingJoin)
     }
 
     fun updateUser(user: User) {
@@ -795,10 +801,11 @@ open class MainViewModel(
         return firebaseId
     }
 
-    private fun pushUserMeetingJoin(userMeetingJoin: UserMeetingJoin) {
+    private fun pushUserMeetingJoin(userMeetingJoin: UserMeetingJoin): String {
         val firebaseId = userMeetingJoinRef.push().key!!
         userMeetingJoin.firebaseId = firebaseId
         userMeetingJoinRef.child(firebaseId).setValue(userMeetingJoin)
+        return firebaseId
     }
 
     private fun test() {
