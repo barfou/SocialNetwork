@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.Meeting
 import fr.barfou.socialnetwork.data.model.Theme
+import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.MeetingAdapter
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
@@ -58,15 +59,27 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
         }
 
         setupRecyclerviews()
-        mainViewModel.retrieveData {
+        mainViewModel.retrieveData { it ->
             if (it) {
-                mainViewModel.initCurrentUser(MainActivity.userId)
-                loadAdaptersByTheme()
-                progress_bar.hide()
+                if (mainViewModel.currentUser == null) {
+                    mainViewModel.initCurrentUser(MainActivity.userId) { res ->
+                        if (res) {
+                            loadAdaptersByTheme()
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Problem while loading data.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                } else {
+                    loadAdaptersByTheme()
+                }
             } else {
-                progress_bar.hide()
                 Toast.makeText(requireContext(), "Problem while loading data.", Toast.LENGTH_SHORT).show()
             }
+            progress_bar.hide()
         }
 
         fabAddMetting.setOnClickListener {
@@ -114,13 +127,49 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
             }
         }
 
+        val user = mainViewModel.currentUser!!
+
         // Recycler View 2
-        mainViewModel.getMostPopularMeetings().run {
-            tv_trending.show()
-            meetingAdapter2.submitList(this)
+        when (user.boolTrend) {
+            true -> mainViewModel.getMostPopularMeetings().run {
+                        tv_trending.show()
+                        meetingAdapter2.submitList(this)
+                    }
+            false -> recycler_view_2.hide()
         }
 
-        // Recycler View 3
+
+        if (user.promote == "0") {
+            // Recycler View 3
+            mainViewModel.filterMeetingByTheme(Theme.SPORT) {
+                tv_recycler_3.text = "Sport"
+                tv_recycler_3.show()
+                meetingAdapter3.submitList(it)
+            }
+
+            // Recycler View 4
+            mainViewModel.filterMeetingByTheme(Theme.CULTURE) {
+                tv_recycler_4.text = "Culture"
+                tv_recycler_4.show()
+                meetingAdapter4.submitList(it)
+            }
+        } else {
+            // Recycler View 3
+            mainViewModel.filterMeetingByTheme(Theme.CULTURE) {
+                tv_recycler_3.text = "Culture"
+                tv_recycler_3.show()
+                meetingAdapter3.submitList(it)
+            }
+
+            // Recycler View 4
+            mainViewModel.filterMeetingByTheme(Theme.SPORT) {
+                tv_recycler_4.text = "Sport"
+                tv_recycler_4.show()
+                meetingAdapter4.submitList(it)
+            }
+        }
+
+        /*// Recycler View 3
         mainViewModel.filterMeetingByTheme(Theme.SPORT) {
             tv_sport.show()
             meetingAdapter3.submitList(it)
@@ -130,7 +179,7 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
         mainViewModel.filterMeetingByTheme(Theme.CULTURE) {
             tv_culture.show()
             meetingAdapter4.submitList(it)
-        }
+        }*/
     }
 
     // Click listener implementation
