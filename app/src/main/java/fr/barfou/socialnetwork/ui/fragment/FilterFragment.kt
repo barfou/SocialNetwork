@@ -29,7 +29,7 @@ class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeLi
     private lateinit var meetingAdapterFilter: MeetingAdapterFilter
     private var searchValue: String = ""
     private lateinit var mainViewModel: MainViewModel
-    private var filterMode: FilterMode = FilterMode.NONE
+    var filterMode: FilterMode = FilterMode.NONE
 
     enum class FilterMode { NONE, BY_DATE, BY_PROXIMITY }
 

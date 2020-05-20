@@ -226,14 +226,26 @@ class MainActivity : AppCompatActivity() {
 
         lateinit var dialog: AlertDialog
         val listFilter = mutableListOf(resources.getString(R.string.date_event), resources.getString(R.string.proximity))
-        if (mode == Mode.FILTER)
+        var selectedPosition = -1
+        if (mode == Mode.FILTER) {
             listFilter.add(resources.getText(R.string.none).toString())
+            try {
+                val fragment = getForegroundFragment() as FilterFragment
+                selectedPosition = when (fragment.filterMode) {
+                    FilterFragment.FilterMode.BY_DATE -> 0
+                    FilterFragment.FilterMode.BY_PROXIMITY -> 1
+                    FilterFragment.FilterMode.NONE -> 2
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
 
         var builder = AlertDialog.Builder(this, R.style.MyAlertDialogTheme)
 
         builder.setTitle(R.string.sort_by)
 
-        builder.setSingleChoiceItems(listFilter.toTypedArray(), -1) { _, position ->
+        builder.setSingleChoiceItems(listFilter.toTypedArray(), selectedPosition) { _, position ->
             when (position) {
                 0 -> sortWith(FilterFragment.FilterMode.BY_DATE)
                 1 -> sortWith(FilterFragment.FilterMode.BY_PROXIMITY)
