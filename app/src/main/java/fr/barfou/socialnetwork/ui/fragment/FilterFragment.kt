@@ -1,9 +1,11 @@
 package fr.barfou.socialnetwork.ui.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +22,7 @@ import fr.barfou.socialnetwork.ui.utils.hide
 import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_filter.*
+import kotlin.system.exitProcess
 
 class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeListener, OnFilterChangeListener {
 
@@ -44,6 +47,10 @@ class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeLi
             "BY_PROXIMITY" -> filterMode = FilterMode.BY_PROXIMITY
             "BY_DATE" -> filterMode = FilterMode.BY_DATE
             "NONE" -> filterMode = FilterMode.NONE
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            (activity as? MainActivity)?.closeSearch()
+            findNavController().popBackStack()
         }
     }
 
