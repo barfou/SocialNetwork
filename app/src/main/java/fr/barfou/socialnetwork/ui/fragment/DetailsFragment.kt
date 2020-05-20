@@ -120,14 +120,14 @@ class DetailsFragment : Fragment(), OnUserClickListener {
     private fun loadData() {
         try {
             mainViewModel.getUserById(userId)?.run {
-                card_creator.show()
+                container_2.show()
                 tv_user_pseudo.text = this.getInitials()
                 tv_date_upload.text = " le $datePost"
                 tv_user_pseudo.setOnClickListener {
                     navigateToProfileFragment(userId)
                 }
             }
-            tv_meeting_name.text = name
+            tv_meeting_name.text = "$name | $type"
             tv_date_meeting.text = "Aura lieu le $dateEvent"
             tv_details_meeting.text = details
             showUsers()
