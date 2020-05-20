@@ -19,6 +19,7 @@ import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.listener.OnLocationResult
 import fr.barfou.socialnetwork.ui.utils.getCurrentDate
 import fr.barfou.socialnetwork.ui.utils.hide
+import fr.barfou.socialnetwork.ui.utils.isOnline
 import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.fragment_login.btnLogin
@@ -64,20 +65,25 @@ class RegisterFragment : Fragment(), OnLocationResult {
         }
 
         btnRegister.setOnClickListener {
-            if (!etPseudoRegister.text.isNullOrBlank() && !etMail.text.isNullOrBlank() && !etPassword.text.isNullOrBlank()) {
-                if (chkCGU.isChecked) {
-                    (activity as? LoginActivity)?.run {
-                        this.getLastLocation { result -> // Callback invoked if permissions not needed
-                            registerUser(location = result)
+            if (isOnline(requireContext())) {
+                if (!etPseudoRegister.text.isNullOrBlank() && !etMail.text.isNullOrBlank() && !etPassword.text.isNullOrBlank()) {
+                    if (chkCGU.isChecked) {
+                        (activity as? LoginActivity)?.run {
+                            this.getLastLocation { result -> // Callback invoked if permissions not needed
+                                registerUser(location = result)
+                            }
                         }
+                    } else {
+                        progress_bar.hide()
+                        Toast.makeText(requireContext(), "Veuillez acceptez les CGU.", Toast.LENGTH_LONG).show()
                     }
                 } else {
                     progress_bar.hide()
-                    Toast.makeText(requireContext(), "Veuillez acceptez les CGU.", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Saisie incorrecte.", Toast.LENGTH_LONG).show()
                 }
             } else {
                 progress_bar.hide()
-                Toast.makeText(requireContext(), "Saisie incorrecte.", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Veuillez activer le Wifi ou les données mobiles", Toast.LENGTH_SHORT).show()
             }
         }
     }
