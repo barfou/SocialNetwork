@@ -1,10 +1,13 @@
 package fr.barfou.socialnetwork.ui.fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -13,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.Meeting
 import fr.barfou.socialnetwork.data.model.Theme
-import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.MeetingAdapter
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
@@ -21,6 +23,8 @@ import fr.barfou.socialnetwork.ui.utils.hide
 import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.home_fragment.*
+import kotlin.system.exitProcess
+
 
 class HomeFragment : Fragment(), OnMeetingClickListener {
 
@@ -36,6 +40,22 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
         activity?.run {
             mainViewModel = ViewModelProvider(this, MainViewModel).get()
         } ?: throw IllegalStateException("Invalid Activity")
+
+        // This callback will only be called when MyFragment is at least Started.
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            AlertDialog.Builder(context)
+                .setTitle("Exit the application")
+                .setMessage("Are you sure you want to exit the application ?")
+                .setPositiveButton(
+                    android.R.string.yes
+                ) { _, _ ->
+                    requireActivity().moveTaskToBack(true)
+                    exitProcess(-1)
+                }
+                .setNegativeButton(android.R.string.no, null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show()
+        }
     }
 
     override fun onCreateView(
@@ -197,4 +217,5 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
                         DetailsFragment.DETAILS_KEY to meeting.details
                 ))
     }
+
 }
