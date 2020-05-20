@@ -49,9 +49,9 @@
     <string name="no_result">Aucun Résultat</string>
     <string name="text_modulate_home_screen">Moduler l\'écran d\'acceuil</string>
     <string name="text_trend">Tendance</string>
-    <string name="text_more_trend">Afficher ou non la liste des activités tendance</string>
+    <string name="text_more_trend">Afficher la liste des activités tendance</string>
     <string name="text_promote">Mise en avant</string>
-    <string name="text_more_promote">Permet de choisir le thème de prédilection</string>
+    <string name="text_more_promote">Thème de prédilection </string>
     <string name="text_theme_app">Thème de l\'application</string>
     <string name="text_light_theme">Thème clair</string>
     <string name="text_dark_theme">Thème Sombre</string>

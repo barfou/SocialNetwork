@@ -10,7 +10,7 @@ data class User(
         var latitude: String,
         var longitude: String,
         var level: String = "1",
-        var boolTrend: Boolean = false,
+        var boolTrend: Boolean = true,
         var promote: String = "0",
         var boolLocation: Boolean = true
 

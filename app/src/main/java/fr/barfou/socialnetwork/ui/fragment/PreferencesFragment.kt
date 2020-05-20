@@ -49,15 +49,15 @@ class PreferencesFragment: Fragment() {
         val listTheme = mutableListOf<String>()
         listTheme.add("SPORT")
         listTheme.add("CULTURE")
-        val aa= ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listTheme)
+        val aa= ArrayAdapter(requireContext(), R.layout.spinner_header, listTheme)
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spPromote!!.adapter = aa
+        spPromote!!.setAdapter(aa)
 
         user = mainViewModel.currentUser!!
 
         swTrend.isChecked = user.boolTrend
         swLocation.isChecked = user.boolLocation
-        spPromote.setSelection(user.promote.toInt())
+        spPromote.spinner.setSelection(user.promote.toInt())
 
         swTrend.setOnCheckedChangeListener { _, isChecked ->
             try {
@@ -76,7 +76,7 @@ class PreferencesFragment: Fragment() {
             }
         }
 
-        spPromote?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spPromote?.spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
