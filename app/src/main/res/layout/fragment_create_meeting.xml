@@ -72,13 +72,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etNameMeeting" />
 
-            <androidx.appcompat.widget.AppCompatSpinner
+            <fr.barfou.socialnetwork.ui.widget.customviews.MySpinner
                 android:id="@+id/spTheme"
                 style="@style/OnSurface"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:spinnerMode="dropdown"
-                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                android:layout_height="31dp"
                 app:layout_constraintStart_toStartOf="@id/tvTheme"
                 app:layout_constraintTop_toBottomOf="@id/tvTheme" />
 
@@ -87,19 +85,18 @@
                 style="@style/Header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="80dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:paddingStart="10dp"
                 android:text="@string/text_type"
-                app:layout_constraintStart_toEndOf="@id/tvTheme"
+                app:layout_constraintStart_toEndOf="@id/spTheme"
                 app:layout_constraintTop_toBottomOf="@id/etNameMeeting" />
 
-            <androidx.appcompat.widget.AppCompatSpinner
+            <fr.barfou.socialnetwork.ui.widget.customviews.MySpinner
                 android:id="@+id/spType"
                 style="@style/OnSurface"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                android:layout_height="31dp"
                 app:layout_constraintStart_toStartOf="@id/tvType"
                 app:layout_constraintTop_toBottomOf="@id/tvType" />
 
@@ -108,18 +105,17 @@
                 style="@style/Header"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="80dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:paddingStart="10dp"
                 android:text="@string/text_date"
-                app:layout_constraintStart_toEndOf="@id/tvType"
-                app:layout_constraintTop_toBottomOf="@id/etNameMeeting" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spTheme" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/OnSurface"
+                style="@style/DatePicker"
                 android:id="@+id/dtpDateMeeting"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="31dp"
                 android:drawableEnd="@drawable/ic_date_range_black_24dp"
                 android:drawablePadding="10dp"
                 android:paddingHorizontal="10dp"
@@ -134,7 +130,7 @@
                 android:layout_marginTop="10dp"
                 android:paddingStart="10dp"
                 android:text="@string/text_location_meeting"
-                app:layout_constraintTop_toBottomOf="@id/spTheme" />
+                app:layout_constraintTop_toBottomOf="@id/dtpDateMeeting" />
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/mapMeeting"

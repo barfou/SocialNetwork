@@ -1,17 +1,66 @@
 package fr.barfou.socialnetwork.ui.widget.customviews
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.util.AttributeSet
-import androidx.appcompat.widget.AppCompatTextView
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
+import androidx.core.content.ContextCompat
 import fr.barfou.socialnetwork.R
+import fr.barfou.socialnetwork.data.model.Theme
 import fr.barfou.socialnetwork.ui.utils.dp
 
-class MySpinner @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : AppCompatTextView(context, attrs, defStyleAttr) {
+class MySpinner : LinearLayout {
 
-    init {
-        this.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_arrow_down, 0)
-        this.height = dp(40)
+    lateinit var spinner: Spinner
+
+    constructor(context: Context) : super(context) {
+        init(context)
+    }
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        init(context)
+    }
+
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+            context,
+            attrs,
+            defStyleAttr
+    ) {
+        init(context)
+    }
+
+    private fun init(context: Context) {
+        this.setBackgroundResource(R.drawable.spinner_background)
+        this.orientation = HORIZONTAL
+
+        // Spinner
+        spinner = Spinner(context, Spinner.MODE_DIALOG)
+        val layoutParams1 = LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT
+        )
+        layoutParams1.setMargins(dp(10), 0, 0, 0)
+        spinner.layoutParams = layoutParams1
+        spinner.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.color_body1))
+        this.addView(spinner)
+    }
+
+    fun selectedItem(): Any {
+        return spinner.selectedItem
+    }
+
+    fun setAdapter(adapter: ArrayAdapter<String>) {
+        spinner.adapter = adapter
+    }
+
+    fun setCustomAdapter(adapter: Any) {
+        spinner.adapter = adapter as SpinnerAdapter
+    }
+
+    fun selectedItemPosition(): Int {
+        return spinner.selectedItemPosition
     }
 }

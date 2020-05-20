@@ -1,6 +1,7 @@
 package fr.barfou.socialnetwork.ui.fragment
 
 import android.app.DatePickerDialog
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -71,17 +72,17 @@ class CreateMeetingFragment: Fragment(), OnMapReadyCallback {
         val listTheme = mutableListOf<String>()
         listTheme.add("SPORT")
         listTheme.add("CULTURE")
-        val aaSpinnerTheme = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listTheme)
+        val aaSpinnerTheme = ArrayAdapter(requireContext(), R.layout.spinner_header, listTheme)
         aaSpinnerTheme.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spTheme!!.adapter = aaSpinnerTheme
+        spTheme!!.setAdapter(aaSpinnerTheme)
 
         val listType = mutableListOf<String>()
 
-        val aaSpinnerType = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, listType)
+        val aaSpinnerType = ArrayAdapter(requireContext(), R.layout.spinner_header, listType)
         aaSpinnerType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spType!!.adapter = aaSpinnerType
+        spType!!.setAdapter(aaSpinnerType)
 
-        spTheme?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        spTheme?.spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -123,7 +124,7 @@ class CreateMeetingFragment: Fragment(), OnMapReadyCallback {
                     // Display Selected date in textbox
                     //currentDate = "$dayOfMonth/${monthOfYear + 1}/$year"
                     currentDate = IntToDateString(dayOfMonth, monthOfYear + 1, year)
-                    dtpDateMeeting.setText(currentDate)
+                    dtpDateMeeting.text = currentDate
                 }, year, month, day
             )
             dpd.show()
@@ -157,9 +158,9 @@ class CreateMeetingFragment: Fragment(), OnMapReadyCallback {
                 //Traitement des données changées
                 val fireBaseId = ""
                 val userId: String = mainViewModel.currentUser!!.firebaseId
-                val type: String = spType.selectedItem.toString()
+                val type: String = spType.selectedItem().toString()
                 val typeId: String = mainViewModel.getIdTypeWithName(type)
-                val theme: String = spTheme.selectedItem.toString()
+                val theme: String = spTheme.selectedItem().toString()
                 val name: String = etNameMeeting.text.toString()
                 val date_creation: String = getCurrentDate()
                 val date_event: String = dtpDateMeeting.text.toString()
