@@ -127,7 +127,8 @@ class DetailsFragment : Fragment(), OnUserClickListener {
                     navigateToProfileFragment(userId)
                 }
             }
-            tv_meeting_name.text = "$name | $type"
+            tv_meeting_name.text = name
+            tv_meeting_type.text = type
             tv_date_meeting.text = "Aura lieu le $dateEvent"
             tv_details_meeting.text = details
             showUsers()
