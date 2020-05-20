@@ -182,7 +182,7 @@ open class MainViewModel(
                 .toMutableList()
     }
 
-    fun initCurrentUser(userId: String) {
+    fun initCurrentUser(userId: String, onSuccess: OnSuccess<Boolean>) {
 
         if (currentUser == null) {
             usersRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
@@ -206,8 +206,10 @@ open class MainViewModel(
                         val boolLocation = user["boolLocation"] as Boolean
                         val promote = user["promote"] as String
                         currentUser = User(firebaseId, mail, pseudo, imageUrl, dateInscription, about, latitude, longitude, level, boolTrend, promote, boolLocation)
+                        onSuccess(true)
                     } catch (e: Exception) {
                         e.printStackTrace()
+                        onSuccess(false)
                     }
                 }
             })
