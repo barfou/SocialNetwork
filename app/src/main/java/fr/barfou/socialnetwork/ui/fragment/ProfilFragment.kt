@@ -57,12 +57,12 @@ class ProfilFragment : Fragment() {
             this.mode = MainActivity.Mode.PROFILE
         }
 
-        loadUserData()?.run {
-            if(userId != mainViewModel.currentUser!!.firebaseId){
-                btnNavPreferences.visibility = View.GONE
-                btnNavEditProfil.visibility = View.GONE
-            }
+        if(userId != mainViewModel.currentUser!!.firebaseId){
+            btnNavPreferences.visibility = View.GONE
+            btnNavEditProfil.visibility = View.GONE
+        }
 
+        loadUserData()?.run {
             tvProfil.text = this.getInitials()
             tvLoginUser.text = this.pseudo.toCapital()
             tvNumberLevelUser.text = this.level
