@@ -129,9 +129,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
+                        app:layout_constraintBottom_toBottomOf="@id/imgLocalisation"
                         app:layout_constraintStart_toEndOf="@id/imgLocalisation"
                         app:layout_constraintTop_toTopOf="@id/imgLocalisation"
-                        app:layout_constraintBottom_toBottomOf="@id/imgLocalisation"
                         tools:text="Bourg-en-Bresse" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -148,13 +148,13 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvBio"
                         style="@style/OnSurface"
-                        android:paddingTop="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:paddingEnd="10dp"
                         android:layout_marginEnd="10dp"
-                        android:maxLines="2"
+                        android:maxLines="5"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
                         app:layout_constraintStart_toEndOf="@id/imgLocalisation"
                         app:layout_constraintTop_toTopOf="@+id/imgBio"
                         tools:text="Bonjour blabla \nb blabla \nb blabla" />

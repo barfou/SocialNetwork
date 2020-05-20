@@ -22,6 +22,7 @@ import fr.barfou.socialnetwork.data.model.Meeting
 import fr.barfou.socialnetwork.data.model.Theme
 import fr.barfou.socialnetwork.data.model.getTheme
 import fr.barfou.socialnetwork.ui.activity.MainActivity
+import fr.barfou.socialnetwork.ui.utils.EditTextLinesLimiter
 import fr.barfou.socialnetwork.ui.utils.IntToDateString
 import fr.barfou.socialnetwork.ui.utils.convertLatLongToLocation
 import fr.barfou.socialnetwork.ui.utils.getCurrentDate
@@ -61,6 +62,8 @@ class CreateMeetingFragment: Fragment(), OnMapReadyCallback {
         (activity as? MainActivity)?.run {
             this.mode = MainActivity.Mode.PROFILE
         }
+
+        restrictEtDetails()
 
         //Affichage de la carte
         mapMeeting.onCreate(savedInstanceState)
@@ -181,6 +184,10 @@ class CreateMeetingFragment: Fragment(), OnMapReadyCallback {
             }
         }
 
+    }
+
+    private fun restrictEtDetails() {
+        etMoreInformations.addTextChangedListener(EditTextLinesLimiter(etMoreInformations, 5));
     }
 
     override fun onMapReady(map: GoogleMap?) {

@@ -15,6 +15,7 @@ import fr.barfou.socialnetwork.R
 import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.TrophyAdapter
+import fr.barfou.socialnetwork.ui.utils.EditTextLinesLimiter
 import fr.barfou.socialnetwork.ui.utils.convertLatLongToLocation
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_modify_profil.*
@@ -57,6 +58,8 @@ class ModifyProfilFragment: Fragment() {
             this.mode = MainActivity.Mode.MODIFY_PROFILE
         }
 
+        restrictTvBio()
+
         val user = mainViewModel.currentUser
 
         if (user != null) {
@@ -69,7 +72,7 @@ class ModifyProfilFragment: Fragment() {
             etBio.setText(user.about)
             //etPassword.setText(user.)
 
-            clLocation.setOnClickListener {
+            btnLocalisation.setOnClickListener {
                 //Traitement mise à jour localisation
                 (activity as? MainActivity)?.run {
                     this.getLastLocation { result -> // Callback invoked if permissions not needed
@@ -118,6 +121,10 @@ class ModifyProfilFragment: Fragment() {
                 requireActivity().onBackPressed()
             }
         }
+    }
+
+    private fun restrictTvBio() {
+        etBio.addTextChangedListener(EditTextLinesLimiter(etBio, 5));
     }
 
     @SuppressLint("SetTextI18n")

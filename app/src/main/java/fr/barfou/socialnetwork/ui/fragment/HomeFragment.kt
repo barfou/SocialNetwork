@@ -189,6 +189,7 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
 
     // Click listener implementation
     override fun invoke(view: View, meeting: Meeting) {
+
         findNavController().navigate(R.id.action_to_details_fragment,
                 bundleOf(
                         DetailsFragment.MEETING_ID_KEY to meeting.firebaseId,

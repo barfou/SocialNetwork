@@ -82,6 +82,18 @@
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/color_body1</item>
     </style>
+    <style name="ReadOnlyControl">
+        <item name="android:background">@drawable/spinner_background</item>
+        <item name="android:layout_height">26dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingHorizontal">10dp</item>
+        <item name="android:fontFamily">@font/capriola_regular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/color_body1</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:singleLine">true</item>
+    </style>
     <style name="ButtonStyleQuit">
         <item name="android:background">@drawable/rounded_button_quit</item>
         <item name="android:fontFamily">@font/russo_one_regular</item>

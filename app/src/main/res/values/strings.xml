@@ -23,7 +23,7 @@
     <string name="text_login">Login</string>
     <string name="text_town">Ville</string>
     <string name="text_country">Pays</string>
-    <string name="text_update_with_loc">Mettre à jour via ma localisation</string>
+    <string name="text_update_with_loc">Mettre à jour Ville/Pays via ma localisation</string>
     <string name="text_bio">Biographie</string>
     <string name="text_confidentiel">Confidentialité</string>
     <string name="text_password">Mot de passe</string>

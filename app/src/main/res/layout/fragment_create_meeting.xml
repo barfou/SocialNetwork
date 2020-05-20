@@ -167,7 +167,7 @@
                 android:id="@+id/etMoreInformations"
                 style="@style/EditTextMainActivity"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="155dp"
                 android:inputType="textMultiLine"
                 android:singleLine="false"
                 app:layout_constraintTop_toBottomOf="@id/tvMoreInformations" />
