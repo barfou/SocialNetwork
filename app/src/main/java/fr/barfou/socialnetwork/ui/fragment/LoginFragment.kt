@@ -72,32 +72,38 @@ class LoginFragment : Fragment(), OnLocationResult {
         if (isOnline(requireContext())) {
             if (!etPseudo.text.isNullOrBlank() && !etPassword.text.isNullOrBlank()) {
                 auth.signInWithEmailAndPassword(
-                    etPseudo.text.toString(),
-                    etPassword.text.toString()
+                        etPseudo.text.toString(),
+                        etPassword.text.toString()
                 )
-                    .addOnCompleteListener(this.requireActivity()) { task ->
-                        if (task.isSuccessful) {
-                            val user = auth.currentUser
-                            user?.run {
-                                loginViewModel.updateUserLocation(
-                                    user.uid,
-                                    location.latitude,
-                                    location.longitude
-                                )
+                        .addOnCompleteListener(this.requireActivity()) { task ->
+                            if (task.isSuccessful) {
+                                val user = auth.currentUser
+                                user?.run {
+                                    loginViewModel.getUserFirebase(user.uid) { res ->
+                                        res?.run {
+                                            if (res.boolLocation) {
+                                                loginViewModel.updateUserLocation(
+                                                        user.uid,
+                                                        location.latitude,
+                                                        location.longitude
+                                                )
+                                            }
+                                        }
+                                    }
+                                    progress_bar.hide()
+                                    val intent = Intent(requireContext(), MainActivity::class.java)
+                                    intent.putExtra("userId", user.uid)
+                                    startActivity(intent)
+                                }
+                            } else {
                                 progress_bar.hide()
-                                val intent = Intent(requireContext(), MainActivity::class.java)
-                                intent.putExtra("userId", user.uid)
-                                startActivity(intent)
+                                Toast.makeText(
+                                        requireContext(),
+                                        "Authentication failed.",
+                                        Toast.LENGTH_SHORT
+                                ).show()
                             }
-                        } else {
-                            progress_bar.hide()
-                            Toast.makeText(
-                                requireContext(),
-                                "Authentication failed.",
-                                Toast.LENGTH_SHORT
-                            ).show()
                         }
-                    }
             } else {
                 progress_bar.hide()
                 Toast.makeText(requireContext(), "Saisie incorrecte.", Toast.LENGTH_SHORT).show()
