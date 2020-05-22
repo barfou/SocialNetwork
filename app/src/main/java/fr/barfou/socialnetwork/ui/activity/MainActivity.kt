@@ -14,7 +14,6 @@ import android.os.Looper
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -32,12 +31,10 @@ import fr.barfou.socialnetwork.ui.listener.OnFilterChangeListener
 import fr.barfou.socialnetwork.ui.listener.OnLocationResult
 import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import fr.barfou.socialnetwork.ui.utils.changeToolbarFont
-import fr.barfou.socialnetwork.ui.utils.getDistanceFromLatLongInM
 import fr.barfou.socialnetwork.ui.utils.hideKeyboard
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.properties.Delegates
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -112,10 +109,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
         searchView.setOnCloseListener {
-            /*if (mode == Mode.FILTER) {
-                onBackPressed()
-                mode = Mode.HOMEPAGE
-            }*/
             return@setOnCloseListener false
         }
         return true

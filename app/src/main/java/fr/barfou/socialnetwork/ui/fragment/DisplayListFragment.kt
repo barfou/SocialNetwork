@@ -14,9 +14,7 @@ import fr.barfou.socialnetwork.data.model.Meeting
 import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.MeetingAdapterFilter
-import fr.barfou.socialnetwork.ui.listener.OnFilterChangeListener
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
-import fr.barfou.socialnetwork.ui.listener.OnSearchValueChangeListener
 import fr.barfou.socialnetwork.ui.utils.hide
 import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel

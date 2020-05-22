@@ -1,7 +1,6 @@
 package fr.barfou.socialnetwork.ui.fragment
 
 import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,22 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
-import androidx.navigation.fragment.findNavController
-import fr.barfou.socialnetwork.ui.activity.LoginActivity
 import fr.barfou.socialnetwork.R
-import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
-import fr.barfou.socialnetwork.ui.adapter.TrophyAdapter
 import fr.barfou.socialnetwork.ui.utils.EditTextLinesLimiter
 import fr.barfou.socialnetwork.ui.utils.convertLatLongToLocation
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_modify_profil.*
-import kotlinx.android.synthetic.main.fragment_profil.*
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
-import java.util.Calendar.*
-
 
 class ModifyProfilFragment: Fragment() {
 
@@ -84,30 +73,6 @@ class ModifyProfilFragment: Fragment() {
                     }
                 }
             }
-
-            /*dtpBirthday.setOnClickListener {
-                if(etBirthday.text.toString() == "") {
-                    day = c.get(DAY_OF_MONTH)
-                    month = c.get(MONTH)
-                    year = c.get(YEAR)
-                } else {
-                    val tblDate : List<String> = etBirthday.text.toString().split("/")
-
-                    day = tblDate[0].toInt()
-                    month = tblDate[1].toInt()
-                    year = tblDate[2].toInt()
-                }
-
-                val dpd = DatePickerDialog(
-                    this.requireContext(),
-                    DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-
-                        // Display Selected date in textbox
-                        etBirthday.setText("$dayOfMonth/$monthOfYear/$year")
-                    }, year!!, month!!, day!!)
-
-                dpd.show()
-            }*/
 
             btnCancelEditProfil.setOnClickListener {
                 requireActivity().onBackPressed()

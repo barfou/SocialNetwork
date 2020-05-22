@@ -11,7 +11,6 @@ import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
 import fr.barfou.socialnetwork.ui.utils.toCapital
 import kotlinx.android.synthetic.main.holder_filter_meeting.view.*
-import kotlinx.android.synthetic.main.holder_meeting.view.*
 import kotlinx.android.synthetic.main.holder_meeting.view.tv_date
 import kotlinx.android.synthetic.main.holder_meeting.view.tv_name
 

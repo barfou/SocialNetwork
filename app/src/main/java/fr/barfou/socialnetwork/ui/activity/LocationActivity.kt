@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
-import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -21,15 +20,11 @@ import fr.barfou.socialnetwork.data.model.ConvertedLocation
 import fr.barfou.socialnetwork.ui.utils.convertLatLongToLocation
 import kotlinx.android.synthetic.main.activity_location.*
 
-
-
 class LocationActivity : AppCompatActivity() {
 
     val PERMISSION_ID = 42
 
     lateinit var mFusedLocationClient: FusedLocationProviderClient
-
-    //lateinit var geocoder : Geocoder
 
     lateinit var addresses : List<Address>
 
@@ -54,14 +49,6 @@ class LocationActivity : AppCompatActivity() {
                         requestNewLocationData()
                     } else {
                         try {
-
-                            /*geocoder = Geocoder(this)
-
-                            addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-
-                            val city = addresses[0].locality
-                            val country = addresses[0].countryName*/
-
                             val myLocation : ConvertedLocation = convertLatLongToLocation(this, location.latitude, location.longitude)
 
                             val town = myLocation.town
@@ -134,7 +121,6 @@ class LocationActivity : AppCompatActivity() {
             PERMISSION_ID
         )
     }
-
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

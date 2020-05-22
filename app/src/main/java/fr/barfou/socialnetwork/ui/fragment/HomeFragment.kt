@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -24,7 +23,6 @@ import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlin.system.exitProcess
-
 
 class HomeFragment : Fragment(), OnMeetingClickListener {
 
@@ -193,18 +191,6 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
                 meetingAdapter4.submitList(it)
             }
         }
-
-        /*// Recycler View 3
-        mainViewModel.filterMeetingByTheme(Theme.SPORT) {
-            tv_sport.show()
-            meetingAdapter3.submitList(it)
-        }
-
-        // Recycler View 4
-        mainViewModel.filterMeetingByTheme(Theme.CULTURE) {
-            tv_culture.show()
-            meetingAdapter4.submitList(it)
-        }*/
     }
 
     // Click listener implementation

@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
 import fr.barfou.socialnetwork.R
-import fr.barfou.socialnetwork.data.model.ConvertedLocation
 import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.activity.MainActivity
 import fr.barfou.socialnetwork.ui.adapter.UserAdapter
@@ -20,11 +19,8 @@ import fr.barfou.socialnetwork.ui.listener.OnUserClickListener
 import fr.barfou.socialnetwork.ui.utils.convertLatLongToLocation
 import fr.barfou.socialnetwork.ui.utils.hide
 import fr.barfou.socialnetwork.ui.utils.show
-import fr.barfou.socialnetwork.ui.utils.toCapital
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
-import kotlinx.android.synthetic.main.activity_location.*
 import kotlinx.android.synthetic.main.details_fragment.*
-import java.util.*
 
 class DetailsFragment : Fragment(), OnUserClickListener {
 

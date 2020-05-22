@@ -4,12 +4,9 @@ import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import fr.barfou.socialnetwork.data.model.Meeting
 import fr.barfou.socialnetwork.data.model.User
-import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
 import fr.barfou.socialnetwork.ui.listener.OnUserClickListener
 import fr.barfou.socialnetwork.ui.utils.dp
-import fr.barfou.socialnetwork.ui.widget.viewholder.MeetingViewHolder
 import fr.barfou.socialnetwork.ui.widget.viewholder.UserViewHolder
 
 class UserAdapter(

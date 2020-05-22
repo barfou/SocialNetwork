@@ -1,6 +1,5 @@
 package fr.barfou.socialnetwork.ui.fragment
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +21,6 @@ import fr.barfou.socialnetwork.ui.utils.hide
 import fr.barfou.socialnetwork.ui.utils.show
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_filter.*
-import kotlin.system.exitProcess
 
 class FilterFragment : Fragment(), OnMeetingClickListener, OnSearchValueChangeListener, OnFilterChangeListener {
 

@@ -14,11 +14,9 @@ typealias OnUserClickListener = (view: View, user: User) -> Unit
 typealias OnLocationResult = (Location) -> Unit
 
 interface OnSearchValueChangeListener {
-
      fun onSearchValueChange(newText: String)
 }
 
 interface OnFilterChangeListener {
-
      fun onFilterChange(filter: FilterFragment.FilterMode)
 }

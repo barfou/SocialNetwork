@@ -9,7 +9,6 @@ import fr.barfou.socialnetwork.data.model.User
 import fr.barfou.socialnetwork.ui.listener.OnMeetingClickListener
 import fr.barfou.socialnetwork.ui.utils.dp
 import fr.barfou.socialnetwork.ui.widget.viewholder.FilterMeetingViewHolder
-import fr.barfou.socialnetwork.ui.widget.viewholder.MeetingViewHolder
 
 class MeetingAdapterFilter(
         var fragment: OnMeetingClickListener

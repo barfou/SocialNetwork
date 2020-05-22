@@ -1,7 +1,6 @@
 package fr.barfou.socialnetwork.ui.fragment
 
 import android.app.DatePickerDialog
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +27,6 @@ import fr.barfou.socialnetwork.ui.utils.convertLatLongToLocation
 import fr.barfou.socialnetwork.ui.utils.getCurrentDate
 import fr.barfou.socialnetwork.ui.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_create_meeting.*
-
 
 class CreateMeetingFragment: Fragment(), OnMapReadyCallback {
 
