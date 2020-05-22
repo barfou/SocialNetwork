@@ -352,7 +352,7 @@ open class MainViewModel(
     }
 
     private fun MutableList<Meeting>.byName(name: String): MutableList<Meeting> {
-        return this.filter { it.name.unAccent().contains(name.unAccent(), ignoreCase = true) }
+        return this.filter { it.name.unAccent().contains(name.unAccent(), ignoreCase = true) or it.type.unAccent().contains(name.unAccent(), ignoreCase = true) }
                 .toMutableList()
     }
 

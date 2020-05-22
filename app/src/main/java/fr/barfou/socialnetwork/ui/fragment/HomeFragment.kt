@@ -79,7 +79,7 @@ class HomeFragment : Fragment(), OnMeetingClickListener {
         }
 
         setupRecyclerviews()
-        mainViewModel.retrieveData { it ->
+        mainViewModel.retrieveData {
             if (it) {
                 if (mainViewModel.currentUser == null) {
                     mainViewModel.initCurrentUser(MainActivity.userId) { res ->
